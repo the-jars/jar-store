@@ -8,7 +8,7 @@ router.param('id', (req, res, next, id) =>
       req.product = product
       next()
     })
-    .catch(console.log)
+    .catch(next)
 )
 
 // GET /api/products/:id
@@ -18,7 +18,6 @@ router.get('/:id', async (req, res, next) => {
     const singleProduct = await Product.findById(req.params.id, {
       include: [Category]
     })
-    console.log(singleProduct.availability)
     if (!singleProduct) {
       res.sendStatus(404)
     }
