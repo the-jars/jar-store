@@ -17,13 +17,36 @@ const Product = db.define(
     // max length is 10
     // decimal precision is 2
     price: {
-      type: Sequelize.DOUBLE(10, 2),
+      type: Sequelize.DECIMAL(10, 2),
       defaultValue: 0.0
+    },
+    size: {
+      type: Sequelize.ENUM('small', 'medium', 'large'),
+      defaultValue: 'small'
+    },
+    flavor: {
+      type: Sequelize.STRING,
+      validate: {
+        notEmpty: true
+      },
+      defaultValue: 'none'
+    },
+    description: {
+      type: Sequelize.TEXT,
+      defaultValue: 'Jar full of goodies'
+    },
+    inventory: {
+      type: Sequelize.INTEGER,
+      validate: {
+        min: 0
+      },
+      defaultValue: 0
     },
     // boolean for availability set by admin
     // true when available
     // false when not available
-    status: {
+    // use availability to acquire string representation
+    available: {
       type: Sequelize.BOOLEAN,
       defaultValue: true
     }

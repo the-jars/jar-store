@@ -14,14 +14,14 @@ notifications:
 install:
   - npm ci # faster, goes only from package-lock
 before_script:
-  - psql -c 'create database "boilermaker-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+  - psql -c 'create database "jars";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 
-# before_deploy:
-#   - npm run build-client # make the bundle
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
-# deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+before_deploy:
+  - npm run build-client # make the bundle
+  - rm -rf node_modules # omit from the tarball, since we skip cleanup
+deploy:
+  skip_cleanup: true # prevents travis from deleting the build
+  provider: heroku
+  app: the-jars # see README
+  api_key:
+    secure: wwk92Cml+UnNpvVukX1uluCmBy+69T5Qw1rm4ejKUiFtTC+Lpyn6VxgSkSJhCIC+33Ip2ekojT0nSA3J2UGCsrKuj9820CiOD4+8I1wcXXGsh168rw1hahYqNIfx/WfRTOwI+SNFzvNREDi+v3i0Oshxh0qK3C+5cx37bB4Q5BDXQc1iss/8exYXgKo0J5dV6mvBPkxJymj/od9cofOhXyxkxCE0uds9rb+Fuo0HsWcm/I7k4Axi3G9n6bZ0XQTQQ0rG9OdPPA44dOoGY1HBQ4yim6Zgw1uFxTqIdyqO48lBo2pQ0ferFt3qedt+oIJVa/XEevRvTXRkncU1tlGb23k8d2jQKm3Xge0rFoVDKLfUKAD/JoSqCUq8igB+jfGSuTA9ZzSCnkXr6xgWMf7TMOVNpI+zki94m8dyWPQfnNiXk0IDLYAVqfqdBmGV6c84WUmLuevDkoioX0qEHjTzkzobph8gEgwYO2kpaWucxjJ2ITX9wCNsSy+LlkNOQ5umYmsOZ443hJ94pNmH/J1F0rrkVfcmcUmqAMreBiCbuWDN1VuHsHwJwz1F9YFj5TgqDITYnfUf9sbgfenbl0WNuUY3dP8V8cNPApTm4sA1IU0EvX3qYjYBsGN6JMfNfgbF8qmCG+Lyt+2/YuiUTrWgH2DrkK793VNHo9q6e9YpXR0= # see README

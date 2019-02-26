@@ -1,7 +1,7 @@
 const User = require('./user')
 const Review = require('./reviews')
 const Address = require('./address')
-const Order = require('./orders')
+const {Order, OrderProduct} = require('./orders')
 const {Product, Category} = require('./product')
 const {Cart} = require('./cart')
 const {CartItem} = require('./cart')
@@ -14,8 +14,8 @@ const {CartItem} = require('./cart')
  */
 
 // User & Address:
-User.hasMany(Address)
-Address.belongsTo(User)
+Address.hasMany(User)
+User.belongsTo(Address)
 
 //Review:
 Review.belongsTo(User)
@@ -31,10 +31,14 @@ User.hasOne(Cart)
 CartItem.belongsTo(Product)
 
 //Orders:
-Order.hasOne(User)
-User.belongsTo(Order)
-Order.belongsToMany(Product, {through: 'OrderProduct'})
-Product.belongsToMany(Order, {through: 'OrderProduct'})
+Order.belongsTo(User)
+User.hasMany(Order)
+
+//OrderProducts:
+OrderProduct.belongsTo(Order)
+Order.hasMany(OrderProduct)
+OrderProduct.belongsTo(Product)
+Product.hasMany(OrderProduct)
 
 // Products:
 Product.belongsToMany(Category, {through: 'ProductCategory'})
