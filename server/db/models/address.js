@@ -3,7 +3,7 @@ const db = require('../db')
 
 const Address = db.define('address', {
   type: {
-    type: Sequelize.dataType
+    type: Sequelize.STRING
   },
   line_1: {
     type: Sequelize.STRING,
