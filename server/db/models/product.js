@@ -16,10 +16,12 @@ const Product = db.define(
     // price in decimal
     // max length is 10
     // decimal precision is 2
+    // * default value = 0.00
     price: {
       type: Sequelize.DECIMAL(10, 2),
       defaultValue: 0.0
     },
+    // size: only three tye
     size: {
       type: Sequelize.ENUM('small', 'medium', 'large'),
       defaultValue: 'small'
