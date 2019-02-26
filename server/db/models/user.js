@@ -28,16 +28,16 @@ const User = db.define('user', {
     type: Sequelize.STRING
   },
   username: {
-    type: Sequelize.STRING,
-    allowNull: false
+    type: Sequelize.STRING
+    // allowNull: false
   },
   firstName: {
-    type: Sequelize.STRING,
-    allowNull: false
+    type: Sequelize.STRING
+    // allowNull: false
   },
   lastName: {
-    type: Sequelize.STRING,
-    allowNull: false
+    type: Sequelize.STRING
+    // allowNull: false
   },
   isAdmin: {
     type: Sequelize.BOOLEAN,
@@ -48,7 +48,7 @@ const User = db.define('user', {
     type: Sequelize.BOOLEAN,
     allowNull: true,
     default: false
-  },
+  }
   // address: {
   //    User.Addresses = User.hasMany(Address);
   // },
