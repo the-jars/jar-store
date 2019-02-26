@@ -12,13 +12,8 @@ const Review = db.define('review', {
   },
   reviewText: {
     type: Sequelize.TEXT,
-    allowNull: false,
+    allowNull: false
   }
 })
-
-// Review.belongsTo(User);
-// User.hasMany(Review);
-// Review.belongsTo(Product);
-// Product.hasMany(Reivew);
 
 module.exports = Review

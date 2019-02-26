@@ -9,18 +9,11 @@ const Cart = db.define('cart', {
   }
 })
 
-const CartItem = db.define('cartitems', {
+const CartItem = db.define('cartitem', {
   quantity: {
     type: Sequelize.INTEGER,
     allowNull: false
   }
 })
 
-module.exports = (Cart, CartItem)
-
-// ASSOCIATIONS
-//CartItem.belongsTo(Cart)
-//Cart.hasMany(CartItem)
-//Cart.belongsTo(User)
-//User.hasOne(Cart)
-//CartItem.belongsTo(Product)
+module.exports = {Cart, CartItem}
