@@ -21,7 +21,8 @@ const Product = db.define(
       defaultValue: 0.0
     },
     size: {
-      type: Sequelize.CHAR
+      type: Sequelize.ENUM('small', 'medium', 'large'),
+      defaultValue: 'small'
     },
     flavor: {
       type: Sequelize.STRING,
