@@ -31,8 +31,8 @@ User.hasOne(Cart)
 CartItem.belongsTo(Product)
 
 //Orders:
-Order.hasOne(User)
-User.belongsTo(Order)
+Order.belongsTo(User)
+User.hasMany(Order)
 Order.belongsToMany(Product, {through: 'OrderProduct'})
 Product.belongsToMany(Order, {through: 'OrderProduct'})
 
