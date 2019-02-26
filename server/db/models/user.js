@@ -5,7 +5,7 @@ const db = require('../db')
 const User = db.define('user', {
   email: {
     type: Sequelize.STRING,
-    unique: true,
+    // unique: true,
     allowNull: false
   },
   password: {
@@ -48,7 +48,7 @@ const User = db.define('user', {
     type: Sequelize.BOOLEAN,
     allowNull: true,
     default: false
-  },
+  }
   // address: {
   //    User.Addresses = User.hasMany(Address);
   // },
