@@ -6,7 +6,8 @@ const GET_PRODUCTS = 'GET_PRODUCTS'
 
 // ACTION CREATORS
 export const getProduct = product => ({
-  GET_PRODUCT,
+  type: GET_PRODUCT,
+
   product
 })
 export const getProducts = products => ({
@@ -17,7 +18,9 @@ export const getProducts = products => ({
 // THUNKS
 export const fetchSingleProduct = productId => async dispatch => {
   try {
-    const res = await axios.get(`/api/product/${productId}`)
+    const res = await axios.get(`/api/products/${productId}`)
+    console.log('data', res.data)
+
     dispatch(getProduct(res.data))
   } catch (error) {
     console.error(error)

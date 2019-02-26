@@ -5,13 +5,18 @@ import {connect} from 'react-redux'
 import {fetchSingleProduct} from '../store/product.js'
 
 class SingleProduct extends Component {
-  async componentDidMount() {
+
+  componentDidMount() {
     const currentProductId = this.props.match.params.id
-    await this.props.setProduct(currentProductId)
+    console.log(currentProductId)
+    this.props.setProduct(currentProductId)
+
   }
 
   render() {
     const product = this.props.currentProduct
+    const categories = product.categories || []
+    console.log(product)
 
     if (!product) {
       return <h1>Product Not Found</h1>
@@ -20,12 +25,12 @@ class SingleProduct extends Component {
         <div>
           <h1>{product.name}</h1>
           <h2>
-            ${product.status === false
+            ${product.available === false
               ? 'Currently Unavailable'
               : product.price}
           </h2>
           <ul>
-            {product.categories.map(category => (
+            {categories.map(category => (
               <li key={category.id}>{category.name}</li>
             ))}
           </ul>
