@@ -125,7 +125,6 @@ const seed = db
     const [a, b, c, d, e, f, g] = users
     const [p1, p2, p3, p4, p5, p6, p7, p8, p9] = products
     const [jelly, nutbutter, salsa] = categories
-    console.log(insertedData)
     const [op1, op2, op3, op4, op5, op6, op7] = orderproducts
     const [o1, o2, o3] = orders
 

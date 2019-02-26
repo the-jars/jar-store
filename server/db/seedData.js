@@ -252,15 +252,7 @@ const userData = [
   }
 ]
 
-const orderProductData = [
-  {quantity: 12},
-  {quantity: 12},
-  {quantity: 12},
-  {quantity: 12},
-  {quantity: 12},
-  {quantity: 12},
-  {quantity: 12}
-]
+const orderProductData = [{quantity: 12}, {quantity: 12}, {quantity: 12}]
 
 module.exports = {
   addressData,
