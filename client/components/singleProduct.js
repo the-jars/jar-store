@@ -12,20 +12,27 @@ class SingleProduct extends Component {
 
   render() {
     const product = this.props.currentProduct
-    return (
-      <div>
-        <h1>{product.name}</h1>
-        <h2>
-          ${product.status === false ? 'Currently Unavailable' : product.price}
-        </h2>
-        <ul>
-          {product.categories.map(category => (
-            <li key={category.id}>{category.name}</li>
-          ))}
-        </ul>
-        <p>{product.description}</p>
-      </div>
-    )
+
+    if (!product) {
+      return <h1>Product Not Found</h1>
+    } else {
+      return (
+        <div>
+          <h1>{product.name}</h1>
+          <h2>
+            ${product.status === false
+              ? 'Currently Unavailable'
+              : product.price}
+          </h2>
+          <ul>
+            {product.categories.map(category => (
+              <li key={category.id}>{category.name}</li>
+            ))}
+          </ul>
+          <p>{product.description}</p>
+        </div>
+      )
+    }
   }
 }
 
