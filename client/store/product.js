@@ -5,14 +5,17 @@ const GET_PRODUCT = 'GET_PRODUCT'
 
 // ACTION CREATORS
 export const getProduct = product => ({
-  GET_PRODUCT,
+  type: GET_PRODUCT,
+
   product
 })
 
 // THUNKS
 export const fetchSingleProduct = productId => async dispatch => {
   try {
-    const res = await axios.get(`/api/product/${productId}`)
+    const res = await axios.get(`/api/products/${productId}`)
+    console.log('data', res.data)
+
     dispatch(getProduct(res.data))
   } catch (error) {
     console.error(error)
