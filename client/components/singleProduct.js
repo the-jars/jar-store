@@ -15,7 +15,15 @@ class SingleProduct extends Component {
     return (
       <div>
         <h1>{product.name}</h1>
-        <span />
+        <h2>
+          ${product.status === false ? 'Currently Unavailable' : product.price}
+        </h2>
+        <ul>
+          {product.categories.map(category => (
+            <li key={category.id}>{category.name}</li>
+          ))}
+        </ul>
+        <p>{product.description}</p>
       </div>
     )
   }
@@ -26,7 +34,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setProduct: fetchSingleProduct()
+  setProduct: currentProductId => dispatch(fetchSingleProduct(currentProductId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)

@@ -7,6 +7,7 @@ router.get('/:id', async (req, res, next) => {
     const singleProduct = await Product.findById(req.params.id, {
       include: [Category]
     })
+    console.log(singleProduct.availability)
     if (!singleProduct) {
       res.sendStatus(404)
     }
