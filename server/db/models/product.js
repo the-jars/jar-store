@@ -17,7 +17,7 @@ const Product = db.define(
     // max length is 10
     // decimal precision is 2
     price: {
-      type: Sequelize.DOUBLE(10, 2),
+      type: Sequelize.DECIMAL(10, 2),
       defaultValue: 0.0
     },
     // boolean for availability set by admin
