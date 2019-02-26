@@ -26,7 +26,35 @@ const User = db.define('user', {
   },
   googleId: {
     type: Sequelize.STRING
-  }
+  },
+  username: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  firstName: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  lastName: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    allowNull: true,
+    default: false
+  },
+  forceReset: {
+    type: Sequelize.BOOLEAN,
+    allowNull: true,
+    default: false
+  },
+  // address: {
+  //    User.Addresses = User.hasMany(Address);
+  // },
+  // reviews: {
+  //    User.Reviews = User.hasMany(Reviews);
+  // }
 })
 
 module.exports = User
