@@ -54,7 +54,7 @@ const Product = db.define(
   {
     getterMethods: {
       availability() {
-        return this.status ? 'available' : 'not available'
+        return this.available ? 'available' : 'not available'
       }
     }
   }

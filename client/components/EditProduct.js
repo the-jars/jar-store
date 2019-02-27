@@ -6,12 +6,14 @@ class EditProduct extends React.Component {
   constructor() {
     super()
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.toggleAvailability = this.toggleAvailability.bind(this)
     this.name = React.createRef()
     this.price = React.createRef()
     this.size = React.createRef()
     this.flavor = React.createRef()
     this.description = React.createRef()
     this.inventory = React.createRef()
+    this.availability = React.createRef()
   }
 
   componentDidMount() {
@@ -26,7 +28,7 @@ class EditProduct extends React.Component {
 
   // allows default values to render correctly
   componentDidUpdate(prevProps) {
-    if (prevProps.productToEdit.id !== this.props.productToEdit.id) {
+    if (prevProps.productToEdit !== this.props.productToEdit) {
       const {productToEdit} = this.props
       this.name.current.value = productToEdit.name
       this.price.current.value = productToEdit.price
@@ -34,6 +36,7 @@ class EditProduct extends React.Component {
       this.flavor.current.value = productToEdit.flavor
       this.description.current.value = productToEdit.description
       this.inventory.current.value = productToEdit.inventory
+      this.availability.current.value = productToEdit.availability
     }
   }
 
@@ -41,7 +44,9 @@ class EditProduct extends React.Component {
   handleSubmit(evt) {
     // prevent refresh
     evt.preventDefault()
+    // extract the needed tags
     const {name, price, size, flavor, description, inventory} = evt.target
+    // create argument for our thunk to pass onto axios' request as a body
     const editField = {
       name: name.value,
       price: price.value,
@@ -50,10 +55,14 @@ class EditProduct extends React.Component {
       description: description.value,
       inventory: Number(inventory.value)
     }
+    // just thunk it
     this.props.editProduct(editField)
   }
-
-  toggleAvailability() {}
+  toggleAvailability(evt) {
+    this.props.editProduct({
+      available: !this.props.productToEdit.available
+    })
+  }
 
   render() {
     const productToEdit = this.props.productToEdit
@@ -87,14 +96,14 @@ class EditProduct extends React.Component {
           <button type="submit">Edit Product</button>
         </form>
         <label htmlFor="availability">Availability:</label>
-        <button
+        {/** TODO: display default value and updated value for button text */}
+        <input
           type="button"
           name="availability"
           id="availability"
+          ref={this.availability}
           onClick={this.toggleAvailability}
-        >
-          {productToEdit.availability}
-        </button>
+        />
       </div>
     )
   }
