@@ -24,7 +24,7 @@ const {
 const {OrderProduct} = require('../server/db/models/orders')
 
 const seed = db
-  .sync({force: true})
+  .sync({})
   .then(() => {
     console.log('Database synced!')
     return Promise.all([
