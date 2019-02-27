@@ -3,6 +3,7 @@ import {fetchProducts, filterCategories} from '../store/product'
 import {fetchCategories} from '../store/category'
 import {connect} from 'react-redux'
 import Product from './Product'
+import {Link} from 'react-router-dom'
 
 export class ProductList extends Component {
   // constructor() {
@@ -24,6 +25,7 @@ export class ProductList extends Component {
   render() {
     const {products} = this.props
     const {categories} = this.props
+    const {user} = this.props.user
     if (!products) {
       return <h1>nope</h1>
     } else
@@ -49,20 +51,35 @@ export class ProductList extends Component {
             </select>
           </div>
           <div className="grid-container">
-            {products.map(product => (
-              <Product
-                key={product.id}
-                className="grid-item"
-                product={product}
-              />
-            ))}
+            {products.map(
+              product =>
+                product.available ? (
+                  <Product
+                    key={product.id}
+                    className="grid-item"
+                    product={product}
+                  />
+                ) : (
+                  ''
+                )
+            )}
           </div>
+          <br />
+          <div>
+            {user.id && user.isAdmin ? (
+              <Link to="/products/add">
+                <button type="button">Add Product</button>
+              </Link>
+            ) : null}
+          </div>
+          )}
         </div>
       )
   }
 }
 
 const mapStateToProps = state => ({
+  user: state.user,
   products: state.allProducts,
   categories: state.categories
 })
