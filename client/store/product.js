@@ -33,11 +33,6 @@ export const fetchProducts = () => async dispatch => {
   }
 }
 
-//REDUCER
-// const initialState = {
-//   products: [],
-//   currentProduct: {}
-
 // thunk for editing selected project
 export const editSingleProduct = (id, editField) => dispatch => {
   axios
@@ -46,6 +41,7 @@ export const editSingleProduct = (id, editField) => dispatch => {
     .catch(console.log)
 }
 
+//REDUCER(S?)
 // initial state is empty object for single product
 export const singleProduct = function(state = {}, action) {
   switch (action.type) {
@@ -56,5 +52,12 @@ export const singleProduct = function(state = {}, action) {
   }
 }
 
-// case GET_PRODUCTS:
-// return { ...state, products: action.products }
+//initial state is empty array for all products
+export const productsReducer = (state = [], action) => {
+  switch (action.type) {
+    case GET_PRODUCTS:
+      return action.products
+    default:
+      return state
+  }
+}
