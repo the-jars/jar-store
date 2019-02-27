@@ -1,9 +1,10 @@
 const router = require('express').Router()
 const {Product, Category} = require('../db/models/index.js')
 
-// POST /api/products/
-// for creating new product
-/**TODO
+/**
+ * POST /api/products/
+ * for creating new product
+ * TODO:
  * handle when user is not admin through passport
  */
 router.post('/', (req, res, next) =>
@@ -22,18 +23,21 @@ router.param('id', (req, res, next, id) =>
       next()
       return null
     })
-    // sends 404 error to the error route
-    /**TODO
+
+    /**
+     * sends 404 error to the error route
+     * TODO:
      * corresponding error handling
      * for not found
      */
     .catch(next)
 )
 
-// GET /api/products/:id
-// acquire individual product
-// used in SingleProduct component
-/** TODO
+/**
+ * GET /api/products/:id
+ * acquire individual product
+ * used in SingleProduct component
+ * TODO:
  * fix to utilize param
  */
 router.get('/:id', async (req, res, next) => {
@@ -50,10 +54,11 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-// PUT /api/products/:id
-// for updating existing product
-// acquired in router.param('id')
-/**TODO
+/**
+ * PUT /api/products/:id
+ * for updating existing product
+ * acquired in router.param('id')
+ * TODO:
  * handle when user is not admin through passport
  */
 router.put('/:id', (req, res, next) =>
@@ -70,7 +75,8 @@ router.put('/:id', (req, res, next) =>
       ]
     })
     .then(updatedProduct => res.status(201).send(updatedProduct))
-    /**TODO
+    /**
+     * TODO:
      * corresponding error handling
      */
     .catch(next)
