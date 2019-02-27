@@ -6,7 +6,12 @@ class EditProduct extends React.Component {
   constructor() {
     super()
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.name = this.price = this.size = this.flavor = this.description = this.inventory = React.createRef()
+    this.name = React.createRef()
+    this.price = React.createRef()
+    this.size = React.createRef()
+    this.flavor = React.createRef()
+    this.description = React.createRef()
+    this.inventory = React.createRef()
   }
 
   componentDidMount() {
@@ -21,15 +26,14 @@ class EditProduct extends React.Component {
 
   // allows default values to render correctly
   componentDidUpdate(prevProps) {
-    if (prevProps.productToEdit !== this.props.productToEdit) {
+    if (prevProps.productToEdit.id !== this.props.productToEdit.id) {
       const {productToEdit} = this.props
-      console.log(productToEdit)
-      this.name = productToEdit.name
-      this.price = productToEdit.price
-      this.size = productToEdit.size
-      this.flavor = productToEdit.flavor
-      this.description = productToEdit.description
-      this.inventory = productToEdit.inventory
+      this.name.current.value = productToEdit.name
+      this.price.current.value = productToEdit.price
+      this.size.current.value = productToEdit.size
+      this.flavor.current.value = productToEdit.flavor
+      this.description.current.value = productToEdit.description
+      this.inventory.current.value = productToEdit.inventory
     }
   }
 
