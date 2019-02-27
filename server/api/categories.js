@@ -1,21 +1,6 @@
 const router = require('express').Router()
 const {Category} = require('../db/models/index.js')
-
-// GET /api/categories/filter
-router.get('/:filter', async (req, res, next) => {
-  try {
-    console.log(req.body)
-    const filterCategory = await Category.findOne({
-      where: {
-        name: req.params.filter
-      }
-    })
-    const filteredProducts = await filterCategory.getProducts()
-    res.json(filteredProducts)
-  } catch (error) {
-    next(error)
-  }
-})
+const {Product} = require('../db/models/product')
 
 // GET /api/categories/
 router.get('/', (req, res, next) =>
@@ -23,5 +8,25 @@ router.get('/', (req, res, next) =>
     .then(categories => res.send(categories))
     .catch(next)
 )
+
+// GET /api/categories/filter
+router.get('/filterProduct', async (req, res, next) => {
+  try {
+    let filteredProducts
+    if (req.query.filter === 'All') {
+      filteredProducts = await Product.findAll()
+    } else {
+      const filterCategory = await Category.findOne({
+        where: {
+          name: req.query.filter
+        }
+      })
+      filteredProducts = await filterCategory.getProducts()
+    }
+    res.json(filteredProducts)
+  } catch (error) {
+    next(error)
+  }
+})
 
 module.exports = router

@@ -6,11 +6,6 @@ import Product from './Product'
 import {Link} from 'react-router-dom'
 
 export class ProductList extends Component {
-  // constructor() {
-  //   super()
-  //   this.handleChange = this.handleChange.bind(this)
-  // }
-
   componentDidMount() {
     this.props.fetchProducts()
     this.props.fetchCategories()
@@ -18,14 +13,13 @@ export class ProductList extends Component {
 
   handleChange = event => {
     const filter = event.target.value
-    history.push(`/products/${filter}`)
     this.props.applyFilter(filter)
   }
 
   render() {
     const {products} = this.props
     const {categories} = this.props
-    const {user} = this.props.user
+    const {user} = this.props
     if (!products) {
       return <h1>nope</h1>
     } else
@@ -36,11 +30,10 @@ export class ProductList extends Component {
             <select
               type="text"
               name="filterByCategory"
+              defaultValue="All"
               onChange={this.handleChange}
             >
-              <option selected value="all">
-                All
-              </option>
+              <option value="All">All</option>
               {!categories
                 ? ''
                 : categories.map(category => (
@@ -72,7 +65,6 @@ export class ProductList extends Component {
               </Link>
             ) : null}
           </div>
-          )}
         </div>
       )
   }
