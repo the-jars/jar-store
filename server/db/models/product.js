@@ -40,7 +40,7 @@ const Product = db.define(
       validate: {
         min: 0
       },
-      defaultValue: 0
+      defaultValue: 1
     },
     imgUrl: {
       type: Sequelize.STRING,
@@ -60,7 +60,7 @@ const Product = db.define(
   {
     getterMethods: {
       availability() {
-        return this.status ? 'available' : 'not available'
+        return this.available ? 'available' : 'not available'
       }
     }
   }
