@@ -1,6 +1,18 @@
 const router = require('express').Router()
 const {Product, Category} = require('../db/models/index.js')
 
+// POST /api/products/
+// for creating new product
+/**TODO
+ * handle when user is not admin
+ * through session data
+ */
+router.post('/', (req, res, next) =>
+  Product.create(req.body)
+    .then(createdProduct => res.status(201).send(createdProduct))
+    .catch(next)
+)
+
 // param for getting the required product
 router.param('id', (req, res, next, id) =>
   Product.findById(id, {include: [{all: true, nested: true}]})
@@ -13,7 +25,11 @@ router.param('id', (req, res, next, id) =>
 )
 
 // GET /api/products/:id
-/** TODO: fix to utilize param */
+// acquire individual product
+// used in SingleProduct component
+/** TODO
+ * fix to utilize param
+ */
 router.get('/:id', async (req, res, next) => {
   try {
     const singleProduct = await Product.findById(req.params.id, {
@@ -28,7 +44,12 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
+// PUT /api/products/:id
 // for updating existing product
+/**TODO
+ * handle when user is not admin
+ * through session data
+ */
 router.put('/:id', (req, res, next) =>
   req.product
     .update(req.body, {
@@ -43,17 +64,7 @@ router.put('/:id', (req, res, next) =>
       ]
     })
     .then(updatedProduct => res.status(201).send(updatedProduct))
-    // handle when user is not admin
     .catch(next)
 )
-/**
- * used for creating new product
- */
-router.post('/', (req, res, next) => {
-  const createField = req.body
-  Product.create(createField)
-    .then(createdProduct => res.status(201).send(createdProduct))
-    .catch(next)
-})
 
 module.exports = router
