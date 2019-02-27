@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import {fetchProducts} from '../store/product.js'
+import {connect} from 'react-redux'
+import Product from './Product'
 
 export class ProductList extends Component {
   constructor(props) {
@@ -11,23 +13,30 @@ export class ProductList extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <h1>Product List!</h1>
-        <ul>
-          {this.props.products && this.props.products.length
-            ? props.products.map(product => (
-                <Product key={product.id} product={product} />
-              ))
-            : `You're in a jam - there's nothing in stock.`}
-        </ul>
-      </div>
-    )
+    const products = this.props.products
+    console.log(this.props.products)
+    if (!products) {
+      return <h1>nope</h1>
+    } else
+      return (
+        <div>
+          <h1>Product List!</h1>
+          <div className="grid-container">
+            {products.map(product => (
+              <Product
+                key={product.id}
+                className="grid-item"
+                product={product}
+              />
+            ))}
+          </div>
+        </div>
+      )
   }
 }
 
 const mapStateToProps = state => ({
-  products: state.products
+  products: state.product.products
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -7,11 +7,10 @@ const GET_PRODUCTS = 'GET_PRODUCTS'
 // ACTION CREATORS
 export const getProduct = product => ({
   type: GET_PRODUCT,
-
   product
 })
 export const getProducts = products => ({
-  GET_PRODUCTS,
+  type: GET_PRODUCTS,
   products
 })
 

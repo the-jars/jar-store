@@ -122,14 +122,10 @@ const reviewData = [
   {
     rating: 5,
     reviewText: 'Cool'
-    // productId: 1
-    // userId: 1
   },
   {
     rating: 5,
     reviewText: 'Cool'
-    // productId: 1
-    // userId: 2
   },
   {
     rating: 5,
