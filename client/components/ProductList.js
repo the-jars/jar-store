@@ -9,6 +9,21 @@ import {fetchCategories} from '../store/category'
 import Product from './Product'
 
 export class ProductList extends Component {
+  constructor() {
+    super()
+    this.state = {
+      currentPage: 1,
+      productsPerPage: 3
+    }
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  handleClick(event) {
+    this.setState({
+      currentPage: Number(event.target.id)
+    })
+  }
+
   componentDidMount() {
     // parses the passed-in query parameters as JavaScript object and grab the filter type
     const filter = queryString.parse(this.props.location.search).filter
@@ -26,6 +41,22 @@ export class ProductList extends Component {
     const {products} = this.props
     const {categories} = this.props
     const {user} = this.props
+    const {currentPage, productsPerPage} = this.state
+
+    // Logic for displaying current todos
+    const indexOfLastProduct = currentPage * productsPerPage
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage
+    const currentProducts = products.slice(
+      indexOfFirstProduct,
+      indexOfLastProduct
+    )
+
+    // Logic for displaying page numbers
+    const pageNumbers = []
+    for (let i = 1; i <= Math.ceil(products.length / productsPerPage); i++) {
+      pageNumbers.push(i)
+    }
+
     if (!products) {
       return <h1>nope</h1>
     } else
@@ -50,7 +81,7 @@ export class ProductList extends Component {
             </select>
           </div>
           <div className="grid-container">
-            {products.map(
+            {currentProducts.map(
               product =>
                 product.available ? (
                   <Product
@@ -71,6 +102,18 @@ export class ProductList extends Component {
               </Link>
             ) : null}
           </div>
+          {pageNumbers.map(number => {
+            return (
+              <button
+                type="button"
+                key={number}
+                id={number}
+                onClick={this.handleClick}
+              >
+                {number}
+              </button>
+            )
+          })}
         </div>
       )
   }
