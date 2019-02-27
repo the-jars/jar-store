@@ -1,24 +1,37 @@
 import React, {Component} from 'react'
-import {fetchProducts} from '../store/product.js'
+import {fetchProducts} from '../store/product'
+import {fetchCategories} from '../store/category'
 import {connect} from 'react-redux'
 import Product from './Product'
 
 export class ProductList extends Component {
   componentDidMount() {
     this.props.fetchProducts()
+    this.props.fetchCategories()
   }
 
   render() {
-    const products = this.props.products
-    console.log(this.props)
+    const {products} = this.props
+    const {categories} = this.props
     if (!products) {
       return <h1>nope</h1>
     } else
       return (
         <div>
-          <h1>Product List!</h1>
-          {/* <select type="text" name="filterByCategory">
-          </select> */}
+          <div>
+            <h1>Product List!</h1>
+            <select type="text" name="filterByCategory">
+              {!categories ? (
+                <p>no categories</p>
+              ) : (
+                categories.map(category => (
+                  <option key={category.id} value={category.name}>
+                    {category.name}
+                  </option>
+                ))
+              )}
+            </select>
+          </div>
           <div className="grid-container">
             {products.map(product => (
               <Product
@@ -34,11 +47,13 @@ export class ProductList extends Component {
 }
 
 const mapStateToProps = state => ({
-  products: state.allProducts
+  products: state.allProducts,
+  categories: state.categories
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchProducts: () => dispatch(fetchProducts())
+  fetchProducts: () => dispatch(fetchProducts()),
+  fetchCategories: () => dispatch(fetchCategories())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductList)
