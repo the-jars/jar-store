@@ -5,12 +5,10 @@ import {connect} from 'react-redux'
 import {fetchSingleProduct} from '../store/product.js'
 
 class SingleProduct extends Component {
-
   componentDidMount() {
     const currentProductId = this.props.match.params.id
     console.log(currentProductId)
     this.props.setProduct(currentProductId)
-
   }
 
   render() {

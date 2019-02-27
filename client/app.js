@@ -9,7 +9,10 @@ const App = () => {
     <div>
       <Navbar />
       <Routes />
+      {/*
+      this is what was breaking the rendering and giving null error on match.params # jake
       <SingleProduct />
+      */}
     </div>
   )
 }
