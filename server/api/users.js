@@ -15,16 +15,3 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
-
-router.get('/:userId', async (req, res, next) => {
-  try {
-    const user = await User.findById(Number(req.params.userId))
-    if (!user) {
-      res.sendStatus(404)
-    } else {
-      res.json(user)
-    }
-  } catch (err) {
-    next(err)
-  }
-})

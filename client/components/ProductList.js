@@ -14,30 +14,33 @@ export class ProductList extends Component {
 
   render() {
     const products = this.props.products
-    console.log(this.props)
-    if (!products) {
-      return <h1>nope</h1>
-    } else
-      return (
-        <div>
-          <h1>Product List!</h1>
-          <div className="grid-container">
-            {products.map(product => (
-              <Product
-                key={product.id}
-                className="grid-item"
-                product={product}
-              />
-            ))}
+    console.log(this.props.user)
+    return (
+      <div>
+        {!products ? (
+          <h1>nope</h1>
+        ) : (
+          <div>
+            <h1>Product List!</h1>
+            <div className="grid-container">
+              {products.map(product => (
+                <Product
+                  key={product.id}
+                  className="grid-item"
+                  product={product}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      )
+        )}
+      </div>
+    )
   }
 }
 
 const mapStateToProps = state => ({
   products: state.allProducts,
-  user: state.currentUser
+  user: state.user
 })
 
 const mapDispatchToProps = dispatch => ({
