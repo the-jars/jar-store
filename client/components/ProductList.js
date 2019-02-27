@@ -1,9 +1,12 @@
+// external modules
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
+import queryString from 'query-string'
+// internal moduels
 import {fetchProducts, filterCategories} from '../store/product'
 import {fetchCategories} from '../store/category'
-import {connect} from 'react-redux'
 import Product from './Product'
-import {Link} from 'react-router-dom'
 
 export class ProductList extends Component {
   constructor() {
@@ -22,13 +25,16 @@ export class ProductList extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchProducts()
+    // parses the passed-in query parameters as JavaScript object and grab the filter type
+    const filter = queryString.parse(this.props.location.search).filter
+    filter ? this.props.applyFilter(filter) : this.props.fetchProducts()
     this.props.fetchCategories()
   }
 
   handleChange = event => {
     const filter = event.target.value
     this.props.applyFilter(filter)
+    this.props.history.push(`/products?filter=${filter}`)
   }
 
   render() {
