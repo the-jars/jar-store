@@ -4,8 +4,7 @@ const {Product, Category} = require('../db/models/index.js')
 // POST /api/products/
 // for creating new product
 /**TODO
- * handle when user is not admin
- * through session data
+ * handle when user is not admin through passport
  */
 router.post('/', (req, res, next) =>
   Product.create(req.body)
@@ -13,7 +12,9 @@ router.post('/', (req, res, next) =>
     .catch(next)
 )
 
-// param for getting the required product
+// param route for getting the required product when id parameter is provided
+// attaches product to the request and moves on to the next route
+// with the matching html request
 router.param('id', (req, res, next, id) =>
   Product.findById(id, {include: [{all: true, nested: true}]})
     .then(product => {
@@ -21,6 +22,11 @@ router.param('id', (req, res, next, id) =>
       next()
       return null
     })
+    // sends 404 error to the error route
+    /**TODO
+     * corresponding error handling
+     * for not found
+     */
     .catch(next)
 )
 
@@ -46,9 +52,9 @@ router.get('/:id', async (req, res, next) => {
 
 // PUT /api/products/:id
 // for updating existing product
+// acquired in router.param('id')
 /**TODO
- * handle when user is not admin
- * through session data
+ * handle when user is not admin through passport
  */
 router.put('/:id', (req, res, next) =>
   req.product
@@ -64,6 +70,9 @@ router.put('/:id', (req, res, next) =>
       ]
     })
     .then(updatedProduct => res.status(201).send(updatedProduct))
+    /**TODO
+     * corresponding error handling
+     */
     .catch(next)
 )
 
