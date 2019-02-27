@@ -27,7 +27,6 @@ export class ProductList extends Component {
   componentDidMount() {
     // parses the passed-in query parameters as JavaScript object and grab the filter type
     const filter = queryString.parse(this.props.location.search).filter
-    console.log(filter)
     filter ? this.props.applyFilter(filter) : this.props.fetchProducts()
     this.props.fetchCategories()
   }
@@ -35,6 +34,7 @@ export class ProductList extends Component {
   handleChange = event => {
     const filter = event.target.value
     this.props.applyFilter(filter)
+    this.props.history.push(`/products?filter=${filter}`)
   }
 
   render() {
