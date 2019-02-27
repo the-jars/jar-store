@@ -42,6 +42,12 @@ const Product = db.define(
       },
       defaultValue: 1
     },
+    imgUrl: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      defaultValue:
+        'http://images.bigoven.com/image/upload/t_recipe-256/cherry-jam-3.jpg'
+    },
     // boolean for availability set by admin
     // true when available
     // false when not available

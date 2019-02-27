@@ -1,79 +1,5 @@
 'use strict'
 
-// const db = require('../server/db')
-
-// const {
-//   User,
-//   Review,
-//   Category,
-//   Product,
-//   Order,
-//   Cart,
-//   Address
-// } = require('../server/db/models')
-
-// const {
-//   addressData,
-//   productData,
-//   categoryData,
-//   productCategoryData,
-//   // reviewData,
-//   orderData,
-//   userData
-// } = require('../server/db/seedData.js')
-
-// async function seed() {
-//   await db.sync({force: true})
-//   console.log('db synced!')
-
-//   const users = await Promise.all(
-//     userData.map(user =>
-//       User.create(user, {
-//         // include: [{model: Address}]
-//       })
-//     )
-//   )
-//   const orders = await Promise.all(
-//     orderData.map(order =>
-//       Order.create(order, {
-//         include: []
-//       })
-//     )
-//   )
-//   // const reviews = await Promise.all(
-//   //   reviewData.map(review =>
-//   //     Review.create(review, {
-//   //       include: []
-//   //     })
-//   //   )
-//   // )
-//   const categories = await Promise.all(
-//     categoryData.map(category =>
-//       Category.create(category, {
-//         include: []
-//       })
-//     )
-//   )
-//   const products = await Promise.all(
-//     productData.map(product =>
-//       Product.create(product, {
-//         include: []
-//       })
-//     )
-//   )
-//   const addresses = await Promise.all(
-//     addressData.map(address =>
-//       Address.create(address, {
-//         // include: [{model: User}]
-//       })
-//     )
-//   )
-//   //order.create: productid as another field and quantity
-
-//   console.log(`seeded ${users.length} users`)
-//   console.log(`seeded successfully`)
-// }
-
 const db = require('../server/db')
 
 const {
@@ -98,7 +24,7 @@ const {
 const {OrderProduct} = require('../server/db/models/orders')
 
 const seed = db
-  .sync({force: true})
+  .sync({})
   .then(() => {
     console.log('Database synced!')
     return Promise.all([
@@ -124,7 +50,7 @@ const seed = db
     const [one, two, three, four, five, six, seven, eight] = reviews
     const [a, b, c, d, e, f, g] = users
     const [p1, p2, p3, p4, p5, p6, p7, p8, p9] = products
-    const [jelly, nutbutter, salsa] = categories
+    const [salsa, jelly, nutbutter] = categories
     const [op1, op2, op3, op4, op5, op6, op7] = orderproducts
     const [o1, o2, o3] = orders
 
