@@ -4,7 +4,7 @@ import axios from 'axios'
 const GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT'
 
 // ACTION CREATORS
-export const getSingleProduct = product => ({
+export const setSingleProduct = product => ({
   type: GET_SINGLE_PRODUCT,
   product
 })
@@ -13,20 +13,20 @@ export const getSingleProduct = product => ({
 export const fetchSingleProduct = productId => async dispatch => {
   try {
     const res = await axios.get(`/api/products/${productId}`)
-    dispatch(getSingleProduct(res.data))
+    dispatch(setSingleProduct(res.data))
   } catch (error) {
     console.error(error)
   }
 }
-
-export const editProduct = productId => dispatch => {
+// thunk for editing selected project
+export const editSingleProduct = productId => dispatch => {
   axios
     .get(`/api/products/${productId}`)
-    .then(response => dispatch(getSingleProduct(response.data)))
+    .then(response => dispatch(setSingleProduct(response.data)))
     .catch(console.log)
 }
 
-// initial staate is empty object for single product
+// initial state is empty object for single product
 export const singleProduct = function(state = {}, action) {
   switch (action.type) {
     case GET_SINGLE_PRODUCT:
