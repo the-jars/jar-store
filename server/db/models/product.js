@@ -40,7 +40,7 @@ const Product = db.define(
       validate: {
         min: 0
       },
-      defaultValue: 0
+      defaultValue: 1
     },
     // boolean for availability set by admin
     // true when available

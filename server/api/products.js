@@ -3,10 +3,11 @@ const {Product, Category} = require('../db/models/index.js')
 
 // param for getting the required product
 router.param('id', (req, res, next, id) =>
-  Product.findById(id, {include: [Category]})
+  Product.findById(id, {include: [{all: true, nested: true}]})
     .then(product => {
       req.product = product
       next()
+      return null
     })
     .catch(next)
 )
@@ -28,14 +29,23 @@ router.get('/:id', async (req, res, next) => {
 })
 
 // for updating existing product
-router.put('/:id', (req, res, next) => {
-  const updateField = req.body
+router.put('/:id', (req, res, next) =>
   req.product
-    .update(updateField)
+    .update(req.body, {
+      fields: [
+        'name',
+        'price',
+        'size',
+        'flavor',
+        'description',
+        'inventory',
+        'available'
+      ]
+    })
     .then(updatedProduct => res.status(201).send(updatedProduct))
     // handle when user is not admin
     .catch(next)
-})
+)
 /**
  * used for creating new product
  */
