@@ -19,9 +19,9 @@ export const fetchSingleProduct = productId => async dispatch => {
   }
 }
 // thunk for editing selected project
-export const editSingleProduct = productId => dispatch => {
+export const editSingleProduct = (id, editField) => dispatch => {
   axios
-    .get(`/api/products/${productId}`)
+    .put(`/api/products/${id}`, editField)
     .then(response => dispatch(setSingleProduct(response.data)))
     .catch(console.log)
 }

@@ -42,6 +42,15 @@ class EditProduct extends React.Component {
     // prevent refresh
     evt.preventDefault()
     const {name, price, size, flavor, description, inventory} = evt.target
+    const editField = {
+      name: name.value,
+      price: price.value,
+      size: size.value,
+      flavor: flavor.value,
+      description: description.value,
+      inventory: Number(inventory.value)
+    }
+    this.props.editProduct(editField)
   }
 
   toggleAvailability() {}
@@ -98,7 +107,8 @@ const mapState = state => ({
 const mapDispatch = (dispatch, ownProps) => ({
   initializeProduct: () =>
     dispatch(fetchSingleProduct(ownProps.match.params.id)),
-  editProduct: editField => dispatch(editSingleProduct(editField))
+  editProduct: editField =>
+    dispatch(editSingleProduct(ownProps.match.params.id, editField))
 })
 
 export default connect(mapState, mapDispatch)(EditProduct)
