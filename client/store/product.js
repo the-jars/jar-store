@@ -19,6 +19,13 @@ export const fetchSingleProduct = productId => async dispatch => {
   }
 }
 
+export const editProduct = productId => dispatch => {
+  axios
+    .get(`/api/products/${productId}`)
+    .then(response => dispatch(getSingleProduct(response.data)))
+    .catch(console.log)
+}
+
 // initial staate is empty object for single product
 export const singleProduct = function(state = {}, action) {
   switch (action.type) {

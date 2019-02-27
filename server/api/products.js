@@ -4,6 +4,7 @@ const {Product, Category} = require('../db/models/index.js')
 /**
  * POST /api/products/
  * for creating new product
+ * *****
  * TODO:
  * handle when user is not admin through passport
  */
@@ -26,6 +27,7 @@ router.param('id', (req, res, next, id) =>
 
     /**
      * sends 404 error to the error route
+     * *****
      * TODO:
      * corresponding error handling
      * for not found
@@ -37,6 +39,7 @@ router.param('id', (req, res, next, id) =>
  * GET /api/products/:id
  * acquire individual product
  * used in SingleProduct component
+ * *****
  * TODO:
  * fix to utilize param
  */
@@ -58,6 +61,7 @@ router.get('/:id', async (req, res, next) => {
  * PUT /api/products/:id
  * for updating existing product
  * acquired in router.param('id')
+ * *****
  * TODO:
  * handle when user is not admin through passport
  */
