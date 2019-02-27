@@ -36,7 +36,8 @@ export class ProductList extends Component {
 }
 
 const mapStateToProps = state => ({
-  products: state.allProducts
+  products: state.allProducts,
+  user: state.currentUser
 })
 
 const mapDispatchToProps = dispatch => ({
