@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {fetchProducts} from '../store/product.js'
 import {connect} from 'react-redux'
 import Product from './Product'
+import {Link} from 'react-router-dom'
 
 export class ProductList extends Component {
   constructor(props) {
@@ -14,29 +15,46 @@ export class ProductList extends Component {
 
   render() {
     const products = this.props.products
-    console.log(this.props)
-    if (!products) {
-      return <h1>nope</h1>
-    } else
-      return (
-        <div>
-          <h1>Product List!</h1>
-          <div className="grid-container">
-            {products.map(product => (
-              <Product
-                key={product.id}
-                className="grid-item"
-                product={product}
-              />
-            ))}
+    const user = this.props.user
+    return (
+      <div>
+        {!products ? (
+          <h1>nope</h1>
+        ) : (
+          <div>
+            <h1>Product List!</h1>
+            <div className="grid-container">
+              {products.map(
+                product =>
+                  product.available ? (
+                    <Product
+                      key={product.id}
+                      className="grid-item"
+                      product={product}
+                    />
+                  ) : (
+                    ''
+                  )
+              )}
+            </div>
+            <br />
+            <div>
+              {user.id && user.isAdmin ? (
+                <Link to="/products/add">
+                  <button type="button">Add Product</button>
+                </Link>
+              ) : null}
+            </div>
           </div>
-        </div>
-      )
+        )}
+      </div>
+    )
   }
 }
 
 const mapStateToProps = state => ({
-  products: state.allProducts
+  products: state.allProducts,
+  user: state.user
 })
 
 const mapDispatchToProps = dispatch => ({

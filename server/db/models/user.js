@@ -41,13 +41,13 @@ const User = db.define('user', {
   },
   isAdmin: {
     type: Sequelize.BOOLEAN,
-    allowNull: true,
-    default: false
+    // allowNull: false,
+    defaultValue: false
   },
   forceReset: {
     type: Sequelize.BOOLEAN,
-    allowNull: true,
-    default: false
+    // allowNull: false,
+    defaultValue: false
   }
   // address: {
   //    User.Addresses = User.hasMany(Address);

@@ -27,6 +27,23 @@ router.post('/', (req, res, next) =>
     .catch(next)
 )
 
+router.post('/', async (req, res, next) => {
+  try {
+    const createdProduct = Product.create({
+      name: req.body.name,
+      price: req.body.price,
+      size: req.body.size,
+      flavor: req.body.flavor,
+      description: req.body.description,
+      inventory: req.body.inventory,
+      availability: req.body.availability
+    })
+    res.json(createdProduct)
+  } catch (err) {
+    next(err)
+  }
+})
+
 // param route for getting the required product when id parameter is provided
 // attaches product to the request and moves on to the next route
 // with the matching html request
