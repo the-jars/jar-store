@@ -4,10 +4,6 @@ import {connect} from 'react-redux'
 import Product from './Product'
 
 export class ProductList extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     this.props.fetchProducts()
   }
@@ -21,6 +17,8 @@ export class ProductList extends Component {
       return (
         <div>
           <h1>Product List!</h1>
+          {/* <select type="text" name="filterByCategory">
+          </select> */}
           <div className="grid-container">
             {products.map(product => (
               <Product
