@@ -14,7 +14,7 @@ export class ProductList extends Component {
 
   render() {
     const products = this.props.products
-    console.log(this.props.products)
+    console.log(this.props)
     if (!products) {
       return <h1>nope</h1>
     } else
@@ -36,7 +36,7 @@ export class ProductList extends Component {
 }
 
 const mapStateToProps = state => ({
-  products: state.product.products
+  products: state.allProducts
 })
 
 const mapDispatchToProps = dispatch => ({

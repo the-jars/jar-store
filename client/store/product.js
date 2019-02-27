@@ -6,7 +6,7 @@ const GET_PRODUCTS = 'GET_PRODUCTS'
 
 // ACTION CREATORS
 export const getProduct = product => ({
-  type: GET_PRODUCT,
+  type: GET_SINGLE_PRODUCT,
   product
 })
 export const getProducts = products => ({
@@ -18,7 +18,7 @@ export const getProducts = products => ({
 export const fetchSingleProduct = productId => async dispatch => {
   try {
     const res = await axios.get(`/api/products/${productId}`)
-    dispatch(setSingleProduct(res.data))
+    dispatch(getProduct(res.data))
   } catch (error) {
     console.error(error)
   }
@@ -37,7 +37,7 @@ export const fetchProducts = () => async dispatch => {
 export const editSingleProduct = (id, editField) => dispatch => {
   axios
     .put(`/api/products/${id}`, editField)
-    .then(response => dispatch(setSingleProduct(response.data)))
+    .then(response => dispatch(getProduct(response.data)))
     .catch(console.log)
 }
 
@@ -53,7 +53,7 @@ export const singleProduct = function(state = {}, action) {
 }
 
 //initial state is empty array for all products
-export const productsReducer = (state = [], action) => {
+export const allProducts = (state = [], action) => {
   switch (action.type) {
     case GET_PRODUCTS:
       return action.products
