@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // ACTION TYPES
-const GET_SINGLE_PRODUCT = 'GET_PRODUCT'
+const GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT'
 
 // ACTION CREATORS
 export const getSingleProduct = product => ({
@@ -19,15 +19,11 @@ export const fetchSingleProduct = productId => async dispatch => {
   }
 }
 
-//REDUCER
-const initialState = {
-  currentProduct: {}
-}
-
-export default function(state = initialState, action) {
+// initial staate is empty object for single product
+export const singleProduct = function(state = {}, action) {
   switch (action.type) {
     case GET_SINGLE_PRODUCT:
-      return {...state, currentProduct: action.product}
+      return action.product
     default:
       return state
   }

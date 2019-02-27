@@ -7,14 +7,12 @@ import {fetchSingleProduct} from '../store/product.js'
 class SingleProduct extends Component {
   componentDidMount() {
     const currentProductId = this.props.match.params.id
-    console.log(currentProductId)
     this.props.setProduct(currentProductId)
   }
 
   render() {
     const product = this.props.currentProduct
     const categories = product.categories || []
-    console.log(product)
 
     if (!product) {
       return <h1>Product Not Found</h1>
@@ -40,7 +38,7 @@ class SingleProduct extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentProduct: state.product.currentProduct
+  currentProduct: state.singleProduct
 })
 
 const mapDispatchToProps = dispatch => ({
