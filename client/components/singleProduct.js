@@ -22,9 +22,9 @@ class SingleProduct extends Component {
         <div>
           <h1>{product.name}</h1>
           <h2>
-            ${product.available === false
+            {product.available === false
               ? 'Currently Unavailable'
-              : product.price}
+              : `$${product.price}`}
           </h2>
           <ul>
             {categories.map(category => (
