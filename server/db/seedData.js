@@ -230,7 +230,8 @@ const userData = [
     password: 'kdsjghdkaj',
     username: 'steffeni',
     firstName: 'Steffeni',
-    lastName: 'V'
+    lastName: 'V',
+    isAdmin: true
   },
   {
     email: 'jake@test.test',
@@ -244,7 +245,8 @@ const userData = [
     password: 'kdsjghdkaj',
     username: 'rose',
     firstName: 'Rose',
-    lastName: 'G'
+    lastName: 'G',
+    isAdmin: true
   }
 ]
 
