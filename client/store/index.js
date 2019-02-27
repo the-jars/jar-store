@@ -3,10 +3,11 @@ import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 // import reducers to combine
+import {categories} from './category'
 import user from './user'
 import {singleProduct, allProducts} from './product'
 
-const reducer = combineReducers({user, singleProduct, allProducts})
+const reducer = combineReducers({user, singleProduct, allProducts, categories})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )

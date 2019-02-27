@@ -58,8 +58,13 @@ class EditProduct extends React.Component {
     // just thunk it
     this.props.editProduct(editField)
   }
+
   toggleAvailability(evt) {
+    // this.props.editProduct({
+    //   available: !this.props.productToEdit.available
+    // })
     this.props.editProduct({
+      ...this.props.productToEdit,
       available: !this.props.productToEdit.available
     })
   }
