@@ -6,13 +6,18 @@ const {Cart} = require('../db/models')
 // POST/api/carts
 router.post('/', async (req, res, next) => {
   try {
+    let userId = req.body.userId
+    if (!userId) {
+      userId = req.session.id
+    }
     const response = await Cart.findOrCreate({
       where: {
-        userId: req.body.userId,
+        userId: userId,
         status: 'active'
       }
     })
-    res.sendStatus(200)
+    // const userCart = response
+    res.json(response[0])
   } catch (error) {
     next(error)
   }
