@@ -8,13 +8,11 @@ router.post('/', async (req, res, next) => {
   try {
     const response = await Cart.findOrCreate({
       where: {
-        userId: req.body.userId
-        // status: 'active'
+        userId: req.body.userId,
+        status: 'active'
       }
     })
-    console.log(response.data)
-    const userCart = response[1].id
-    res.json(userCart)
+    res.sendStatus(200)
   } catch (error) {
     next(error)
   }
