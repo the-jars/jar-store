@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Cart, CartItem} = require('../db/models')
+const {Cart} = require('../db/models')
 
 // Routes for /api/carts
 
@@ -8,12 +8,12 @@ router.post('/', async (req, res, next) => {
   try {
     const response = await Cart.findOrCreate({
       where: {
-        userId: req.body.userId,
-        status: 'active'
-      },
-      include: [CartItem]
+        userId: req.body.userId
+        // status: 'active'
+      }
     })
-    const userCart = response[1]
+    console.log(response.data)
+    const userCart = response[1].id
     res.json(userCart)
   } catch (error) {
     next(error)
