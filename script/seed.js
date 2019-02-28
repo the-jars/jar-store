@@ -69,6 +69,10 @@ const seed = db
         review.setProduct(products[idx])
       }),
 
+      orders.forEach(function(order, idx) {
+        order.setUser(users[idx])
+      }),
+
       op1.setProduct(p1),
       op2.setProduct(p2),
       op3.setProduct(p3),
