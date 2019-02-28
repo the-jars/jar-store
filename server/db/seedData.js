@@ -130,66 +130,36 @@ const reviewData = [
   {
     rating: 5,
     reviewText: 'Cool'
-    // productId: 1
-    // userId: 3
   },
   {
     rating: 5,
     reviewText: 'Cool'
-    // productId: 2
-    // userId: 4
   },
   {
     rating: 3,
     reviewText: 'Cool'
-    // productId: 1
-    // userId: 4
   },
   {
     rating: 1,
     reviewText: 'Cool'
-    // productId: 1
-    // userId: 6
   },
   {
     rating: 5,
     reviewText: 'Nut butters are great. What?'
-    // productId: 4
-    // userId: 5
   },
   {
     rating: 5,
     reviewText: 'I love this weird stuff'
-    // productId: 9
-    // userId: 4
   }
 ]
 
 const orderData = [
-  {
-    shippingStatus: 'Delivered'
-    // userId: 1
-  },
-  {
-    shippingStatus: 'Canceled'
-    // userId: 1
-  },
-  {
-    shippingStatus: 'Processing'
-    // userId: 2
-  },
-  {
-    shippingStatus: 'Processing'
-    // userId: 3
-  },
-  {
-    shippingStatus: 'Canceled'
-    // userId: 4
-  },
-  {
-    shippingStatus: 'Delivered'
-    // userId: 5
-  }
+  {shippingStatus: 'Delivered'},
+  {shippingStatus: 'Canceled'},
+  {shippingStatus: 'Processing'},
+  {shippingStatus: 'Processing'},
+  {shippingStatus: 'Canceled'},
+  {shippingStatus: 'Delivered'}
 ]
 
 const userData = [
@@ -252,6 +222,28 @@ const userData = [
 
 const orderProductData = [{quantity: 12}, {quantity: 12}, {quantity: 12}]
 
+const cartData = [
+  {status: 'active'},
+  {status: 'active'},
+  {status: 'inactive'},
+  {status: 'inactive'}
+]
+
+const cartItemData = [
+  {quantity: 1},
+  {quantity: 1},
+  {quantity: 2},
+  {quantity: 2},
+  {quantity: 3},
+  {quantity: 3}
+  // {quantity: 1},
+  // {quantity: 1},
+  // {quantity: 2},
+  // {quantity: 2},
+  // {quantity: 3},
+  // {quantity: 3}
+]
+
 module.exports = {
   addressData,
   productData,
@@ -260,5 +252,7 @@ module.exports = {
   reviewData,
   orderData,
   userData,
-  orderProductData
+  orderProductData,
+  cartData,
+  cartItemData
 }
