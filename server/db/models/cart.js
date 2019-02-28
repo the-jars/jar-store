@@ -6,6 +6,11 @@ const Cart = db.define('cart', {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true
+  },
+  status: {
+    type: Sequelize.ENUM('active', 'inactive'),
+    defaultValue: 'active',
+    allowNull: false
   }
 })
 
