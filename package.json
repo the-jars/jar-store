@@ -79,7 +79,7 @@
     "@babel/preset-env": "^7.0.0-beta.55",
     "@babel/preset-react": "^7.0.0-beta.55",
     "@babel/register": "^7.0.0-beta.55",
-    "axios-mock-adapter": "^1.15.0",
+    "axios-mock-adapter": "^1.16.0",
     "babel-eslint": "^8.2.6",
     "babel-loader": "^8.0.0-beta.4",
     "chai": "^3.5.0",
@@ -98,7 +98,8 @@
     "react-test-renderer": "^16.4.2",
     "redux-devtools-extension": "^2.13.5",
     "redux-mock-store": "^1.5.3",
-    "supertest": "^3.1.0",
+    "sinon": "^7.2.5",
+    "supertest": "^3.4.2",
     "webpack": "^4.16.4",
     "webpack-cli": "^3.1.0"
   }
