@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import {fetchCartItems} from './cart'
 
 /**
  * ACTION TYPES
@@ -27,6 +28,8 @@ export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
     dispatch(getUser(res.data || defaultUser))
+    //const cart = await axios.get('/api/carts', { userId })
+    dispatch(fetchCartItems(res.data.id))
   } catch (err) {
     console.error(err)
   }

@@ -4,13 +4,13 @@ const {Product} = require('../db/models/product')
 const {User} = require('../db/models/user')
 
 //GET /api/cart
-router.get('/', async (req, res, next) => {
+router.get('/:userId', async (req, res, next) => {
   try {
     //pull cartId with userid && active in cart table
-    console.log(req.body.userId)
+    // console.log('id', req.body.userId)
     const cart = await Cart.findOne({
       where: {
-        userId: req.body.userId,
+        userId: req.params.userId,
         status: 'active'
       }
     })

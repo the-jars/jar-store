@@ -12,9 +12,9 @@ export const setCart = cart => ({
 // THUNKS
 export const fetchCartItems = userId => async dispatch => {
   try {
-    const cart = await axios.get('/api/carts', {userId})
+    const cart = await axios.get(`/api/carts/${userId}`)
     console.log('userId', userId)
-    dispatch(setCart(cart))
+    dispatch(setCart(cart.data))
   } catch (error) {
     console.error(error)
   }

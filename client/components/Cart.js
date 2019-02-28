@@ -9,13 +9,8 @@ export class Cart extends Component {
     super(props)
   }
 
-  componentDidMount() {
-    me()
-    this.props.fetchCartItems(this.props.user.id)
-  }
-
   render() {
-    console.log(this.props.user.id)
+    // console.log('props', this.props)
     // this.props.fetchCartItems(this.props.user.id)
     // if (this.props.user && this.props.user.id) {
     //   this.props.fetchCartItems(this.props.user.id)
@@ -33,8 +28,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchCartItems: userId => dispatch(fetchCartItems(userId)),
-  me: () => dispatch(me())
+  fetchCartItems: userId => dispatch(fetchCartItems(userId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)
