@@ -1,19 +1,21 @@
 import React from 'react'
 import {Navbar, Sidebar} from './components'
-import {Grid} from 'semantic-ui-react'
+import {Grid, GridColumn} from 'semantic-ui-react'
 import Routes from './routes'
 // import 'semantic-ui-css/semantic.min.css'
 
 const App = () => {
   return (
     <div>
-      <Grid>
-        <Grid.Row>
-          <Navbar />
-        </Grid.Row>
-        <Grid.Row>
-          <Sidebar />
-          <Routes />
+      <Grid padded>
+        <Navbar />
+        <Grid.Row columns={7} padded>
+          <GridColumn width={3}>
+            <Sidebar />
+          </GridColumn>
+          <GridColumn width={4}>
+            <Routes />
+          </GridColumn>
         </Grid.Row>
       </Grid>
     </div>
