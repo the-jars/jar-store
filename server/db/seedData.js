@@ -154,24 +154,12 @@ const reviewData = [
 ]
 
 const orderData = [
-  {
-    shippingStatus: 'Delivered'
-  },
-  {
-    shippingStatus: 'Canceled'
-  },
-  {
-    shippingStatus: 'Processing'
-  },
-  {
-    shippingStatus: 'Processing'
-  },
-  {
-    shippingStatus: 'Canceled'
-  },
-  {
-    shippingStatus: 'Delivered'
-  }
+  {shippingStatus: 'Delivered'},
+  {shippingStatus: 'Canceled'},
+  {shippingStatus: 'Processing'},
+  {shippingStatus: 'Processing'},
+  {shippingStatus: 'Canceled'},
+  {shippingStatus: 'Delivered'}
 ]
 
 const userData = [
@@ -234,6 +222,28 @@ const userData = [
 
 const orderProductData = [{quantity: 12}, {quantity: 12}, {quantity: 12}]
 
+const cartData = [
+  {status: 'active'},
+  {status: 'active'},
+  {status: 'inactive'},
+  {status: 'inactive'}
+]
+
+const cartItemData = [
+  {quantity: 1},
+  {quantity: 1},
+  {quantity: 2},
+  {quantity: 2},
+  {quantity: 3},
+  {quantity: 3}
+  // {quantity: 1},
+  // {quantity: 1},
+  // {quantity: 2},
+  // {quantity: 2},
+  // {quantity: 3},
+  // {quantity: 3}
+]
+
 module.exports = {
   addressData,
   productData,
@@ -242,5 +252,7 @@ module.exports = {
   reviewData,
   orderData,
   userData,
-  orderProductData
+  orderProductData,
+  cartData,
+  cartItemData
 }

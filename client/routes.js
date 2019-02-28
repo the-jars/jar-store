@@ -7,6 +7,7 @@ import {me} from './store'
 import singleProduct from './components/singleProduct'
 import ProductList from './components/ProductList'
 import AddProduct from './components/AddProduct.js'
+import Cart from './components/Cart'
 /**
  * COMPONENT
  */
@@ -23,6 +24,7 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/cart" component={Cart} />
         <Route exact path="/products/add" component={AddProduct} />
 
         <Route exact path="/products" component={ProductList} />
