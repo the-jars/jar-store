@@ -2,6 +2,15 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {
+  Button,
+  Form,
+  Grid,
+  Header,
+  Image,
+  Message,
+  Segment
+} from 'semantic-ui-react'
 
 /**
  * COMPONENT
@@ -10,8 +19,51 @@ const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
+    <div className="login-form">
+      <style>{`
+      body > div,
+      body > div > div,
+      body > div > div > div.login-form {
+        height: 100%;
+      }
+    `}</style>
+      <Grid textAlign="center" style={{height: '100%'}} verticalAlign="middle">
+        <Grid.Column style={{maxWidth: 450}}>
+          <Header as="h2" color="teal" textAlign="center">
+            <Image src="screen_shot_2019-02-27_at_3.40.20_pm.png" /> Log-in to
+            your account
+          </Header>
+          <Form size="large" onSubmit={handleSubmit} name={name}>
+            <Segment stacked>
+              <Form.Input
+                fluid
+                icon="user"
+                iconPosition="left"
+                placeholder="E-mail address"
+                name="email"
+              />
+              <Form.Input
+                fluid
+                icon="lock"
+                iconPosition="left"
+                placeholder="Password"
+                type="password"
+                name="password"
+              />
+
+              <Button color="teal" fluid size="large" type="submit">
+                Login
+              </Button>
+            </Segment>
+          </Form>
+          <Message>
+            New to us? <a href="#">Sign Up</a>
+          </Message>
+        </Grid.Column>
+      </Grid>
+      <a href="/auth/google">{displayName} with Google</a>
+
+      {/* <form onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor="email">
             <small>Email</small>
@@ -29,7 +81,7 @@ const AuthForm = props => {
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
-      <a href="/auth/google">{displayName} with Google</a>
+       */}
     </div>
   )
 }
