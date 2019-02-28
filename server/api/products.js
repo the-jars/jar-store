@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Category} = require('../db/models/index.js')
+const {Category} = require('../db/models')
 const {Product} = require('../db/models/product')
 //GET /api/products
 router.get('/', async (req, res, next) => {
