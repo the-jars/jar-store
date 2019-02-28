@@ -1,13 +1,10 @@
 const router = require('express').Router()
-const {Category} = require('../db/models/index.js')
+const {Category} = require('../db/models')
 const {Product} = require('../db/models/product')
 //GET /api/products
 router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll()
-    // if (!products) {
-    //   res.sendStatus(404)
-    // }
     res.json(products)
   } catch (err) {
     next(err)
@@ -21,15 +18,9 @@ router.get('/', async (req, res, next) => {
  * TODO:
  * handle when user is not admin through passport
  */
-router.post('/', (req, res, next) =>
-  Product.create(req.body)
-    .then(createdProduct => res.status(201).send(createdProduct))
-    .catch(next)
-)
-
 router.post('/', async (req, res, next) => {
   try {
-    const createdProduct = Product.create({
+    const createdProduct = await Product.create({
       name: req.body.name,
       price: req.body.price,
       size: req.body.size,
