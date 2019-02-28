@@ -7,8 +7,8 @@ import Routes from './routes'
 const App = () => {
   return (
     <div>
+      <Navbar />
       <Grid padded>
-        <Navbar />
         <Grid.Row columns={7} padded>
           <GridColumn width={3}>
             <Sidebar />
