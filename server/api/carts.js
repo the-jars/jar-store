@@ -14,8 +14,10 @@ router.param('cartId', (req, res, next, cartId) =>
     .catch(next)
 )
 
+router.get('/:cartId', (req, res, next) => res.send(req.cart.cartitems))
+
 router.param('itemId', (req, res, next, itemId) =>
-  Cart.findById(itemId)
+  CartItem.findById(itemId)
     .then(item => {
       req.item = item
       next()
@@ -23,9 +25,8 @@ router.param('itemId', (req, res, next, itemId) =>
     })
     .catch(next)
 )
-
 /** routes for deleting cartItem from the cart
- * - happens after router.param('cartId')
+ * - happens afte dr router.param('cartId')
  * - recives id of cartItem to remove through the body as itemId
  * - uses magic method on the cart instance to unassociate the specific item
  * - after, remove that item from the database cartItem model
@@ -35,13 +36,13 @@ router.delete('/:cartId/:itemId', (req, res, next) =>
     .removeCartitem(req.item.id)
     // if item was succesfully removed, also delete it from the cartItem
     // send status for succesfully deleted: 204
-    .then(() => {
-      req.item
-        .destroy()
-        .then(() => {
-          res.status(204).send(req.cart.cartitems)
-        })
-        .catch(next)
+    .then(async result => {
+      try {
+        await req.item.destroy()
+        res.sendStatus(204)
+      } catch (e) {
+        next(e)
+      }
     })
     .catch(next)
 )

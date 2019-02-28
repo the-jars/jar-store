@@ -41,11 +41,18 @@ describe('Cart routes', () => {
 
   describe('DELETE /api/carts/:cartId/:itemId', () => {
     it('deletes the item from the cartItem', async () => {
-      const res = await request(app)
+      // deletes the provided jar
+      await request(app)
         .delete(`/api/carts/${cart.id}/${oneFartJar.id}`)
         .expect(204)
-      console.log(res.data)
-      expect(res.data).to.be.equal([oneFartJar, twoBarfJar])
+      // get the updated list of cart items
+      const updateRes = await request(app)
+        .get(`/api/carts/${cart.id}`)
+        .expect(200)
+      //
+      const updatedCart = updateRes.body
+      expect(updatedCart.length).to.be.equal(1)
+      expect(updatedCart[0].id).to.be.equal(twoBarfJar.id)
     })
   }) // end describe('DELETE /api/carts/:cartId')
 })
