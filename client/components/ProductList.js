@@ -3,6 +3,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import queryString from 'query-string'
+import {Menu, Sidebar} from 'semantic-ui-react'
+
 // internal moduels
 import {fetchProducts, filterCategories} from '../store/product'
 import {fetchCategories} from '../store/category'

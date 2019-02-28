@@ -1,14 +1,21 @@
 import React from 'react'
-
-import {Navbar} from './components'
+import {Navbar, Sidebar} from './components'
+import {Grid} from 'semantic-ui-react'
 import Routes from './routes'
 // import 'semantic-ui-css/semantic.min.css'
 
 const App = () => {
   return (
     <div>
-      <Navbar />
-      <Routes />
+      <Grid>
+        <Grid.Row>
+          <Navbar />
+        </Grid.Row>
+        <Grid.Row>
+          <Sidebar />
+          <Routes />
+        </Grid.Row>
+      </Grid>
     </div>
   )
 }
