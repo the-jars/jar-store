@@ -7,9 +7,6 @@ import {fetchCartInfo} from './store/cart'
 import {me} from './store/user'
 // import 'semantic-ui-css/semantic.min.css'
 
-//write thunk and call it
-//thnk takes userid and...
-
 export class App extends Component {
   componentDidMount() {
     //thunk with input!
