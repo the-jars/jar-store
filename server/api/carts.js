@@ -38,14 +38,8 @@ router.delete('/:cartId/:itemId', (req, res, next) =>
     .removeCartitem(req.item.id)
     // if item was succesfully removed, also delete it from the cartItem
     // send status for succesfully deleted: 204
-    .then(async () => {
-      try {
-        await req.item.destroy()
-        res.sendStatus(204)
-      } catch (e) {
-        next(e)
-      }
-    })
+    .then(() => req.item.destroy())
+    .then(() => res.sendStatus(204))
     .catch(next)
 )
 
