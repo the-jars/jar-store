@@ -32,6 +32,17 @@ router.post('/:cartId/products/:productId', async (req, res, next) => {
   try {
     const cartId = req.params.cartId
     const productId = req.params.productId
+    //   //check to see if cart exists
+    //   const cartExists = await Cart.findOne({
+    //     where:{
+    //       id: cartId
+    //     }
+    //   })
+    //   if(!cartExists){
+    //     await Cart.create({
+
+    //     })
+    //   }
 
     //check cartitem
     const isAlreadyInCart = await CartItem.findOne({
@@ -44,11 +55,12 @@ router.post('/:cartId/products/:productId', async (req, res, next) => {
       await isAlreadyInCart.increment('quantity', {by: 1})
       res.json(isAlreadyInCart)
     } else {
-      await CartItem.create({
+      const createdCartItem = await CartItem.create({
         cartId: cartId,
         productId: productId,
         quantity: 1
       })
+      res.json(createdCartItem)
     }
   } catch (error) {
     next(error)
