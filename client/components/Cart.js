@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {fetchCartItems} from '../store/cart'
+import {fetchCartItems, deleteCartItem} from '../store/cart'
 import {connect} from 'react-redux'
 import {
   Card,
@@ -79,7 +79,11 @@ export class Cart extends Component {
                             </Card.Content>
                           </Grid.Column>
                           <Grid.Column>
-                            <Button>Remove</Button>
+                            <Button
+                              onClick={() => this.props.deleteCartItem(item)}
+                            >
+                              Remove
+                            </Button>
                           </Grid.Column>
                         </Grid.Row>
                       </Grid>
@@ -139,7 +143,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchCartItems: userId => dispatch(fetchCartItems(userId))
+  fetchCartItems: userId => dispatch(fetchCartItems(userId)),
+  deleteCartItem: itemToDelete => dispatch(deleteCartItem(itemToDelete))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)
