@@ -61,7 +61,6 @@ router.delete('/:cartId/:itemId', (req, res, next) =>
 //GET /api/cart for getting cart by the logged in user
 router.get('/:userId', async (req, res, next) => {
   try {
-    console.log("YOU'RE AT THE WRONG PLACE BRO!!")
     //pull cartId with userid && active in cart table
     // console.log('id', req.body.userId)
     const cart = await Cart.findOne({
