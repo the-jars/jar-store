@@ -1,7 +1,5 @@
 const router = require('express').Router()
-const {Cart, CartItem} = require('../db/models')
-
-// Routes for /api/carts
+const {Cart, CartItem, Product} = require('../db/models')
 
 // POST/api/carts
 router.post('/', async (req, res, next) => {
@@ -62,15 +60,46 @@ router.delete('/:cartId/:itemId', (req, res, next) =>
 
 router.put('/:cartId/:itemId', async (req, res, next) => {
   try {
+    console.log(req.body.quantity)
     const cartItemToUpdate = await CartItem.findOne({
       where: {
-        cartId: req.params.itemId
+        cartId: Number(req.params.cartId)
       }
     })
-    const updatedCart = await cartItemToUpdate.update({
-      quantity: req.body.cartItem.quantity
+    const updatedCartItem = await cartItemToUpdate.update({
+      quantity: req.body.quantity,
+      where: {
+        productId: req.params.itemId
+      }
     })
-    res.status(204).json(updatedCart)
+    res.status(204).json(updatedCartItem)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// Routes for /api/carts
+//GET /api/cart for getting cart by the logged in user
+router.get('/:userId', async (req, res, next) => {
+  try {
+    //pull cartId with userid && active in cart table
+    // console.log('id', req.body.userId)
+    const cart = await Cart.findOne({
+      where: {
+        userId: req.params.userId,
+        status: 'active'
+      }
+    })
+    const cartId = cart.id
+    //pull everything from cartitems with cartid
+    const items = await CartItem.findAll({
+      where: {
+        cartId: cartId
+      },
+      //eager load product info
+      include: [{model: Product}]
+    })
+    res.json(items)
   } catch (err) {
     next(err)
   }

@@ -17,16 +17,16 @@ export const deleteItem = itemToDelete => ({
   itemToDelete
 })
 
-export const updateQty = updatedCart => ({
+export const updateQty = updatedCartItem => ({
   type: UPDATE_QTY,
-  updatedCart
+  updatedCartItem
 })
 
 // THUNKS
 // - for fetching all items in carts
 export const fetchCartItems = userId => async dispatch => {
   try {
-    const cart = await axios.get(`/api/allcarts/${userId}`)
+    const cart = await axios.get(`/api/carts/${userId}`)
     dispatch(setCart(cart.data))
   } catch (error) {
     console.error(error)
@@ -47,11 +47,11 @@ export const deleteCartItem = itemToDelete => dispatch =>
     })
     .catch(console.log)
 
-export const putItemQty = editedCartItem => async dispatch => {
+export const putItemQty = (editedCartItem, value) => async dispatch => {
   try {
     const {data: updatedCartItem} = await axios.put(
       `/api/carts/${editedCartItem.cartId}/${editedCartItem.id}`,
-      editedCartItem
+      value
     )
     dispatch(updateQty(updatedCartItem))
   } catch (err) {

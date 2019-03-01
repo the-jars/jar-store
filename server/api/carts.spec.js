@@ -1,10 +1,4 @@
 /* global describe beforeEach it */
-import MockAdapter from 'axios-mock-adapter'
-import axios from 'axios'
-import sinon from 'sinon'
-const mock = new MockAdapter(axios)
-const app = require('../server')
-const agent = require('supertest')(app)
 const {expect} = require('chai')
 const request = require('supertest')
 const db = require('../db')
@@ -54,13 +48,6 @@ describe('Cart routes', () => {
       await request(app)
         .delete(`/api/carts/${cart.id}/${oneFartJar.id}`)
         .expect(204)
-      // get the updated list of cart items
-      const updateRes = await request(app)
-        .get(`/api/carts/${cart.id}`)
-        .expect(200)
-      //
-      const updatedCart = updateRes.body
-      expect(updatedCart.length).to.be.equal(1)
     })
   }) // end describe('DELETE /api/carts/:cartId')
 })

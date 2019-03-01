@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {fetchCartItems, deleteCartItem} from '../store/cart'
+import {fetchCartItems, deleteCartItem, putItemQty} from '../store/cart'
 import {connect} from 'react-redux'
 import {
   Card,
@@ -9,19 +9,39 @@ import {
   Table,
   Dropdown,
   Header,
-  Button
+  Button,
+  Form,
+  Input
 } from 'semantic-ui-react'
 
 export class Cart extends Component {
-  // constructor(props) {
-  //   super(props)
-  // }
+  constructor(props) {
+    super(props)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.state = {
+      qty: 0,
+      currentItem: {}
+    }
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
 
   total(cartData) {
     return cartData.reduce((acc, item) => {
       acc += item.quantity * item.product.price
       return acc
     }, 0)
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    this.props.putItemQty(this.state.currentItem, event.target.name.value)
+  }
+
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
   }
 
   render() {
@@ -39,7 +59,6 @@ export class Cart extends Component {
               for (let i = 1; i <= item.product.inventory; i++) {
                 quantityOptions.push({key: i, text: `${i}`, value: i})
               }
-              console.log(item.quantity, quantityOptions)
               return (
                 // eslint-disable-next-line react/jsx-key
                 <div key={item.id}>
@@ -65,11 +84,26 @@ export class Cart extends Component {
                             </Feed>
                           </Grid.Column>
                           <Grid.Column>
-                            <Dropdown
-                              placeholder={`${item.quantity}`}
-                              options={quantityOptions}
-                            />
-                            <Button>Update</Button>
+                            <Form onSubmit={this.handleSubmit}>
+                              {/* <Dropdown
+                                placeholder={`${item.quantity}`}
+                                options={quantityOptions}
+                                name="quantity"
+                                value={name}
+                                onClick={() => this.setState({item: item})}
+                                onChange={this.handleChange}
+                              /> */}
+                              <Input
+                                type="text"
+                                name="quantity"
+                                value={this.state.quantity}
+                                onChange={this.handleChange}
+                                onClick={() =>
+                                  this.setState({currentItem: item})
+                                }
+                              />
+                              <Button type="submit">Update</Button>
+                            </Form>
                           </Grid.Column>
                           <Grid.Column>
                             <Card.Content>
@@ -144,7 +178,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchCartItems: userId => dispatch(fetchCartItems(userId)),
-  deleteCartItem: itemToDelete => dispatch(deleteCartItem(itemToDelete))
+  deleteCartItem: itemToDelete => dispatch(deleteCartItem(itemToDelete)),
+  putItemQty: editedCartItem => dispatch(putItemQty(editedCartItem))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)
