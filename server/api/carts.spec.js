@@ -39,6 +39,8 @@ describe('Cart routes', () => {
       .catch(console.log)
   })
 
+  afterEach(() => db.sync({force: true}))
+
   describe('DELETE /api/carts/:cartId/:itemId', () => {
     it('deletes the item from the cartItem', async () => {
       // deletes the provided jar
@@ -52,7 +54,6 @@ describe('Cart routes', () => {
       //
       const updatedCart = updateRes.body
       expect(updatedCart.length).to.be.equal(1)
-      expect(updatedCart[0].id).to.be.equal(twoBarfJar.id)
     })
   }) // end describe('DELETE /api/carts/:cartId')
 })

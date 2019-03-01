@@ -14,9 +14,6 @@ router.param('cartId', (req, res, next, cartId) =>
     .catch(next)
 )
 
-/** route for reloading the cart after items have been deleted or  */
-router.get('/:cartId', (req, res, next) => res.send(req.cart.cartitems))
-
 router.param('itemId', (req, res, next, itemId) =>
   CartItem.findById(itemId)
     .then(item => {
