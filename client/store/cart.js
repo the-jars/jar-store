@@ -3,6 +3,7 @@ import axios from 'axios'
 // ACTION TYPES
 const SET_CART = 'SET_CART'
 const DELETE_ITEM = 'DELETE_ITEM'
+const UPDATE_QTY = 'UPDATE_QTY'
 
 // ACTION CREATORS
 // - for setting the cart of [...cartitems]
@@ -14,6 +15,11 @@ export const setCart = cart => ({
 export const deleteItem = itemToDelete => ({
   type: DELETE_ITEM,
   itemToDelete
+})
+
+export const updateQty = updatedCart => ({
+  type: UPDATE_QTY,
+  updatedCart
 })
 
 // THUNKS
@@ -41,6 +47,18 @@ export const deleteCartItem = itemToDelete => dispatch =>
     })
     .catch(console.log)
 
+export const putItemQty = editedCartItem => async dispatch => {
+  try {
+    const {data: updatedCartItem} = await axios.put(
+      `/api/carts/${editedCartItem.cartId}/${editedCartItem.id}`,
+      editedCartItem
+    )
+    dispatch(updateQty(updatedCartItem))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 // REDUCER
 export const cart = (state = [], action) => {
   switch (action.type) {
@@ -50,6 +68,13 @@ export const cart = (state = [], action) => {
       return state.filter(
         value => value.productId !== action.itemToDelete.productId
       )
+    case UPDATE_QTY:
+      return state.map(item => {
+        if (item.id === action.updatedCart.id) {
+          item.quantity = action.updatedCart.quantity
+        }
+        return item
+      })
     default:
       return state
   }

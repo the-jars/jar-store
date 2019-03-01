@@ -49,6 +49,7 @@ router.param('itemId', (req, res, next, itemId) =>
  * - uses magic method on the cart instance to unassociate the specific item
  * - after, remove that item from the database cartItem model
  */
+
 router.delete('/:cartId/:itemId', (req, res, next) =>
   req.cart
     .removeCartitem(req.item.id)
@@ -58,5 +59,21 @@ router.delete('/:cartId/:itemId', (req, res, next) =>
     .then(() => res.sendStatus(204))
     .catch(next)
 )
+
+router.put('/:cartId/:itemId', async (req, res, next) => {
+  try {
+    const cartItemToUpdate = await CartItem.findOne({
+      where: {
+        cartId: req.params.itemId
+      }
+    })
+    const updatedCart = await cartItemToUpdate.update({
+      quantity: req.body.cartItem.quantity
+    })
+    res.status(204).json(updatedCart)
+  } catch (err) {
+    next(err)
+  }
+})
 
 module.exports = router
