@@ -14,6 +14,7 @@ router.param('cartId', (req, res, next, cartId) =>
     .catch(next)
 )
 
+/** route for reloading the cart after items have been deleted or  */
 router.get('/:cartId', (req, res, next) => res.send(req.cart.cartitems))
 
 router.param('itemId', (req, res, next, itemId) =>
@@ -25,7 +26,8 @@ router.param('itemId', (req, res, next, itemId) =>
     })
     .catch(next)
 )
-/** routes for deleting cartItem from the cart
+
+/** route for deleting cartItem from the cart
  * - happens afte dr router.param('cartId')
  * - recives id of cartItem to remove through the body as itemId
  * - uses magic method on the cart instance to unassociate the specific item
@@ -36,7 +38,7 @@ router.delete('/:cartId/:itemId', (req, res, next) =>
     .removeCartitem(req.item.id)
     // if item was succesfully removed, also delete it from the cartItem
     // send status for succesfully deleted: 204
-    .then(async result => {
+    .then(async () => {
       try {
         await req.item.destroy()
         res.sendStatus(204)

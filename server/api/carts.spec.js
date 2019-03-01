@@ -7,13 +7,13 @@ const CartItem = db.model('cartitem')
 const Product = db.model('product')
 
 describe('Cart routes', () => {
-  // set up cart route test
-  // the test cart has one fart jar and two barf jar pre-loaded
   let cart
   let fartJar
   let barfJar
   let oneFartJar
   let twoBarfJar
+  // set up cart route test
+  // the test cart has one fart jar and two barf jar pre-loaded
   beforeEach(async () => {
     await db.sync({force: true})
     cart = await Cart.create()
