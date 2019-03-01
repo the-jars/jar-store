@@ -9,6 +9,13 @@ router.post('/', async (req, res, next) => {
     let userId = req.body.userId
     if (!userId) {
       userId = req.session.id
+      const response = await Cart.findOrCreate({
+        where: {
+          sessionId: userId
+          // status: 'active'
+        }
+      })
+      res.json(response[0])
     }
     const response = await Cart.findOrCreate({
       where: {
@@ -16,7 +23,6 @@ router.post('/', async (req, res, next) => {
         status: 'active'
       }
     })
-    // const userCart = response
     res.json(response[0])
   } catch (error) {
     next(error)

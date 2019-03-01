@@ -11,6 +11,10 @@ const Cart = db.define('cart', {
     type: Sequelize.ENUM('active', 'inactive'),
     defaultValue: 'active',
     allowNull: false
+  },
+  sessionId: {
+    type: Sequelize.STRING,
+    allowNull: true
   }
 })
 

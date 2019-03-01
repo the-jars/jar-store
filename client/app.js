@@ -13,7 +13,7 @@ import {me} from './store/user'
 export class App extends Component {
   componentDidMount() {
     //thunk with input!
-    this.props.cartMeta(this.props.userId)
+    this.props.instantiateCart(this.props.userId)
   }
 
   render() {
@@ -39,7 +39,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  cartMeta: userId => dispatch(fetchCartInfo(userId))
+  instantiateCart: userId => dispatch(fetchCartInfo(userId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

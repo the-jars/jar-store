@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // ACTION TYPES
 const SET_CART = 'SET_CART'
-const SET_CART_META = 'SET_CART_META'
+const INSTANTIATE_CART = 'INSTANTIATE_CART'
 
 // ACTION CREATORS
 export const setCart = cart => ({
@@ -10,8 +10,8 @@ export const setCart = cart => ({
   cart
 })
 
-export const setCartMeta = cartInfo => ({
-  type: SET_CART_META,
+export const instantiateCart = cartInfo => ({
+  type: INSTANTIATE_CART,
   cartInfo
 })
 
@@ -28,7 +28,7 @@ export const fetchCartItems = userId => async dispatch => {
 export const fetchCartInfo = userId => async dispatch => {
   try {
     const cartInfo = await axios.post(`/api/carts`, userId)
-    dispatch(setCartMeta(cartInfo))
+    dispatch(instantiateCart(cartInfo))
   } catch (error) {
     console.error(error)
   }
@@ -46,7 +46,7 @@ export const cart = (state = [], action) => {
 
 export const cartMeta = (state = {}, action) => {
   switch (action.type) {
-    case SET_CART_META:
+    case INSTANTIATE_CART:
       return action.cartInfo
     default:
       return state
