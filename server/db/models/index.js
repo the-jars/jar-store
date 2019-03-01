@@ -55,6 +55,7 @@ module.exports = {
   Address,
   Review,
   Order,
+  OrderProduct,
   Product,
   Category,
   Cart,
