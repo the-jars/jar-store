@@ -79,7 +79,8 @@ const productData = [
   {
     name: 'Serrano Pepper Salsa',
     price: 10.0,
-    status: true
+    status: true,
+    inventory: 7
   },
   {
     name: 'Hatch Chile & Tomatillo Salsa',

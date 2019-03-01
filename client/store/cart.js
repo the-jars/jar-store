@@ -4,7 +4,10 @@ import axios from 'axios'
 const SET_CART = 'SET_CART'
 const INSTANTIATE_CART = 'INSTANTIATE_CART'
 const ADDED_ITEM_TO_CART = 'ADDED_ITEM_TO_CART'
+const DELETE_ITEM = 'DELETE_ITEM'
+
 // ACTION CREATORS
+// - for setting the cart of [...cartitems]
 export const setCart = cart => ({
   type: SET_CART,
   cart
@@ -25,7 +28,13 @@ export const addedItemToCart = (productId, cartId) => ({
 //if it does, we run xyz
 //if no, we create cart and then call the thunk that adds item to it
 
+export const deleteItem = itemToDelete => ({
+  type: DELETE_ITEM,
+  itemToDelete
+})
+
 // THUNKS
+// - for fetching all items in carts
 export const fetchCartItems = userId => async dispatch => {
   try {
     const cart = await axios.get(`/api/carts/${userId}`)
@@ -34,6 +43,20 @@ export const fetchCartItems = userId => async dispatch => {
     console.error(error)
   }
 }
+// - for deleting one item from the array
+export const deleteCartItem = itemToDelete => dispatch =>
+  axios
+    .delete(`/api/carts/${itemToDelete.cartId}/${itemToDelete.productId}`)
+    .then(res => {
+      // status is 204 when delete is succesful
+      if (res.status === 204) dispatch(deleteItem(itemToDelete))
+      else
+        throw new Error(
+          'Delete item failed: something went wrong on the server.'
+        )
+      return res.status
+    })
+    .catch(console.log)
 
 export const fetchCartInfo = userId => async dispatch => {
   try {
@@ -56,6 +79,10 @@ export const cart = (state = [], action) => {
   switch (action.type) {
     case SET_CART:
       return action.cart
+    case DELETE_ITEM:
+      return state.filter(
+        value => value.productId !== action.itemToDelete.productId
+      )
     default:
       return state
   }
