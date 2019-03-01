@@ -20,7 +20,7 @@ export const deleteItem = itemToDelete => ({
 // - for fetching all items in carts
 export const fetchCartItems = userId => async dispatch => {
   try {
-    const cart = await axios.get(`/api/allcarts/${userId}`)
+    const cart = await axios.get(`/api/carts/${userId}`)
     dispatch(setCart(cart.data))
   } catch (error) {
     console.error(error)
