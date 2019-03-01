@@ -31,67 +31,71 @@ export class Cart extends Component {
     const total = itemTotal + 5.95 + tax
     return (
       <div>
-        <h1>Your Cart</h1>
-        <ul>
-          {cart.map(item => {
-            const quantityOptions = []
-            for (let i = 1; i <= item.product.inventory; i++) {
-              quantityOptions.push({key: i, text: `${i}`, value: i})
-            }
-            console.log(item.quantity, quantityOptions)
-            return (
-              // eslint-disable-next-line react/jsx-key
-              <div>
-                <Card color="pink" fluid key={item.id}>
-                  <Card.Content>
-                    <Grid columns={5}>
-                      <Grid.Row>
-                        <Grid.Column>
-                          <Image
-                            src={item.product.imgUrl}
-                            circular
-                            size="small"
-                          />
-                        </Grid.Column>
-                        <Grid.Column>
-                          <Card.Header>{item.product.name}</Card.Header>
-                          <Feed>
-                            <Feed.Content>
-                              <Card.Meta>{item.product.description}</Card.Meta>
-                            </Feed.Content>
-                          </Feed>
-                        </Grid.Column>
-                        <Grid.Column>
-                          <Dropdown
-                            placeholder={`${item.quantity}`}
-                            options={quantityOptions}
-                          />
-                          <Button>Update</Button>
-                        </Grid.Column>
-                        <Grid.Column>
-                          <Card.Content>
-                            {`$${(item.product.price * item.quantity).toFixed(
-                              2
-                            )}`}
-                          </Card.Content>
-                        </Grid.Column>
-                        <Grid.Column>
-                          <Button>Remove</Button>
-                        </Grid.Column>
-                      </Grid.Row>
-                    </Grid>
-                  </Card.Content>
-                </Card>
-              </div>
-            )
-          })}
-        </ul>
-        <Card centered>
+        <Grid columns={1} padded>
+          <Grid.Column>
+            <h1>Your Cart</h1>
+            {cart.map(item => {
+              const quantityOptions = []
+              for (let i = 1; i <= item.product.inventory; i++) {
+                quantityOptions.push({key: i, text: `${i}`, value: i})
+              }
+              console.log(item.quantity, quantityOptions)
+              return (
+                // eslint-disable-next-line react/jsx-key
+                <div key={item.id}>
+                  <Card color="pink" fluid key={item.id}>
+                    <Card.Content>
+                      <Grid columns={5}>
+                        <Grid.Row>
+                          <Grid.Column>
+                            <Image
+                              src={item.product.imgUrl}
+                              circular
+                              size="small"
+                            />
+                          </Grid.Column>
+                          <Grid.Column>
+                            <Card.Header>{item.product.name}</Card.Header>
+                            <Feed>
+                              <Feed.Content>
+                                <Card.Meta>
+                                  {item.product.description}
+                                </Card.Meta>
+                              </Feed.Content>
+                            </Feed>
+                          </Grid.Column>
+                          <Grid.Column>
+                            <Dropdown
+                              placeholder={`${item.quantity}`}
+                              options={quantityOptions}
+                            />
+                            <Button>Update</Button>
+                          </Grid.Column>
+                          <Grid.Column>
+                            <Card.Content>
+                              {`$${(item.product.price * item.quantity).toFixed(
+                                2
+                              )}`}
+                            </Card.Content>
+                          </Grid.Column>
+                          <Grid.Column>
+                            <Button>Remove</Button>
+                          </Grid.Column>
+                        </Grid.Row>
+                      </Grid>
+                    </Card.Content>
+                  </Card>
+                </div>
+              )
+            })}
+          </Grid.Column>
+        </Grid>
+        <Card centered padded margined>
           <Table basic="very" celled collapsing>
             <Table.Body>
               <Table.Row>
                 <Table.Cell>
-                  <Header>
+                  <Header padded>
                     <Header.Content>Items</Header.Content>
                   </Header>
                 </Table.Cell>
