@@ -31,19 +31,6 @@ export const deleteItem = itemToDelete => ({
 
 // MIDDLEWARE
 
-// export const checkForActiveCart = userId => {
-//   try {
-//     //check to see if cart exists
-//     const activeCart
-
-//     //if it does, we run middleware
-//     //if no, we create cart
-
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
-
 // THUNKS
 // - for fetching all items in carts
 export const fetchCartItems = userId => async dispatch => {
@@ -54,6 +41,7 @@ export const fetchCartItems = userId => async dispatch => {
     console.error(error)
   }
 }
+
 // - for deleting one item from the array
 export const deleteCartItem = itemToDelete => dispatch =>
   axios
@@ -69,6 +57,7 @@ export const deleteCartItem = itemToDelete => dispatch =>
     })
     .catch(console.log)
 
+// Might  not be needed anymore
 export const fetchCartInfo = userId => async dispatch => {
   try {
     const cartInfo = await axios.post(`/api/carts`, userId)
@@ -78,7 +67,14 @@ export const fetchCartInfo = userId => async dispatch => {
   }
 }
 
-//
+export const addOrCreateCart = (cartId, productId) => async dispatch => {
+  try {
+    await axios.post(`/${cartId}/products/${productId}`)
+    dispatch()
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 // REDUCER
 export const cart = (state = [], action) => {

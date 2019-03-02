@@ -94,10 +94,7 @@ export class ProductList extends Component {
                       className="grid-item"
                       product={product}
                     />
-                    <AddItemButton
-                      productId={product.id}
-                      cartId={this.props.cart.id}
-                    />
+                    <AddItemButton productId={product.id} />
                   </div>
                 ) : (
                   ''
@@ -131,8 +128,7 @@ export class ProductList extends Component {
 
 const mapStateToProps = state => ({
   user: state.user,
-  products: state.allProducts,
-  categories: state.categories
+  products: state.allProducts
 })
 
 const mapDispatchToProps = dispatch => ({
