@@ -24,6 +24,10 @@ export const addedItemToCart = (productId, cartId) => ({
   cartId: cartId
 })
 
+//check to see if cart exists
+//if it does, we run xyz
+//if no, we create cart and then call the thunk that adds item to it
+
 export const deleteItem = itemToDelete => ({
   type: DELETE_ITEM,
   itemToDelete
