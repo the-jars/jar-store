@@ -9,6 +9,8 @@ import {Menu, Sidebar} from 'semantic-ui-react'
 import {fetchProducts, filterCategories} from '../store/product'
 import {fetchCategories} from '../store/category'
 import Product from './Product'
+import AddItemButton from './AddItemToCart'
+import {cart} from '../store/cart'
 
 export class ProductList extends Component {
   constructor() {
@@ -86,11 +88,17 @@ export class ProductList extends Component {
             {currentProducts.map(
               product =>
                 product.available ? (
-                  <Product
-                    key={product.id}
-                    className="grid-item"
-                    product={product}
-                  />
+                  <div>
+                    <Product
+                      key={product.id}
+                      className="grid-item"
+                      product={product}
+                    />
+                    <AddItemButton
+                      productId={product.id}
+                      cartId={this.props.cart.id}
+                    />
+                  </div>
                 ) : (
                   ''
                 )
