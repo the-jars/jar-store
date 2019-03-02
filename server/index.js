@@ -83,7 +83,6 @@ const createApp = () => {
 
   // sends index.html
   app.use('*', (req, res) => {
-    console.log('i am in index js in server')
     res.sendFile(path.join(__dirname, '..', 'public/index.html'))
   })
 

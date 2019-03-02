@@ -28,6 +28,8 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+//if cartitem has this productid + cartid combo, increment that quantity
+//else create productid + cartid combo w quantity 1
 router.post('/:cartId/products/:productId', async (req, res, next) => {
   try {
     const cartId = req.params.cartId
@@ -55,8 +57,6 @@ router.post('/:cartId/products/:productId', async (req, res, next) => {
     next(error)
   }
 })
-//if cartitem has this productid + cartid combo, increment that quantity
-//else create productid + cartid combo w quantity 1
 
 // when cartId is provided, grab that cart and move onto the next route
 router.param('cartId', (req, res, next, cartId) =>
