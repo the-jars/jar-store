@@ -224,10 +224,22 @@ const userData = [
 const orderProductData = [{quantity: 12}, {quantity: 12}, {quantity: 12}]
 
 const cartData = [
-  {status: 'active'},
-  {status: 'active'},
-  {status: 'inactive'},
-  {status: 'inactive'}
+  {
+    status: 'active',
+    userId: 1
+  },
+  {
+    status: 'active',
+    userId: 2
+  },
+  {
+    status: 'inactive',
+    userId: 3
+  },
+  {
+    status: 'inactive',
+    userId: 4
+  }
 ]
 
 const cartItemData = [

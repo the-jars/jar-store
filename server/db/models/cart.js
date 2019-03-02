@@ -12,6 +12,10 @@ const Cart = db.define('cart', {
     defaultValue: 'active',
     allowNull: false
   },
+  userId: {
+    type: Sequelize.INTEGER,
+    allowNull: true
+  },
   sessionId: {
     type: Sequelize.STRING,
     allowNull: true

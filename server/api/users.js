@@ -20,7 +20,7 @@ router.get('/', async (req, res, next) => {
 router.post('/:id/cart', async (req, res, next) => {
   try {
     let userCart
-    if (!req.params.id) {
+    if (req.params.id === 'null') {
       userCart = await Cart.findOrCreate({
         where: {
           sessionId: req.session.id

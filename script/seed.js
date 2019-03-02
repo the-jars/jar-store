@@ -85,10 +85,6 @@ const seed = db
       nutbutter.setProducts([p4, p5, p9]),
       salsa.setProducts([p7, p8]),
 
-      carts.forEach(function(cart, idx) {
-        cart.setUser(users[idx])
-      }),
-
       cartitems.forEach(function(cartItem, idx) {
         cartItem.setCart(
           carts[idx] ? carts[idx] : carts[carts.length - (idx - 1)]
