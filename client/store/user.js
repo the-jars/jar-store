@@ -27,6 +27,7 @@ const removeUser = () => ({type: REMOVE_USER})
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
+    console.log('I am auth res in me', res)
     dispatch(getUser(res.data || defaultUser))
     //const cart = await axios.get('/api/carts', { userId })
     if (res.data.id) {
@@ -46,6 +47,7 @@ export const auth = (email, password, method) => async dispatch => {
   }
 
   try {
+    console.log('I am a user object', res.data)
     dispatch(getUser(res.data))
     history.push('/home')
   } catch (dispatchOrHistoryErr) {

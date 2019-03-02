@@ -24,14 +24,25 @@ export const addedItemToCart = (productId, cartId) => ({
   cartId: cartId
 })
 
-//check to see if cart exists
-//if it does, we run xyz
-//if no, we create cart and then call the thunk that adds item to it
-
 export const deleteItem = itemToDelete => ({
   type: DELETE_ITEM,
   itemToDelete
 })
+
+// MIDDLEWARE
+
+// export const checkForActiveCart = userId => {
+//   try {
+//     //check to see if cart exists
+//     const activeCart
+
+//     //if it does, we run middleware
+//     //if no, we create cart
+
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
 
 // THUNKS
 // - for fetching all items in carts
@@ -67,12 +78,7 @@ export const fetchCartInfo = userId => async dispatch => {
   }
 }
 
-// export const addItemToCart = () => async dispatch => {
-//   // try {
-//   // } catch (err) {
-//   //   console.error(err)
-//   // }
-// }
+//
 
 // REDUCER
 export const cart = (state = [], action) => {
