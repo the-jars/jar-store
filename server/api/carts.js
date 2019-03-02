@@ -10,8 +10,8 @@ router.post('/', async (req, res, next) => {
       userId = req.session.id
       const response = await Cart.findOrCreate({
         where: {
-          sessionId: userId
-          // status: 'active'
+          sessionId: userId,
+          status: 'active'
         }
       })
       res.json(response[0])
@@ -32,17 +32,6 @@ router.post('/:cartId/products/:productId', async (req, res, next) => {
   try {
     const cartId = req.params.cartId
     const productId = req.params.productId
-    //   //check to see if cart exists
-    //   const cartExists = await Cart.findOne({
-    //     where:{
-    //       id: cartId
-    //     }
-    //   })
-    //   if(!cartExists){
-    //     await Cart.create({
-
-    //     })
-    //   }
 
     //check cartitem
     const isAlreadyInCart = await CartItem.findOne({
