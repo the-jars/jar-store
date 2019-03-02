@@ -45,11 +45,19 @@ export class Cart extends Component {
     })
   }
 
+  total(cartData) {
+    return cartData.reduce((acc, item) => {
+      acc += item.quantity * item.product.price
+      return acc
+    }, 0)
+  }
+
   render() {
     const cart = this.props.cart || []
     const itemTotal = this.total(cart)
     const tax = itemTotal * 0.1
     const total = itemTotal + 5.95 + tax
+
     const qty = this.state.qty
     return (
       <div>
@@ -135,12 +143,12 @@ export class Cart extends Component {
             })}
           </Grid.Column>
         </Grid>
-        <Card centered padded margined>
+        <Card centered>
           <Table basic="very" celled collapsing>
             <Table.Body>
               <Table.Row>
                 <Table.Cell>
-                  <Header padded>
+                  <Header>
                     <Header.Content>Items</Header.Content>
                   </Header>
                 </Table.Cell>
