@@ -1,11 +1,13 @@
 import axios from 'axios'
 import history from '../history'
+import {fetchCartItems} from './cart'
 
 /**
  * ACTION TYPES
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
+// const SET_USER = 'SET_USER'
 
 /**
  * INITIAL STATE
@@ -17,6 +19,7 @@ const defaultUser = {}
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
+// const setUser = user => ({type: SET_USER, user})
 
 /**
  * THUNK CREATORS
@@ -25,6 +28,10 @@ export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
     dispatch(getUser(res.data || defaultUser))
+    //const cart = await axios.get('/api/carts', { userId })
+    if (res.data.id) {
+      dispatch(fetchCartItems(res.data.id))
+    }
   } catch (err) {
     console.error(err)
   }
@@ -55,6 +62,15 @@ export const logout = () => async dispatch => {
     console.error(err)
   }
 }
+
+// export const fetchUser = userId => async dispatch => {
+//   try {
+//     const {data: user} = await axios.post(`/api/users/${userId}`)
+//     dispatch(setUser(user))
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
 
 /**
  * REDUCER

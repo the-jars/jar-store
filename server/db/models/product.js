@@ -40,7 +40,13 @@ const Product = db.define(
       validate: {
         min: 0
       },
-      defaultValue: 0
+      defaultValue: 1
+    },
+    imgUrl: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      defaultValue:
+        'http://images.bigoven.com/image/upload/t_recipe-256/cherry-jam-3.jpg'
     },
     // boolean for availability set by admin
     // true when available
@@ -54,7 +60,7 @@ const Product = db.define(
   {
     getterMethods: {
       availability() {
-        return this.status ? 'available' : 'not available'
+        return this.available ? 'available' : 'not available'
       }
     }
   }

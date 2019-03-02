@@ -1,23 +1,20 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 
 // ACTIONS
 import {fetchSingleProduct} from '../store/product.js'
 
 class SingleProduct extends Component {
-
   componentDidMount() {
     const currentProductId = this.props.match.params.id
-    console.log(currentProductId)
     this.props.setProduct(currentProductId)
-
   }
 
   render() {
     const product = this.props.currentProduct
     const categories = product.categories || []
-    console.log(product)
-
+    const user = this.props.user
     if (!product) {
       return <h1>Product Not Found</h1>
     } else {
@@ -25,9 +22,9 @@ class SingleProduct extends Component {
         <div>
           <h1>{product.name}</h1>
           <h2>
-            ${product.available === false
+            {product.available === false
               ? 'Currently Unavailable'
-              : product.price}
+              : `$${product.price}`}
           </h2>
           <ul>
             {categories.map(category => (
@@ -35,6 +32,13 @@ class SingleProduct extends Component {
             ))}
           </ul>
           <p>{product.description}</p>
+          <div>
+            {user.id && user.isAdmin ? (
+              <Link to={`/products/${product.id}/edit`}>
+                <button type="button">Edit Product</button>
+              </Link>
+            ) : null}
+          </div>
         </div>
       )
     }
@@ -42,7 +46,8 @@ class SingleProduct extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentProduct: state.product.currentProduct
+  currentProduct: state.singleProduct,
+  user: state.user
 })
 
 const mapDispatchToProps = dispatch => ({

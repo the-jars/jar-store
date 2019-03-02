@@ -54,7 +54,7 @@ const createApp = () => {
   // session middleware with passport
   app.use(
     session({
-      secret: process.env.SESSION_SECRET || 'my best friend is Cody',
+      secret: process.env.SESSION_SECRET || 'strawberries are delicious',
       store: sessionStore,
       resave: false,
       saveUninitialized: false
@@ -105,7 +105,7 @@ const startListening = () => {
   require('./socket')(io)
 }
 
-const syncDb = () => db.sync({force: true})
+const syncDb = () => db.sync({})
 
 async function bootApp() {
   await sessionStore.sync()
