@@ -58,21 +58,36 @@ router.delete('/:cartId/:itemId', (req, res, next) =>
     .catch(next)
 )
 
-router.put('/:cartId/:itemId', async (req, res, next) => {
+router.put('/:cartId/:productId', async (req, res, next) => {
   try {
-    console.log(req.body.quantity)
-    const cartItemToUpdate = await CartItem.findOne({
-      where: {
-        cartId: Number(req.params.cartId)
+    console.log(
+      'cartId',
+      req.params.cartId,
+      'productId',
+      req.params.productId,
+      'qty',
+      req.body.value
+    )
+    const [rowsUpdated, updatedCartItem] = await CartItem.update(
+      {
+        quantity: Number(req.body.value)
+      },
+      {
+        returning: true,
+        where: {
+          cartId: Number(req.params.cartId),
+          productId: req.params.productId
+        }
       }
-    })
-    const updatedCartItem = await cartItemToUpdate.update({
-      quantity: req.body.quantity,
-      where: {
-        productId: req.params.itemId
-      }
-    })
-    res.status(204).json(updatedCartItem)
+    )
+    // const [num, updatedCartItem] = await cartItemToUpdate.update(
+    //   {
+    //     quantity: Number(req.body.value)
+    //   },
+    //   {returning: true}
+    // )
+    //console.log(updatedCartItem)
+    res.json(updatedCartItem)
   } catch (err) {
     next(err)
   }

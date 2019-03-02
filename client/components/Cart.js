@@ -17,12 +17,11 @@ import {
 export class Cart extends Component {
   constructor(props) {
     super(props)
-    this.handleSubmit = this.handleSubmit.bind(this)
     this.state = {
       qty: 0,
       currentItem: {}
     }
-    this.handleSubmit = this.handleSubmit.bind(this)
+    //this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
@@ -33,14 +32,16 @@ export class Cart extends Component {
     }, 0)
   }
 
-  handleSubmit(event) {
-    event.preventDefault()
-    this.props.putItemQty(this.state.currentItem, event.target.name.value)
-  }
+  // handleSubmit(event) {
+  //   event.preventDefault()
+  //   this.props.putItemQty(this.state.currentItem, this.state.qty)
+  //   console.log(this.state.currentItem, this.state.qty)
+  // }
 
-  handleChange(event) {
+  handleChange(event, {value, currentitem}) {
     this.setState({
-      [event.target.name]: event.target.value
+      qty: value,
+      currentItem: currentitem
     })
   }
 
@@ -49,6 +50,7 @@ export class Cart extends Component {
     const itemTotal = this.total(cart)
     const tax = itemTotal * 0.1
     const total = itemTotal + 5.95 + tax
+    const qty = this.state.qty
     return (
       <div>
         <Grid columns={1} padded>
@@ -84,25 +86,30 @@ export class Cart extends Component {
                             </Feed>
                           </Grid.Column>
                           <Grid.Column>
-                            <Form onSubmit={this.handleSubmit}>
-                              {/* <Dropdown
-                                placeholder={`${item.quantity}`}
+                            <Card.Content>{item.quantity}</Card.Content>
+                            <Form>
+                              <Form.Dropdown
+                                placeholder="Update Quantity"
+                                selection
                                 options={quantityOptions}
                                 name="quantity"
-                                value={name}
-                                onClick={() => this.setState({item: item})}
+                                value={qty}
                                 onChange={this.handleChange}
-                              /> */}
-                              <Input
+                              />
+                              {/* <Input
                                 type="text"
                                 name="quantity"
-                                value={this.state.quantity}
+                                value={item.quantity}
                                 onChange={this.handleChange}
+
+                              /> */}
+                              <Button
                                 onClick={() =>
-                                  this.setState({currentItem: item})
+                                  this.props.putItemQty(item, this.state.qty)
                                 }
-                              />
-                              <Button type="submit">Update</Button>
+                              >
+                                Update
+                              </Button>
                             </Form>
                           </Grid.Column>
                           <Grid.Column>
@@ -179,7 +186,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchCartItems: userId => dispatch(fetchCartItems(userId)),
   deleteCartItem: itemToDelete => dispatch(deleteCartItem(itemToDelete)),
-  putItemQty: editedCartItem => dispatch(putItemQty(editedCartItem))
+  putItemQty: (editedCartItem, qty) => dispatch(putItemQty(editedCartItem, qty))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)

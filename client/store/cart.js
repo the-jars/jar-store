@@ -50,10 +50,10 @@ export const deleteCartItem = itemToDelete => dispatch =>
 export const putItemQty = (editedCartItem, value) => async dispatch => {
   try {
     const {data: updatedCartItem} = await axios.put(
-      `/api/carts/${editedCartItem.cartId}/${editedCartItem.id}`,
-      value
+      `/api/carts/${editedCartItem.cartId}/${editedCartItem.productId}`,
+      {value}
     )
-    dispatch(updateQty(updatedCartItem))
+    dispatch(updateQty(updatedCartItem[0]))
   } catch (err) {
     console.error(err)
   }
@@ -70,8 +70,8 @@ export const cart = (state = [], action) => {
       )
     case UPDATE_QTY:
       return state.map(item => {
-        if (item.id === action.updatedCart.id) {
-          item.quantity = action.updatedCart.quantity
+        if (item.id === action.updatedCartItem.id) {
+          item.quantity = action.updatedCartItem.quantity
         }
         return item
       })
