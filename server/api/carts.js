@@ -1,6 +1,8 @@
 const router = require('express').Router()
 const {Cart, CartItem, Product} = require('../db/models')
 
+// Routes for /api/carts
+
 // POST/api/carts
 router.post('/', async (req, res, next) => {
   try {
@@ -57,7 +59,6 @@ router.delete('/:cartId/:itemId', (req, res, next) =>
     .catch(next)
 )
 
-// Routes for /api/carts
 //GET /api/cart for getting cart by the logged in user
 router.get('/:userId', async (req, res, next) => {
   try {
