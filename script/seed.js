@@ -69,42 +69,58 @@ const seed = db
       cartitems
     ] = insertedData
 
-    const [p1, p2, p3, p4, p5, p6, p7, p8, p9] = butters
+    // const [p1, p2, p3, p4, p5, p6, p7, p8, p9] = butters
     const [salsa, jelly, nutbutter] = categories
-    const [op1, op2, op3, op4, op5, op6, op7] = orderproducts
-    const [o1, o2, o3] = orders
+    // const [op1, op2, op3, op4, op5, op6, op7] = orderproducts
+    // const [o1, o2, o3] = orders
 
+    const productData = [...butters, ...salsas, ...jellies, ...butterJellies]
     return Promise.all([
       reviews.forEach(function(review, idx) {
         review.setUser(
           users[idx] ? users[idx] : users[users.length - (idx - 1)]
         )
-        review.setProduct(butters[idx])
+        review.setProduct(
+          productData[Math.floor(Math.random() * productData.length)]
+        )
       }),
 
       orders.forEach(function(order, idx) {
         order.setUser(users[idx])
       }),
 
-      op1.setProduct(p1),
-      op2.setProduct(p2),
-      op3.setProduct(p3),
+      // op1.setProduct(p1),
+      // op2.setProduct(p2),
+      // op3.setProduct(p3),
 
-      op1.setOrder(o1),
-      op2.setOrder(o2),
-      op3.setOrder(o3),
+      // op1.setOrder(o1),
+      // op2.setOrder(o2),
+      // op3.setOrder(o3),
 
-      jelly.setProducts(jellies),
-      nutbutter.setProducts(butters),
+      orderproducts.forEach(order => {
+        order.setProduct(
+          productData[Math.floor(Math.random() * productData.length)]
+          // carts[idx] ? carts[idx] : carts[carts.length - (idx - 1)]
+        )
+        order.setOrder(orders[Math.floor(Math.random() * orders.length)])
+      }),
+
+      jelly.setProducts(jellies.concat(butterJellies)),
+      nutbutter.setProducts(butters.concat(butterJellies)),
       salsa.setProducts(salsas),
-      nutbutter.setProducts(butterJellies),
-      jelly.setProducts(butterJellies),
+
+      carts.forEach(cart => {
+        cart.setUser(users[Math.floor(Math.random() * users.length)])
+      }),
 
       cartitems.forEach(function(cartItem, idx) {
         cartItem.setCart(
-          carts[idx] ? carts[idx] : carts[carts.length - (idx - 1)]
+          carts[Math.floor(Math.random() * carts.length)]
+          // carts[idx] ? carts[idx] : carts[carts.length - (idx - 1)]
         )
-        cartItem.setProduct(butters[idx])
+        cartItem.setProduct(
+          productData[Math.floor(Math.random() * productData.length)]
+        )
       })
     ])
   })

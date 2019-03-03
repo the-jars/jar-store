@@ -221,7 +221,20 @@ const userData = [
   }
 ]
 
-const orderProductData = [{quantity: 12}, {quantity: 12}, {quantity: 12}]
+const orderProductData = [
+  {quantity: 1},
+  {quantity: 3},
+  {quantity: 6},
+  {quantity: 2},
+  {quantity: 14},
+  {quantity: 7},
+  {quantity: 2},
+  {quantity: 1},
+  {quantity: 5},
+  {quantity: 6},
+  {quantity: 23},
+  {quantity: 3}
+]
 
 const cartData = [
   {
@@ -244,13 +257,13 @@ const cartItemData = [
   {quantity: 2},
   {quantity: 2},
   {quantity: 3},
+  {quantity: 3},
+  {quantity: 1},
+  {quantity: 1},
+  {quantity: 2},
+  {quantity: 2},
+  {quantity: 3},
   {quantity: 3}
-  // {quantity: 1},
-  // {quantity: 1},
-  // {quantity: 2},
-  // {quantity: 2},
-  // {quantity: 3},
-  // {quantity: 3}
 ]
 
 module.exports = {
