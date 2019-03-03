@@ -1,18 +1,20 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import {Card} from 'semantic-ui-react'
+import {Card, Image, Grid} from 'semantic-ui-react'
 
 export const Product = props => {
   const product = props.product
   return (
-    <Card>
-      <div>
-        <img src={product.imgUrl} alt="something's broken" />
-        <h3>
-          <Link to={`products/${product.id}`}>{product.name}</Link>
-        </h3>
-      </div>
-    </Card>
+    <div>
+      <Card>
+        <Image src={product.imgUrl} circular fluid />
+        <Card.Content>
+          <Card.Header>
+            <Link to={`products/${product.id}`}>{product.name}</Link>
+          </Card.Header>
+        </Card.Content>
+      </Card>
+    </div>
   )
 }
 

@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import queryString from 'query-string'
-import {Menu, Sidebar} from 'semantic-ui-react'
+import {Menu, Sidebar, Grid, Dropdown, Button} from 'semantic-ui-react'
 
 // internal moduels
 import {fetchProducts, filterCategories} from '../store/product'
@@ -15,7 +15,8 @@ export class ProductList extends Component {
     super()
     this.state = {
       currentPage: 1,
-      productsPerPage: 20
+      productsPerPage: 20,
+      filter: 'All'
     }
     this.handleClick = this.handleClick.bind(this)
   }
@@ -33,10 +34,11 @@ export class ProductList extends Component {
     this.props.fetchCategories()
   }
 
-  handleChange = event => {
-    const filter = event.target.value
-    this.props.applyFilter(filter)
-    this.props.history.push(`/products?filter=${filter}`)
+  handleChange = (event, {value}) => {
+    this.setState({
+      filter: value
+    })
+    this.props.applyFilter(this.state.filter)
   }
 
   render() {
@@ -58,6 +60,11 @@ export class ProductList extends Component {
     for (let i = 1; i <= Math.ceil(products.length / productsPerPage); i++) {
       pageNumbers.push(i)
     }
+    //category options
+    const categoryOptions = categories.map((category, idx) => {
+      return {key: idx, text: category.name, value: category.name}
+    })
+    categoryOptions.push({key: 10, text: 'All', Value: 'All'})
 
     if (!products) {
       return <h1>nope</h1>
@@ -66,35 +73,56 @@ export class ProductList extends Component {
         <div>
           <div>
             <h1>Product List!</h1>
-            <select
-              type="text"
-              name="filterByCategory"
-              defaultValue="All"
-              onChange={this.handleChange}
-            >
-              <option value="All">All</option>
-              {!categories
-                ? ''
-                : categories.map(category => (
-                    <option key={category.id} value={category.name}>
-                      {category.name}
-                    </option>
-                  ))}
-            </select>
+            <div>
+              <Dropdown
+                // type="text"
+                name="filterByCategory"
+                defaultValue="All"
+                placeholder="All"
+                selection
+                value={this.state.filter}
+                onChange={this.handleChange}
+                options={categoryOptions}
+              >
+                {/* <option value="All">All</option>
+                {!categories
+                  ? ''
+                  : categories.map(category => (
+                      <option key={category.id} value={category.name}>
+                        {category.name}
+                      </option>
+                    ))} */}
+              </Dropdown>
+              <Button
+                onClick={() => {
+                  this.props.applyFilter(this.state.filter)
+                  this.props.history.push(
+                    `/products?filter=${this.state.filter}`
+                  )
+                }}
+              >
+                Filter
+              </Button>
+            </div>
           </div>
-          <div className="grid-container">
-            {currentProducts.map(
-              product =>
-                product.available ? (
-                  <Product
-                    key={product.id}
-                    className="grid-item"
-                    product={product}
-                  />
-                ) : (
-                  ''
-                )
-            )}
+          <br />
+          <div>
+            <Grid>
+              <Grid.Column>
+                {currentProducts.map(
+                  product =>
+                    product.available ? (
+                      <Product
+                        key={product.id}
+                        className="grid-item"
+                        product={product}
+                      />
+                    ) : (
+                      ''
+                    )
+                )}
+              </Grid.Column>
+            </Grid>
           </div>
           <br />
           <div>
