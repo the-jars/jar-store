@@ -1,25 +1,30 @@
 import React from 'react'
 import {Button} from 'semantic-ui-react'
 import {connect} from 'react-redux'
-import {addOrCreateCart} from './store/cart'
+import {createNewCart, addItemToCart} from '../store/cart'
 
 const AddItemButton = props => {
   const handleClick = () => {
-    let cartId
-    !props.cart.id ? (cartId = null) : (cartId = props.cart.id)
-    const productId = props.productId
-    addOrCreateCart(cartId, productId)
+    console.log(props)
+    if (!props.cart.id) {
+      props.createNewCart(props.userId, props.productId)
+    } else {
+      props.addItemToCart(props.productId, props.cart.id)
+    }
   }
 
   return <Button onClick={handleClick}>Add To Cart</Button>
 }
 
 const mapStateToProps = state => ({
-  cart: state.cart
+  cart: state.cartMeta
 })
 
 const mapDispatchToProps = dispatch => ({
-  addOrCreateCart: () => dispatch(addOrCreateCart())
+  createNewCart: (userId, productId) =>
+    dispatch(createNewCart(userId, productId)),
+  addItemToCart: (productId, cartId) =>
+    dispatch(addItemToCart(productId, cartId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddItemButton)

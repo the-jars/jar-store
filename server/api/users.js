@@ -27,6 +27,7 @@ router.post('/:id/cart', async (req, res, next) => {
         }
       })
     } else {
+      // TODO: This should create a cart by finding the user then calling User.someMagicMethod
       userCart = await Cart.findOrCreate({
         where: {
           userId: req.params.id

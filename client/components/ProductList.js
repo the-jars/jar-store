@@ -94,7 +94,10 @@ export class ProductList extends Component {
                       className="grid-item"
                       product={product}
                     />
-                    <AddItemButton productId={product.id} />
+                    <AddItemButton
+                      productId={product.id}
+                      userId={this.props.user.id}
+                    />
                   </div>
                 ) : (
                   ''

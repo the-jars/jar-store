@@ -28,6 +28,8 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+router.put('/:cartId')
+
 //if cartitem has this productid + cartid combo, increment that quantity
 //else create productid + cartid combo w quantity 1
 router.post('/:cartId/products/:productId', async (req, res, next) => {
@@ -35,6 +37,9 @@ router.post('/:cartId/products/:productId', async (req, res, next) => {
     const cartId = req.params.cartId
     const productId = req.params.productId
     //   //check to see if cart exists
+    if (cartId === 'null') {
+      res.send('This is what happens when cartId is null')
+    }
     //   const cartExists = await Cart.findOne({
     //     where:{
     //       id: cartId

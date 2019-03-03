@@ -33,8 +33,6 @@ export const deleteItem = itemToDelete => ({
   itemToDelete
 })
 
-// MIDDLEWARE
-
 // THUNKS
 // - for fetching all items in carts
 export const fetchCartItems = userId => async dispatch => {
@@ -71,10 +69,33 @@ export const fetchCartInfo = userId => async dispatch => {
   }
 }
 
-export const addOrCreateCart = (cartId, productId) => async dispatch => {
+// add item to cart if it exists
+export const addItemToCart = (productId, cartId) => async dispatch => {
   try {
-    await axios.post(`/${cartId}/products/${productId}`)
-    dispatch()
+    console.log('I am addItemToCart thunk')
+    if (!cartId === undefined) {
+      cartId = 'null'
+    }
+    const cartItem = await axios.post(
+      `/api/carts/${cartId}/products/${productId}`
+    )
+    dispatch(addedItemToCart(cartItem.data))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+// creates a cart and add and item to it if it is passed a productID
+export const createNewCart = (userId, productId) => async dispatch => {
+  try {
+    console.log('I am creatNewCart thunk')
+    const response = await axios.post(`/api/users/${userId}/cart`)
+    const newCart = response.data
+    console.log('I am a new cart', newCart)
+    dispatch(instantiateCart(newCart))
+    if (productId) {
+      dispatch(addItemToCart(productId, newCart.id))
+    }
   } catch (error) {
     console.error(error)
   }
@@ -89,6 +110,8 @@ export const cart = (state = [], action) => {
       return state.filter(
         value => value.productId !== action.itemToDelete.productId
       )
+    case ADDED_ITEM_TO_CART:
+      return [...state, action.cartItem]
     default:
       return state
   }

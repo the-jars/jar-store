@@ -1,6 +1,6 @@
 import axios from 'axios'
 import history from '../history'
-import {fetchCartItems} from './cart'
+import {fetchCartItems, fetchCartInfo, createNewCart} from './cart'
 
 /**
  * ACTION TYPES
@@ -32,6 +32,9 @@ export const me = () => async dispatch => {
     //const cart = await axios.get('/api/carts', { userId })
     if (res.data.id) {
       dispatch(fetchCartItems(res.data.id))
+      dispatch(fetchCartInfo(res.data.id))
+    } else {
+      dispatch(createNewCart('null'))
     }
   } catch (err) {
     console.error(err)
