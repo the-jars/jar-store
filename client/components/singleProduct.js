@@ -7,7 +7,7 @@ import {Image, Card} from 'semantic-ui-react'
 // ACTIONS
 import {fetchSingleProduct} from '../store/product.js'
 import {Button} from 'semantic-ui-react'
-import AddReview from './Review.js'
+import AddReview from './AddReview.js'
 
 class SingleProduct extends Component {
   constructor() {
@@ -48,7 +48,16 @@ class SingleProduct extends Component {
                 </Link>
               ) : null}
             </div>
-            <Button onClick={this.props.showAddReviewFunc}>Add a Review</Button>
+            {user.id ? (
+              <Button onClick={this.props.showAddReviewFunc}>
+                Add a Review
+              </Button>
+            ) : (
+              <h1>
+                Want to leave a review? Please <Link to="/login">login</Link> or{' '}
+                <Link to="/signup">sign up!</Link>{' '}
+              </h1>
+            )}
             {this.props.showAddReview ? <AddReview product={product} /> : null}
           </Card>
         </div>
