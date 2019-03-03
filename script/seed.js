@@ -13,7 +13,7 @@ const {
 
 const {
   addressData,
-  productData,
+  //productData,
   categoryData,
   // productCategoryData,
   reviewData,
@@ -23,6 +23,13 @@ const {
   cartData,
   cartItemData
 } = require('../server/db/seedData.js')
+
+const {
+  butterData,
+  jellyData,
+  salsaData,
+  butterJellyData
+} = require('../server/db/seedData2')
 
 const {OrderProduct} = require('../server/db/models/orders')
 const {Cart, CartItem} = require('../server/db/models/cart')
@@ -35,7 +42,10 @@ const seed = db
       User.bulkCreate(userData, {returning: true}),
       Review.bulkCreate(reviewData, {returning: true}),
       Category.bulkCreate(categoryData, {returning: true}),
-      Product.bulkCreate(productData, {returning: true}),
+      Product.bulkCreate(butterData, {returning: true}),
+      Product.bulkCreate(jellyData, {returning: true}),
+      Product.bulkCreate(salsaData, {returning: true}),
+      Product.bulkCreate(butterJellyData, {returning: true}),
       Order.bulkCreate(orderData, {returning: true}),
       Address.bulkCreate(addressData, {returning: true}),
       OrderProduct.bulkCreate(orderProductData, {returning: true}),
@@ -48,7 +58,10 @@ const seed = db
       users,
       reviews,
       categories,
-      products,
+      butters,
+      jellies,
+      salsas,
+      butterJellies,
       orders,
       addresses,
       orderproducts,
@@ -56,7 +69,7 @@ const seed = db
       cartitems
     ] = insertedData
 
-    const [p1, p2, p3, p4, p5, p6, p7, p8, p9] = products
+    const [p1, p2, p3, p4, p5, p6, p7, p8, p9] = butters
     const [salsa, jelly, nutbutter] = categories
     const [op1, op2, op3, op4, op5, op6, op7] = orderproducts
     const [o1, o2, o3] = orders
@@ -66,7 +79,7 @@ const seed = db
         review.setUser(
           users[idx] ? users[idx] : users[users.length - (idx - 1)]
         )
-        review.setProduct(products[idx])
+        review.setProduct(butters[idx])
       }),
 
       orders.forEach(function(order, idx) {
@@ -81,15 +94,17 @@ const seed = db
       op2.setOrder(o2),
       op3.setOrder(o3),
 
-      jelly.setProducts([p1, p2, p3, p9, p8]),
-      nutbutter.setProducts([p4, p5, p9]),
-      salsa.setProducts([p7, p8]),
+      jelly.setProducts(jellies),
+      nutbutter.setProducts(butters),
+      salsa.setProducts(salsas),
+      nutbutter.setProducts(butterJellies),
+      jelly.setProducts(butterJellies),
 
       cartitems.forEach(function(cartItem, idx) {
         cartItem.setCart(
           carts[idx] ? carts[idx] : carts[carts.length - (idx - 1)]
         )
-        cartItem.setProduct(products[idx])
+        cartItem.setProduct(butters[idx])
       })
     ])
   })

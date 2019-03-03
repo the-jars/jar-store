@@ -105,19 +105,19 @@ const categoryData = [
   {name: 'Nut Butters'}
 ]
 
-const productCategoryData = [
-  {productId: 1, categoryId: 1},
-  {productId: 2, categoryId: 1},
-  {productId: 3, categoryId: 1},
-  {productId: 4, categoryId: 2},
-  {productId: 5, categoryId: 2},
-  {productId: 6, categoryId: 3},
-  {productId: 7, categoryId: 3},
-  {productId: 8, categoryId: 1},
-  {productId: 8, categoryId: 3},
-  {productId: 9, categoryId: 1},
-  {productId: 9, categoryId: 2}
-]
+// const productCategoryData = [
+//   {productId: 1, categoryId: 1},
+//   {productId: 2, categoryId: 1},
+//   {productId: 3, categoryId: 1},
+//   {productId: 4, categoryId: 2},
+//   {productId: 5, categoryId: 2},
+//   {productId: 6, categoryId: 3},
+//   {productId: 7, categoryId: 3},
+//   {productId: 8, categoryId: 1},
+//   {productId: 8, categoryId: 3},
+//   {productId: 9, categoryId: 1},
+//   {productId: 9, categoryId: 2}
+// ]
 
 const reviewData = [
   {
@@ -257,7 +257,7 @@ module.exports = {
   addressData,
   productData,
   categoryData,
-  productCategoryData,
+  //productCategoryData,
   reviewData,
   orderData,
   userData,
