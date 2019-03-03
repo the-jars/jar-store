@@ -15,7 +15,7 @@ export class ProductList extends Component {
     super()
     this.state = {
       currentPage: 1,
-      productsPerPage: 20,
+      productsPerPage: 30,
       filter: 'All'
     }
     this.handleClick = this.handleClick.bind(this)
@@ -107,20 +107,20 @@ export class ProductList extends Component {
           <br />
           <div>
             <Grid>
-              <Grid.Column>
-                {currentProducts.map(
-                  product =>
-                    product.available ? (
-                      <Product
-                        key={product.id}
-                        className="grid-item"
-                        product={product}
-                      />
-                    ) : (
-                      ''
-                    )
-                )}
-              </Grid.Column>
+              {/* <Grid.Column> */}
+              {currentProducts.map(
+                product =>
+                  product.available ? (
+                    <Product
+                      key={product.id}
+                      className="grid-item"
+                      product={product}
+                    />
+                  ) : (
+                    ''
+                  )
+              )}
+              {/* </Grid.Column> */}
             </Grid>
           </div>
           <br />
