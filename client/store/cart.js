@@ -30,15 +30,15 @@ export const deleteItem = itemToDelete => ({
 })
 
 // THUNKS
-// - for fetching all items in carts
-// export const fetchCartItems = userId => async dispatch => {
-//   try {
-//     const cart = await axios.get(`/api/carts/${userId}`)
-//     dispatch(setCart(cart.data))
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
+// - for fetching all items in carts along with metadata
+export const fetchCartItems = userId => async dispatch => {
+  try {
+    const cart = await axios.get(`/api/carts/${userId}`)
+    dispatch(setCart(cart.data))
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 // export const fetchCartItemsByCartId = cartId => async dispatch => {
 //   try {
@@ -96,22 +96,22 @@ export const addItemToCart = (productId, cartId) => async dispatch => {
   }
 }
 
-// creates a cart and add and item to it if it is passed a productID
-export const createNewCart = (userId, productId) => async dispatch => {
-  try {
-    console.log('I am creatNewCart thunk')
-    const response = await axios.post(`/api/users/${userId}/cart`)
-    const newCart = response.data
-    console.log('I am a new cart', newCart)
-    // dispatch(instantiateCart(newCart))
-    dispatch(setCart(newCart))
-    if (productId) {
-      dispatch(addItemToCart(productId, newCart.id))
-    }
-  } catch (error) {
-    console.error(error)
-  }
-}
+// // creates a cart and add and item to it if it is passed a productID
+// export const createNewCart = (userId, productId) => async dispatch => {
+//   try {
+//     console.log('I am creatNewCart thunk')
+//     const response = await axios.post(`/api/users/${userId}/cart`)
+//     const newCart = response.data
+//     console.log('I am a new cart', newCart)
+//     // dispatch(instantiateCart(newCart))
+//     dispatch(setCart(newCart))
+//     if (productId) {
+//       dispatch(addItemToCart(productId, newCart.id))
+//     }
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
 
 const filterHelper = (state, updatedItem) => {
   console.log('updatedItem', updatedItem)

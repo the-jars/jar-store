@@ -143,7 +143,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchCartItems: userId => dispatch(fetchCartItems(userId)),
+  fetchCartInfo: userId => dispatch(fetchCartInfo(userId)),
   deleteCartItem: itemToDelete => dispatch(deleteCartItem(itemToDelete))
 })
 

@@ -32,7 +32,7 @@ class Navbar extends React.Component {
                 active={this.props.activeItem === 'logout'}
                 onClick={this.handleItemClick}
               >
-                <Link to="#" onClick={this.props.handleClick}>
+                <Link to="/login" onClick={this.props.handleClick}>
                   Logout
                 </Link>
               </Menu.Item>
@@ -43,6 +43,13 @@ class Navbar extends React.Component {
               >
                 <Link to="/products">Jars!</Link>
               </Menu.Item>
+              <Menu.Item
+                name="cart"
+                active={this.props.activeItem === 'cart'}
+                onClick={this.handleItemClick}
+              >
+                <Link to="/cart">Cart</Link>
+              </Menu.Item>
             </Menu>
           </div>
         ) : (
@@ -51,6 +58,7 @@ class Navbar extends React.Component {
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
             <Link to="/products">Jars!</Link>
+            <Link to="/cart">Cart</Link>
           </div>
         )}
       </div>

@@ -5,7 +5,7 @@ const {Cart, CartItem, Product} = require('../db/models')
 // POST/api/carts
 
 // if passed a userId, will find or create an active cart for that user
-// if passed something falsy for userId, it will create an an active cart using the sessionId instead
+// if passed the string 'null' for userId, it will create an an active cart using the sessionId instead
 router.post('/:userId', async (req, res, next) => {
   try {
     let userId = req.params.userId
@@ -44,8 +44,8 @@ router.post('/:userId', async (req, res, next) => {
   }
 })
 
-//if cartitem has this productid + cartid combo, increment that quantity
-//else create productid + cartid combo w quantity 1
+// POST /api/carts/:cartID/products/:productID
+// Adds product to cart or increments it if it's already there
 router.post('/:cartId/products/:productId', async (req, res, next) => {
   try {
     const cartId = req.params.cartId
@@ -135,31 +135,31 @@ router.get('/unauth/', async (req, res, next) => {
   }
 })
 
-// // Routes for /api/carts
-// //GET /api/cart/userId for getting cart by the logged in user
-// router.get('/:userId', async (req, res, next) => {
-//   try {
-//     //pull cartId with userid && active in cart table
-//     console.log('id', req.body.userId)
-//     const cart = await Cart.findOne({
-//       where: {
-//         userId: req.params.userId,
-//         status: 'active'
-//       }
-//     })
-//     const cartId = cart.id
-//     //pull everything from cartitems with cartid
-//     const items = await CartItem.findAll({
-//       where: {
-//         cartId: cartId
-//       },
-//       //eager load product info
-//       include: [{model: Product}]
-//     })
-//     res.json(items)
-//   } catch (err) {
-//     next(err)
-//   }
-// })
+// Routes for /api/carts
+//GET /api/cart/userId for getting cart by the logged in user
+router.get('/:userId', async (req, res, next) => {
+  try {
+    //pull cartId with userid && active in cart table
+    console.log('id', req.body.userId)
+    const cart = await Cart.findOne({
+      where: {
+        userId: req.params.userId,
+        status: 'active'
+      }
+    })
+    const cartId = cart.id
+    //pull everything from cartitems with cartid
+    const items = await CartItem.findAll({
+      where: {
+        cartId: cartId
+      },
+      //eager load product info
+      include: [{model: Product}]
+    })
+    res.json(items)
+  } catch (err) {
+    next(err)
+  }
+})
 
 module.exports = router
