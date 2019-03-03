@@ -24,7 +24,7 @@ class Routes extends Component {
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
+        <Route path="/signup" render={() => <Signup type="signup" />} />
         <Route path="/cart" render={() => <Cart {...this.props} />} />
         <Route exact path="/review/add" component={AddReview} />
         <Route exact path="/products/add" component={AddProduct} />
