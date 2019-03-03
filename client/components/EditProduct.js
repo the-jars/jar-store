@@ -1,10 +1,17 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchSingleProduct, editSingleProduct} from '../store/product'
+import AddProductCategory from './AddProductCategory'
+
+import {
+  fetchSingleProduct,
+  editSingleProduct,
+  fetchNewProductCategory
+} from '../store/product'
 
 class EditProduct extends React.Component {
   constructor() {
     super()
+    // this.handleNewPC = this.handleNewPC.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.toggleAvailability = this.toggleAvailability.bind(this)
     this.name = React.createRef()
@@ -65,7 +72,12 @@ class EditProduct extends React.Component {
       available: !this.props.productToEdit.available
     })
   }
-
+  // handleNewPC() {
+  //   this.props.fetchNewProductCategory(
+  //     this.state.newCategoryId,
+  //     this.props.singleProduct.id
+  //   )
+  // }
   render() {
     const productToEdit = this.props.productToEdit
     return (
@@ -112,14 +124,17 @@ class EditProduct extends React.Component {
 }
 
 const mapState = state => ({
-  productToEdit: state.singleProduct
+  productToEdit: state.singleProduct,
+  categories: state.categories
 })
 
 const mapDispatch = (dispatch, ownProps) => ({
   initializeProduct: () =>
     dispatch(fetchSingleProduct(ownProps.match.params.id)),
   editProduct: editField =>
-    dispatch(editSingleProduct(ownProps.match.params.id, editField))
+    dispatch(editSingleProduct(ownProps.match.params.id, editField)),
+  fetchNewProductCategory: (categoryId, productId) =>
+    dispatch(fetchNewProductCategory(categoryId, productId))
 })
 
 export default connect(mapState, mapDispatch)(EditProduct)

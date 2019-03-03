@@ -2,7 +2,7 @@ import {addCategoryThunk, fetchCategories} from '../store/category.js'
 import {connect} from 'react-redux'
 import {Button, Form} from 'semantic-ui-react'
 import React, {Component} from 'react'
-
+import AddProductCategory from './AddProductCategory'
 class AddCategory extends Component {
   constructor(props) {
     super(props)
@@ -23,7 +23,6 @@ class AddCategory extends Component {
   }
 
   handleChange = event => {
-    console.log(this.state)
     return this.setState({
       [event.target.name]: event.target.value
     })
@@ -31,16 +30,22 @@ class AddCategory extends Component {
 
   render() {
     return (
-      <Form onChange={this.handleChange} onSubmit={this.handleSubmit}>
-        <Form.Input
-          type="text"
-          name="name"
-          id="name"
-          value={this.state.name}
-          onChange={this.handleChange}
-        />
-        <Button type="submit">Add Category</Button>
-      </Form>
+      <div>
+        <Form onChange={this.handleChange} onSubmit={this.handleSubmit}>
+          <Form.Input
+            type="text"
+            name="name"
+            id="name"
+            value={this.state.name}
+            onChange={this.handleChange}
+          />
+          <Button type="submit">Add Category</Button>
+        </Form>
+
+        <AddProductCategory />
+
+        {/* <AddProductCategory /> */}
+      </div>
     )
   }
 }

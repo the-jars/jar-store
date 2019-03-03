@@ -1,11 +1,11 @@
 import axios from 'axios'
-
-// ACTION TYPES
+// import {Category} from '.../server/db/models/product.js'
+// // ACTION TYPES
 const GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT'
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const ADD_PRODUCT = 'ADD_PRODUCT'
 const ADD_PRODUCT_CATEGORY = 'ADD_PRODUCT_CATEGORY'
-// ACTION CREATORS
+// // ACTION CREATORS
 export const getProduct = product => ({
   type: GET_SINGLE_PRODUCT,
   product
@@ -24,7 +24,7 @@ export const addProductCategory = productCategory => ({
   productCategory
 })
 
-// THUNKS
+// // THUNKS
 export const fetchSingleProduct = productId => async dispatch => {
   try {
     const res = await axios.get(`/api/products/${productId}`)
@@ -54,13 +54,17 @@ export const fetchProducts = () => async dispatch => {
   }
 }
 
-// thunk for editing selected project
+// // thunk for editing selected project
 export const editSingleProduct = (id, editField) => dispatch => {
   axios
     .put(`/api/products/${id}`, editField)
     .then(response => dispatch(getProduct(response.data)))
     .catch(console.log)
 }
+
+// export const getCategory = () => dispatch => {
+//   axios.get()
+// }
 
 export const addProductThunk = newProductInfo => dispatch => {
   axios
@@ -69,11 +73,25 @@ export const addProductThunk = newProductInfo => dispatch => {
     .catch(console.log)
 }
 
-export const fetchNewProductCategory = (categoryId, productId) => dispatch => {
-  axios
-    .post(`/api/products/${productId}/categories/${categoryId}`)
-    .then(res => dispatch(addProductCategory(res.data)))
-    .catch(console.log)
+// export const fetchNewProductCategory = (categoryId, productId) => dispatch => {
+//   axios
+//     .post(`/api/products/${productId}/categories/${categoryId}`)
+//     .then(res => dispatch(addProductCategory(res.data)))
+//     .catch(console.log)
+// }
+
+export const fetchNewProductCategory = (
+  categoryId,
+  productId
+) => async dispatch => {
+  try {
+    const newProductCategory = await axios.post(
+      `/api/products/${productId}/categories/${categoryId}`
+    )
+    console.log('created new produtcategory: ', newProductCategory.data)
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 //REDUCER(S?)
@@ -82,6 +100,11 @@ export const singleProduct = function(state = {}, action) {
   switch (action.type) {
     case GET_SINGLE_PRODUCT:
       return action.product
+    // case ADD_PRODUCT_CATEGORY:
+    //   return {
+    //     ...state,
+    //     categories: [...state.categories, action.productCategory]
+    //   }
     default:
       return state
   }
