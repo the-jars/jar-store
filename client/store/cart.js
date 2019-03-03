@@ -23,10 +23,6 @@ export const addedItemToCart = cartItem => ({
   cartItem
 })
 
-//check to see if cart exists
-//if it does, we run xyz
-//if no, we create cart and then call the thunk that adds item to it
-
 export const deleteItem = itemToDelete => ({
   type: DELETE_ITEM,
   itemToDelete
@@ -60,7 +56,7 @@ export const deleteCartItem = itemToDelete => dispatch =>
     })
     .catch(console.log)
 
-// Might  not be needed anymore
+// fetches active cart metadata and puts it on state
 export const fetchCartInfo = userId => async dispatch => {
   try {
     console.log('fetchingCartInfo', userId)
