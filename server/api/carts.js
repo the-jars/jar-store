@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {Cart, CartItem, Product} = require('../db/models')
+// Routes for /api/carts
 
 // Routes for /api/carts
 
@@ -9,6 +10,13 @@ router.post('/', async (req, res, next) => {
     let userId = req.body.userId
     if (!userId) {
       userId = req.session.id
+      const response = await Cart.findOrCreate({
+        where: {
+          sessionId: userId,
+          status: 'active'
+        }
+      })
+      res.json(response[0])
     }
     const response = await Cart.findOrCreate({
       where: {
@@ -16,12 +24,42 @@ router.post('/', async (req, res, next) => {
         status: 'active'
       }
     })
-    // const userCart = response
     res.json(response[0])
   } catch (error) {
     next(error)
   }
 })
+
+//if cartitem has this productid + cartid combo, increment that quantity
+//else create productid + cartid combo w quantity 1
+router.post('/:cartId/products/:productId', async (req, res, next) => {
+  try {
+    const cartId = req.params.cartId
+    const productId = req.params.productId
+
+    //check cartitem
+    const isAlreadyInCart = await CartItem.findOne({
+      where: {
+        cartId: cartId,
+        productId: productId
+      }
+    })
+    if (isAlreadyInCart) {
+      await isAlreadyInCart.increment('quantity', {by: 1})
+      res.json(isAlreadyInCart)
+    } else {
+      const createdCartItem = await CartItem.create({
+        cartId: cartId,
+        productId: productId,
+        quantity: 1
+      })
+      res.json(createdCartItem)
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
 // when cartId is provided, grab that cart and move onto the next route
 router.param('cartId', (req, res, next, cartId) =>
   Cart.findById(cartId, {include: [CartItem]})
@@ -84,4 +122,5 @@ router.get('/:userId', async (req, res, next) => {
     next(err)
   }
 })
+
 module.exports = router
