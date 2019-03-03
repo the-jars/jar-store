@@ -69,6 +69,10 @@ const seed = db
         review.setProduct(products[idx])
       }),
 
+      orders.forEach(function(order, idx) {
+        order.setUser(users[idx])
+      }),
+
       op1.setProduct(p1),
       op2.setProduct(p2),
       op3.setProduct(p3),
@@ -81,10 +85,6 @@ const seed = db
       nutbutter.setProducts([p4, p5, p9]),
       salsa.setProducts([p7]),
       // p8.setCategory(salsa),
-
-      carts.forEach(function(cart, idx) {
-        cart.setUser(users[idx])
-      }),
 
       cartitems.forEach(function(cartItem, idx) {
         cartItem.setCart(
