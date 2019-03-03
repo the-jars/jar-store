@@ -7,12 +7,7 @@ export const Product = props => {
   return (
     <div>
       <Card>
-        <Image
-          src={product.imgUrl}
-          circular
-          size="medium"
-          verticalAlign="top"
-        />
+        <Image src={product.imgUrl} circular verticalAlign="top" />
         <Card.Content>
           <Card.Header>
             <Link to={`products/${product.id}`}>{product.name}</Link>
