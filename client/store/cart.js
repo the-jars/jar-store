@@ -51,7 +51,6 @@ export const fetchCartItems = userId => async dispatch => {
 }
 // - for deleting one item from the array
 export const deleteCartItem = itemToDelete => dispatch => {
-  console.log('ITEM', itemToDelete)
   axios
     .delete(`/api/carts/${itemToDelete.cartId}/${itemToDelete.id}`)
     .then(res => {
