@@ -15,6 +15,7 @@ class SingleProduct extends Component {
     const product = this.props.currentProduct
     const categories = product.categories || []
     const user = this.props.user
+    console.log(this.props)
     if (!product) {
       return <h1>Product Not Found</h1>
     } else {

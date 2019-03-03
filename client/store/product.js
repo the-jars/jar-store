@@ -4,7 +4,7 @@ import axios from 'axios'
 const GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT'
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const ADD_PRODUCT = 'ADD_PRODUCT'
-
+const ADD_PRODUCT_CATEGORY = 'ADD_PRODUCT_CATEGORY'
 // ACTION CREATORS
 export const getProduct = product => ({
   type: GET_SINGLE_PRODUCT,
@@ -19,10 +19,10 @@ export const addProduct = product => ({
   type: ADD_PRODUCT,
   product
 })
-// export const getProducts = products => ({
-//   GET_PRODUCTS,
-//   products
-// })
+export const addProductCategory = productCategory => ({
+  type: ADD_PRODUCT_CATEGORY,
+  productCategory
+})
 
 // THUNKS
 export const fetchSingleProduct = productId => async dispatch => {
@@ -66,6 +66,13 @@ export const addProductThunk = newProductInfo => dispatch => {
   axios
     .post(`/api/products`, newProductInfo)
     .then(res => dispatch(addProduct(res.data)))
+    .catch(console.log)
+}
+
+export const fetchNewProductCategory = (categoryId, productId) => dispatch => {
+  axios
+    .post(`/api/products/${productId}/categories/${categoryId}`)
+    .then(res => dispatch(addProductCategory(res.data)))
     .catch(console.log)
 }
 
