@@ -1,21 +1,22 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {showAddReview} from '../store/review'
 
 // ACTIONS
 import {fetchSingleProduct} from '../store/product.js'
 import {Button} from 'semantic-ui-react'
-import Reviews from './Review.js'
+import Review from './Review.js'
 
 class SingleProduct extends Component {
+  constructor() {
+    super()
+  }
   componentDidMount() {
     const currentProductId = this.props.match.params.id
     this.props.setProduct(currentProductId)
   }
 
-  handleClick(e) {
-    return <Reviews product={this.state.currentProduct} />
-  }
   render() {
     const product = this.props.currentProduct
     const categories = product.categories || []
@@ -44,7 +45,8 @@ class SingleProduct extends Component {
               </Link>
             ) : null}
           </div>
-          <Button onClick={() => this.handleClick}>Add a Review</Button>
+          <Button onClick={this.props.showAddReviewFunc}>Add a Review</Button>
+          {this.props.showAddReview ? <Review product={product} /> : null}
         </div>
       )
     }
@@ -58,7 +60,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setProduct: currentProductId => dispatch(fetchSingleProduct(currentProductId))
+  setProduct: currentProductId =>
+    dispatch(fetchSingleProduct(currentProductId)),
+  showAddReviewFunc: () => dispatch(showAddReview())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)

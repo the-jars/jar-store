@@ -3,7 +3,7 @@ import {Rating, Button, Grid, TextArea, Form} from 'semantic-ui-react'
 import {addNewReview} from '../store/review'
 import {connect} from 'react-redux'
 
-export class Reviews extends Component {
+export class Review extends Component {
   constructor() {
     super()
     this.state = {
@@ -54,7 +54,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   addNewReview: (reviewData, productId, userId) =>
-    addNewReview(reviewData, productId, userId)
+    dispatch(addNewReview(reviewData, productId, userId))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Reviews)
+export default connect(mapStateToProps, mapDispatchToProps)(Review)
