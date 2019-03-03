@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {fetchCartItems, deleteCartItem} from '../store/cart'
+import {fetchCartInfo, deleteCartItem} from '../store/cart'
 import {connect} from 'react-redux'
 import {
   Card,
@@ -16,6 +16,10 @@ export class Cart extends Component {
   // constructor(props) {
   //   super(props)
   // }
+
+  componentDidMount() {
+    this.props.fetchCartInfo(this.props.user.id)
+  }
 
   total(cartData) {
     return cartData.reduce((acc, item) => {
