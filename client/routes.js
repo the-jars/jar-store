@@ -8,6 +8,7 @@ import singleProduct from './components/singleProduct'
 import ProductList from './components/ProductList'
 import AddProduct from './components/AddProduct.js'
 import Cart from './components/Cart'
+import Reviews from './components/Review'
 /**
  * COMPONENT
  */
@@ -25,6 +26,7 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/cart" render={() => <Cart {...this.props} />} />
+        <Route exact path="/review/add" component={Reviews} />
         <Route exact path="/products/add" component={AddProduct} />
 
         <Route exact path="/products" component={ProductList} />

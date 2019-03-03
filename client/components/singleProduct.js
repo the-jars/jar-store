@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom'
 
 // ACTIONS
 import {fetchSingleProduct} from '../store/product.js'
+import {Button} from 'semantic-ui-react'
+import Reviews from './Review.js'
 
 class SingleProduct extends Component {
   componentDidMount() {
@@ -11,6 +13,9 @@ class SingleProduct extends Component {
     this.props.setProduct(currentProductId)
   }
 
+  handleClick(e) {
+    return <Reviews product={this.state.currentProduct} />
+  }
   render() {
     const product = this.props.currentProduct
     const categories = product.categories || []
@@ -39,6 +44,7 @@ class SingleProduct extends Component {
               </Link>
             ) : null}
           </div>
+          <Button onClick={() => this.handleClick}>Add a Review</Button>
         </div>
       )
     }
@@ -47,7 +53,8 @@ class SingleProduct extends Component {
 
 const mapStateToProps = state => ({
   currentProduct: state.singleProduct,
-  user: state.user
+  user: state.user,
+  showAddReview: state.reviews.showAddReview
 })
 
 const mapDispatchToProps = dispatch => ({
