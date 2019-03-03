@@ -7,7 +7,12 @@ export const Product = props => {
   return (
     <div>
       <Card>
-        <Image src={product.imgUrl} circular fluid size="large" />
+        <Image
+          src={product.imgUrl}
+          circular
+          size="medium"
+          verticalAlign="top"
+        />
         <Card.Content>
           <Card.Header>
             <Link to={`products/${product.id}`}>{product.name}</Link>

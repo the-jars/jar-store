@@ -3,7 +3,15 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import queryString from 'query-string'
-import {Menu, Sidebar, Grid, Dropdown, Button} from 'semantic-ui-react'
+import {
+  Menu,
+  Sidebar,
+  Grid,
+  Dropdown,
+  Button,
+  Segment,
+  Card
+} from 'semantic-ui-react'
 
 // internal moduels
 import {fetchProducts, filterCategories} from '../store/product'

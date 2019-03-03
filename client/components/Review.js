@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import {Rating, Button, Grid, TextArea, Form} from 'semantic-ui-react'
-import {addNewReview} from '../store/review'
+import {addNewReview, showAddReview} from '../store/review'
 import {connect} from 'react-redux'
 
-export class Review extends Component {
+export class AddReview extends Component {
   constructor() {
     super()
     this.state = {
@@ -11,19 +11,24 @@ export class Review extends Component {
       maxRating: 5,
       reviewText: ''
     }
-    this.handleChange = this.handleChange.bind(this)
-    //this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleRate = this.handleRate.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
   handleRate = (e, {rating, maxRating}) => this.setState({rating, maxRating})
   handleChange = (e, {name, value}) => this.setState({[name]: value})
   handleSubmit = e => {
+    e.preventDefault()
     this.props.addNewReview(
       this.state,
       this.props.product.id,
       this.props.user.id
     )
+    this.props.showAddReviewFunc()
+    this.setState({
+      reviewText: ''
+    })
   }
 
   render() {
@@ -54,7 +59,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   addNewReview: (reviewData, productId, userId) =>
-    dispatch(addNewReview(reviewData, productId, userId))
+    dispatch(addNewReview(reviewData, productId, userId)),
+  showAddReviewFunc: () => dispatch(showAddReview())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Review)
+export default connect(mapStateToProps, mapDispatchToProps)(AddReview)

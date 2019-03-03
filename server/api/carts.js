@@ -55,15 +55,25 @@ router.param('itemId', (req, res, next, itemId) =>
  * - after, remove that item from the database cartItem model
  */
 
-router.delete('/:cartId/:itemId', (req, res, next) =>
-  req.cart
-    .removeCartitem(req.item.id)
-    // if item was succesfully removed, also delete it from the cartItem
-    // send status for succesfully deleted: 204
-    .then(() => req.item.destroy())
-    .then(() => res.sendStatus(204))
-    .catch(next)
-)
+router.delete('/:cartId/:cartItemId', async (req, res, next) => {
+  // req.cart
+  //   .removeCartitem(req.item.id)
+  //   // if item was succesfully removed, also delete it from the cartItem
+  //   // send status for succesfully deleted: 204
+  //   .then(() => req.item.destroy())
+  //   .then(() => res.sendStatus(204))
+  //   .catch(next)
+  try {
+    await CartItem.destroy({
+      where: {
+        id: req.params.cartItemId
+      }
+    })
+    res.sendStatus(204)
+  } catch (err) {
+    next(err)
+  }
+})
 
 router.put('/:cartId/:productId', async (req, res, next) => {
   try {

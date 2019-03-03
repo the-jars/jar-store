@@ -21,7 +21,6 @@ export class Cart extends Component {
       qty: 0,
       currentItem: {}
     }
-    //this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
@@ -31,12 +30,6 @@ export class Cart extends Component {
       return acc
     }, 0)
   }
-
-  // handleSubmit(event) {
-  //   event.preventDefault()
-  //   this.props.putItemQty(this.state.currentItem, this.state.qty)
-  //   console.log(this.state.currentItem, this.state.qty)
-  // }
 
   handleChange(event, {value, currentitem}) {
     this.setState({
@@ -176,7 +169,7 @@ export class Cart extends Component {
                     <Header.Content>Total</Header.Content>
                   </Header>
                 </Table.Cell>
-                <Table.Cell>{`$${total}`}</Table.Cell>
+                <Table.Cell>{`$${total.toFixed(2)}`}</Table.Cell>
               </Table.Row>
             </Table.Body>
           </Table>
