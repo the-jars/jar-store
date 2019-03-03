@@ -19,10 +19,6 @@ export const addProduct = product => ({
   type: ADD_PRODUCT,
   product
 })
-// export const getProducts = products => ({
-//   GET_PRODUCTS,
-//   products
-// })
 
 // THUNKS
 export const fetchSingleProduct = productId => async dispatch => {
