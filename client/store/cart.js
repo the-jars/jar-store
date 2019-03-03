@@ -33,9 +33,7 @@ export const deleteItem = itemToDelete => ({
 // - for fetching all items in carts
 export const fetchCartItems = userId => async dispatch => {
   try {
-    console.log('Im being run', userId)
     const cart = await axios.get(`/api/carts/${userId}`)
-    console.log('im a cart', cart)
     dispatch(setCart(cart.data))
   } catch (error) {
     console.error(error)
@@ -43,9 +41,10 @@ export const fetchCartItems = userId => async dispatch => {
 }
 
 // - for deleting one item from the array
-export const deleteCartItem = itemToDelete => dispatch =>
+export const deleteCartItem = itemToDelete => dispatch => {
+  console.log('to Delete', itemToDelete)
   axios
-    .delete(`/api/carts/${itemToDelete.cartId}/${itemToDelete.productId}`)
+    .delete(`/api/carts/${itemToDelete.cartId}/${itemToDelete.id}`)
     .then(res => {
       // status is 204 when delete is succesful
       if (res.status === 204) dispatch(deleteItem(itemToDelete))
@@ -56,6 +55,7 @@ export const deleteCartItem = itemToDelete => dispatch =>
       return res.status
     })
     .catch(console.log)
+}
 
 // fetches active cart metadata and puts it on state
 export const fetchCartInfo = userId => async dispatch => {
