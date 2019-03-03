@@ -88,12 +88,8 @@ export class ProductList extends Component {
             {currentProducts.map(
               product =>
                 product.available ? (
-                  <div>
-                    <Product
-                      key={product.id}
-                      className="grid-item"
-                      product={product}
-                    />
+                  <div key={product.id}>
+                    <Product className="grid-item" product={product} />
                     <AddItemButton
                       productId={product.id}
                       userId={this.props.user.id}

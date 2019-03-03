@@ -3,9 +3,10 @@ const {Cart, CartItem, Product} = require('../db/models')
 // Routes for /api/carts
 
 // POST/api/carts
-router.post('/', async (req, res, next) => {
+router.post('/:userId', async (req, res, next) => {
   try {
-    let userId = req.body.userId
+    let userId = req.params.userId
+    console.log('im the userId on the body', userId)
     if (!userId) {
       userId = req.session.id
       const response = await Cart.findOrCreate({
@@ -27,8 +28,6 @@ router.post('/', async (req, res, next) => {
     next(error)
   }
 })
-
-router.put('/:cartId')
 
 //if cartitem has this productid + cartid combo, increment that quantity
 //else create productid + cartid combo w quantity 1
@@ -116,7 +115,7 @@ router.delete('/:cartId/:itemId', (req, res, next) =>
 router.get('/:userId', async (req, res, next) => {
   try {
     //pull cartId with userid && active in cart table
-    // console.log('id', req.body.userId)
+    console.log('id', req.body.userId)
     const cart = await Cart.findOne({
       where: {
         userId: req.params.userId,

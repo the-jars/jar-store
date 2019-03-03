@@ -18,10 +18,9 @@ export const instantiateCart = cartInfo => ({
   cartInfo
 })
 
-export const addedItemToCart = (productId, cartId) => ({
+export const addedItemToCart = cartItem => ({
   type: ADDED_ITEM_TO_CART,
-  productId: productId,
-  cartId: cartId
+  cartItem
 })
 
 //check to see if cart exists
@@ -37,7 +36,9 @@ export const deleteItem = itemToDelete => ({
 // - for fetching all items in carts
 export const fetchCartItems = userId => async dispatch => {
   try {
+    console.log('Im being run', userId)
     const cart = await axios.get(`/api/carts/${userId}`)
+    console.log('im a cart', cart)
     dispatch(setCart(cart.data))
   } catch (error) {
     console.error(error)
@@ -62,7 +63,8 @@ export const deleteCartItem = itemToDelete => dispatch =>
 // Might  not be needed anymore
 export const fetchCartInfo = userId => async dispatch => {
   try {
-    const cartInfo = await axios.post(`/api/carts`, userId)
+    console.log('fetchingCartInfo', userId)
+    const cartInfo = await axios.post(`/api/carts/${userId}`)
     dispatch(instantiateCart(cartInfo))
   } catch (error) {
     console.error(error)
@@ -76,9 +78,11 @@ export const addItemToCart = (productId, cartId) => async dispatch => {
     if (!cartId === undefined) {
       cartId = 'null'
     }
-    const cartItem = await axios.post(
+    const response = await axios.post(
       `/api/carts/${cartId}/products/${productId}`
     )
+    const cartItem = response.data
+    console.log('im a cart item', cartItem)
     dispatch(addedItemToCart(cartItem))
   } catch (error) {
     console.error(error)
@@ -101,6 +105,12 @@ export const createNewCart = (userId, productId) => async dispatch => {
   }
 }
 
+const filterHelper = (state, updatedItem) => {
+  console.log('updatedItem', updatedItem)
+  const filteredState = state.filter(item => item.id !== updatedItem.id)
+  return [...filteredState, updatedItem]
+}
+
 // REDUCER
 export const cart = (state = [], action) => {
   switch (action.type) {
@@ -111,7 +121,7 @@ export const cart = (state = [], action) => {
         value => value.productId !== action.itemToDelete.productId
       )
     case ADDED_ITEM_TO_CART:
-      return [...state, action.cartItem]
+      return filterHelper(state, action.cartItem)
     default:
       return state
   }
