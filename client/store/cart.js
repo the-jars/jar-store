@@ -65,7 +65,7 @@ export const fetchCartInfo = userId => async dispatch => {
   try {
     console.log('fetchingCartInfo', userId)
     const cartInfo = await axios.post(`/api/carts/${userId}`)
-    dispatch(instantiateCart(cartInfo))
+    dispatch(instantiateCart(cartInfo.data))
   } catch (error) {
     console.error(error)
   }

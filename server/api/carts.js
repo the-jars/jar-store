@@ -3,6 +3,8 @@ const {Cart, CartItem, Product} = require('../db/models')
 // Routes for /api/carts
 
 // POST/api/carts
+// if passed a userId, will find or create an active cart for that user
+// if passed something falsy for userId, it will create an an active cart using the sessionId instead
 router.post('/:userId', async (req, res, next) => {
   try {
     let userId = req.params.userId
@@ -35,22 +37,6 @@ router.post('/:cartId/products/:productId', async (req, res, next) => {
   try {
     const cartId = req.params.cartId
     const productId = req.params.productId
-    //   //check to see if cart exists
-    if (cartId === 'null') {
-      res.send('This is what happens when cartId is null')
-    }
-    //   const cartExists = await Cart.findOne({
-    //     where:{
-    //       id: cartId
-    //     }
-    //   })
-    //   if(!cartExists){
-    //     await Cart.create({
-
-    //     })
-    //   }
-
-    //check cartitem
     const isAlreadyInCart = await CartItem.findOne({
       where: {
         cartId: cartId,
