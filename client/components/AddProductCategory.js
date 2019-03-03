@@ -52,19 +52,9 @@ class AddProductCategory extends React.Component {
   }
 }
 
-const mapState = state => ({
-  singleProduct: state.singleProduct,
-  categories: state.singleProduct.categories
-  // handleNewPC: state.handleNewPC
-})
-
 const mapDispatch = (dispatch, ownProps) => ({
-  initializeProduct: () =>
-    dispatch(fetchSingleProduct(ownProps.match.params.id)),
-  editProduct: editField =>
-    dispatch(editSingleProduct(ownProps.match.params.id, editField)),
   fetchNewProductCategory: (categoryId, productId) =>
     dispatch(fetchNewProductCategory(categoryId, productId))
 })
 
-export default connect(mapState, mapDispatch)(AddProductCategory)
+export default connect(null, mapDispatch)(AddProductCategory)

@@ -43,8 +43,6 @@ class AddCategory extends Component {
         </Form>
 
         <AddProductCategory />
-
-        {/* <AddProductCategory /> */}
       </div>
     )
   }

@@ -1,10 +1,11 @@
 import axios from 'axios'
-// import {Category} from '.../server/db/models/product.js'
+
 // // ACTION TYPES
 const GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT'
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const ADD_PRODUCT = 'ADD_PRODUCT'
 const ADD_PRODUCT_CATEGORY = 'ADD_PRODUCT_CATEGORY'
+
 // // ACTION CREATORS
 export const getProduct = product => ({
   type: GET_SINGLE_PRODUCT,
@@ -62,23 +63,12 @@ export const editSingleProduct = (id, editField) => dispatch => {
     .catch(console.log)
 }
 
-// export const getCategory = () => dispatch => {
-//   axios.get()
-// }
-
 export const addProductThunk = newProductInfo => dispatch => {
   axios
     .post(`/api/products`, newProductInfo)
     .then(res => dispatch(addProduct(res.data)))
     .catch(console.log)
 }
-
-// export const fetchNewProductCategory = (categoryId, productId) => dispatch => {
-//   axios
-//     .post(`/api/products/${productId}/categories/${categoryId}`)
-//     .then(res => dispatch(addProductCategory(res.data)))
-//     .catch(console.log)
-// }
 
 export const fetchNewProductCategory = (
   categoryId,
@@ -100,11 +90,6 @@ export const singleProduct = function(state = {}, action) {
   switch (action.type) {
     case GET_SINGLE_PRODUCT:
       return action.product
-    // case ADD_PRODUCT_CATEGORY:
-    //   return {
-    //     ...state,
-    //     categories: [...state.categories, action.productCategory]
-    //   }
     default:
       return state
   }
