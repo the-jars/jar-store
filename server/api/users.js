@@ -3,6 +3,7 @@ const {User} = require('../db/models')
 const {Cart} = require('../db/models')
 module.exports = router
 
+// GET /api/users
 router.get('/', async (req, res, next) => {
   try {
     const users = await User.findAll({
@@ -17,6 +18,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+// POST /api/users/userId/cart
 router.post('/:id/cart', async (req, res, next) => {
   try {
     let userCart

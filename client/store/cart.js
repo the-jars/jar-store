@@ -2,6 +2,7 @@ import axios from 'axios'
 
 // ACTION TYPES
 const SET_CART = 'SET_CART'
+const RESET_CART = 'RESET_CART'
 const INSTANTIATE_CART = 'INSTANTIATE_CART'
 const ADDED_ITEM_TO_CART = 'ADDED_ITEM_TO_CART'
 const DELETE_ITEM = 'DELETE_ITEM'
@@ -118,6 +119,8 @@ export const cart = (state = [], action) => {
       )
     case ADDED_ITEM_TO_CART:
       return filterHelper(state, action.cartItem)
+    case RESET_CART:
+      return []
     default:
       return state
   }

@@ -53,6 +53,7 @@ export const auth = (email, password, method) => async dispatch => {
     console.log('I am a user object', res.data)
     dispatch(getUser(res.data))
     dispatch(fetchCartInfo(res.data.id))
+    dispatch(fetchCartItems(res.data.id))
     history.push('/home')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
