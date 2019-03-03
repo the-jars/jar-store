@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 
 // ACTIONS
 import {fetchSingleProduct} from '../store/product.js'
+import AddItemToCart from './AddItemToCart.js'
 
 class SingleProduct extends Component {
   componentDidMount() {
@@ -33,6 +34,7 @@ class SingleProduct extends Component {
           </ul>
           <p>{product.description}</p>
           <div>
+            <AddItemToCart productId={product.id} userId={this.props.user.id} />
             {user.id && user.isAdmin ? (
               <Link to={`/products/${product.id}/edit`}>
                 <button type="button">Edit Product</button>
