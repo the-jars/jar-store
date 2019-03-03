@@ -31,10 +31,10 @@ export const me = () => async dispatch => {
     dispatch(getUser(res.data || defaultUser))
     //const cart = await axios.get('/api/carts', { userId })
     if (res.data.id) {
-      dispatch(fetchCartItems(res.data.id))
+      // dispatch(fetchCartItems(res.data.id))
       dispatch(fetchCartInfo(res.data.id))
     } else {
-      dispatch(createNewCart('null'))
+      dispatch(fetchCartInfo('null'))
     }
   } catch (err) {
     console.error(err)
@@ -51,9 +51,10 @@ export const auth = (email, password, method) => async dispatch => {
 
   try {
     console.log('I am a user object', res.data)
+    //Here's where we'd save the session Cart
     dispatch(getUser(res.data))
     dispatch(fetchCartInfo(res.data.id))
-    dispatch(fetchCartItems(res.data.id))
+    // dispatch(fetchCartItems(res.data.id))
     history.push('/home')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)

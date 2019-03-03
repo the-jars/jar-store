@@ -3,29 +3,42 @@ const {Cart, CartItem, Product} = require('../db/models')
 // Routes for /api/carts
 
 // POST/api/carts
+
 // if passed a userId, will find or create an active cart for that user
 // if passed something falsy for userId, it will create an an active cart using the sessionId instead
 router.post('/:userId', async (req, res, next) => {
   try {
     let userId = req.params.userId
+    let response
     console.log('im the userId on the body', userId)
-    if (!userId) {
+    if (userId === 'null') {
       userId = req.session.id
-      const response = await Cart.findOrCreate({
+      response = await Cart.findOrCreate({
         where: {
           sessionId: userId,
           status: 'active'
         }
       })
-      res.json(response[0])
+    } else {
+      response = await Cart.findOrCreate({
+        where: {
+          userId: userId,
+          status: 'active'
+        }
+      })
     }
-    const response = await Cart.findOrCreate({
+    const cart = response[0]
+    const cartId = cart.id
+    //pull everything from cartitems with cartid
+    const items = await CartItem.findAll({
       where: {
-        userId: userId,
-        status: 'active'
-      }
+        cartId: cartId
+      },
+      //eager load product info
+      include: [{model: Product}]
     })
-    res.json(response[0])
+    // console.log('i am items', items)
+    res.json({cart, items})
   } catch (error) {
     next(error)
   }
@@ -96,15 +109,14 @@ router.delete('/:cartId/:itemId', (req, res, next) => {
     .catch(next)
 })
 
-// Routes for /api/carts
-//GET /api/cart/userId for getting cart by the logged in user
-router.get('/:userId', async (req, res, next) => {
+// GET /api/cart/unauth/ for getting cart by sessionId for unauthenticated users
+router.get('/unauth/', async (req, res, next) => {
   try {
     //pull cartId with userid && active in cart table
     console.log('id', req.body.userId)
     const cart = await Cart.findOne({
       where: {
-        userId: req.params.userId,
+        userId: req.session.id,
         status: 'active'
       }
     })
@@ -123,16 +135,31 @@ router.get('/:userId', async (req, res, next) => {
   }
 })
 
-//GET /api/cart for getting cart by cartID for unauthenticated users
-router.get('/unauth/:cartId', async (req, res, next) => {
-  try {
-    const sessionCart = await Cart.findById(req.params.cartId, {
-      include: [{model: CartItem}]
-    })
-    res.json(sessionCart)
-  } catch (error) {
-    console.error(error)
-  }
-})
+// // Routes for /api/carts
+// //GET /api/cart/userId for getting cart by the logged in user
+// router.get('/:userId', async (req, res, next) => {
+//   try {
+//     //pull cartId with userid && active in cart table
+//     console.log('id', req.body.userId)
+//     const cart = await Cart.findOne({
+//       where: {
+//         userId: req.params.userId,
+//         status: 'active'
+//       }
+//     })
+//     const cartId = cart.id
+//     //pull everything from cartitems with cartid
+//     const items = await CartItem.findAll({
+//       where: {
+//         cartId: cartId
+//       },
+//       //eager load product info
+//       include: [{model: Product}]
+//     })
+//     res.json(items)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
 module.exports = router
