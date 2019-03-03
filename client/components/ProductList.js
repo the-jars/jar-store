@@ -64,7 +64,7 @@ export class ProductList extends Component {
     const categoryOptions = categories.map((category, idx) => {
       return {key: idx, text: category.name, value: category.name}
     })
-    categoryOptions.push({key: 10, text: 'All', Value: 'All'})
+    categoryOptions.push({key: 10, text: 'All', value: 'All'})
 
     if (!products) {
       return <h1>nope</h1>
@@ -77,7 +77,6 @@ export class ProductList extends Component {
               <Dropdown
                 // type="text"
                 name="filterByCategory"
-                defaultValue="All"
                 placeholder="All"
                 selection
                 value={this.state.filter}

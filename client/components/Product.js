@@ -12,6 +12,7 @@ export const Product = props => {
           <Card.Header>
             <Link to={`products/${product.id}`}>{product.name}</Link>
           </Card.Header>
+          <Card.Meta>{product.description}</Card.Meta>
         </Card.Content>
       </Card>
     </div>
