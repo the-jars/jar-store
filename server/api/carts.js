@@ -97,7 +97,7 @@ router.delete('/:cartId/:itemId', (req, res, next) => {
 })
 
 // Routes for /api/carts
-//GET /api/cart for getting cart by the logged in user
+//GET /api/cart/userId for getting cart by the logged in user
 router.get('/:userId', async (req, res, next) => {
   try {
     //pull cartId with userid && active in cart table
@@ -120,6 +120,18 @@ router.get('/:userId', async (req, res, next) => {
     res.json(items)
   } catch (err) {
     next(err)
+  }
+})
+
+//GET /api/cart for getting cart by cartID for unauthenticated users
+router.get('/unauth/:cartId', async (req, res, next) => {
+  try {
+    const sessionCart = await Cart.findById(req.params.cartId, {
+      include: [{model: CartItem}]
+    })
+    res.json(sessionCart)
+  } catch (error) {
+    console.error(error)
   }
 })
 

@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const {User} = require('../db/models')
-const {Cart} = require('../db/models')
+const {Cart, CartItem} = require('../db/models')
 module.exports = router
 
 // GET /api/users
@@ -35,6 +35,7 @@ router.post('/:id/cart', async (req, res, next) => {
         }
       })
     }
+    console.log(userCart[0].items)
     res.json(userCart[0])
   } catch (error) {
     next(error)

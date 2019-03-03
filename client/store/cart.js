@@ -40,6 +40,15 @@ export const fetchCartItems = userId => async dispatch => {
   }
 }
 
+export const fetchCartItemsByCartId = cartId => async dispatch => {
+  try {
+    const cart = await axios.get(`/api/carts/${userId}`)
+    dispatch(setCart(cart.data))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 // - for deleting one item from the array
 export const deleteCartItem = itemToDelete => dispatch => {
   console.log('to Delete', itemToDelete)
@@ -94,6 +103,7 @@ export const createNewCart = (userId, productId) => async dispatch => {
     const newCart = response.data
     console.log('I am a new cart', newCart)
     dispatch(instantiateCart(newCart))
+    dispatch(setCart(newCart.cartitems))
     if (productId) {
       dispatch(addItemToCart(productId, newCart.id))
     }
