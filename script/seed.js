@@ -79,7 +79,8 @@ const seed = db
 
       jelly.setProducts([p1, p2, p3, p9, p8]),
       nutbutter.setProducts([p4, p5, p9]),
-      salsa.setProducts([p7, p8]),
+      salsa.setProducts([p7]),
+      // p8.setCategory(salsa),
 
       carts.forEach(function(cart, idx) {
         cart.setUser(users[idx])

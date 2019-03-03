@@ -28,6 +28,7 @@ class AddCategory extends Component {
       [event.target.name]: event.target.value
     })
   }
+
   render() {
     return (
       <Form onChange={this.handleChange} onSubmit={this.handleSubmit}>
