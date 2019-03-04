@@ -108,4 +108,17 @@ router.put('/:id', (req, res, next) =>
     .catch(next)
 )
 
+router.post('/:id/categories/:categoryId', async (req, res, next) => {
+  try {
+    const productId = req.params.id
+    const categoryId = req.params.categoryId
+    const product = await Product.findById(productId)
+    const category = await Category.findById(categoryId)
+    const newProductCategory = await category.addProduct(product)
+    res.json(newProductCategory)
+  } catch (err) {
+    next(err)
+  }
+})
+
 module.exports = router

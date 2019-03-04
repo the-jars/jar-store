@@ -2,13 +2,21 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {showAddReview, getReviews} from '../store/review'
-import {Image, Card, Icon, Segment, Header, Grid} from 'semantic-ui-react'
+import {
+  Image,
+  Card,
+  Icon,
+  Segment,
+  Header,
+  Grid,
+  Button
+} from 'semantic-ui-react'
 import Review from './Review'
 
 // ACTIONS
 import {fetchSingleProduct} from '../store/product.js'
-import {Button} from 'semantic-ui-react'
 import AddReview from './AddReview.js'
+import AddItemToCart from './AddItemToCart.js'
 
 class SingleProduct extends Component {
   constructor() {
@@ -54,6 +62,10 @@ class SingleProduct extends Component {
                   ))}
                 </ul>
                 <p>{product.description}</p>
+                <AddItemToCart
+                  productId={product.id}
+                  userId={this.props.user.id}
+                />
                 <Card.Meta>Average Rating: {totalRating}</Card.Meta>
               </Card>
             </Grid.Column>

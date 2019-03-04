@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {fetchCartItems, deleteCartItem, putItemQty} from '../store/cart'
+import {fetchCartInfo, deleteCartItem, putItemQty} from '../store/cart'
 import {connect} from 'react-redux'
 import {
   Card,
@@ -7,19 +8,16 @@ import {
   Grid,
   Image,
   Table,
-  Dropdown,
   Header,
   Button,
-  Form,
-  Input
+  Form
 } from 'semantic-ui-react'
 
 export class Cart extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      qty: 0,
-      currentItem: {}
+      qty: 0
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -98,13 +96,6 @@ export class Cart extends Component {
                                     value={qty}
                                     onChange={this.handleChange}
                                   />
-                                  {/* <Input
-                                type="text"
-                                name="quantity"
-                                value={item.quantity}
-                                onChange={this.handleChange}
-
-                              /> */}
                                   <Button
                                     onClick={() =>
                                       this.props.putItemQty(
@@ -192,7 +183,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchCartItems: userId => dispatch(fetchCartItems(userId)),
+  fetchCartInfo: userId => dispatch(fetchCartInfo(userId)),
   deleteCartItem: itemToDelete => dispatch(deleteCartItem(itemToDelete)),
   putItemQty: (editedCartItem, qty) => dispatch(putItemQty(editedCartItem, qty))
 })
