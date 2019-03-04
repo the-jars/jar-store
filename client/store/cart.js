@@ -65,7 +65,6 @@ export const deleteCartItem = itemToDelete => dispatch => {
     .catch(console.log)
 }
 
-// add item to cart if it exists
 export const putItemQty = (editedCartItem, value) => async dispatch => {
   try {
     const {data: updatedCartItem} = await axios.put(

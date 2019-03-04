@@ -30,12 +30,6 @@ export class Cart extends Component {
 
   handleChange(event, {value, currentitem}) {
     this.setState({
-      qty: value
-    })
-  }
-
-  handleChange(event, {value, currentitem}) {
-    this.setState({
       qty: value,
       currentItem: currentitem
     })
