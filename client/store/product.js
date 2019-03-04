@@ -5,6 +5,7 @@ const GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT'
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const ADD_PRODUCT = 'ADD_PRODUCT'
 const ADD_PRODUCT_CATEGORY = 'ADD_PRODUCT_CATEGORY'
+const SET_FILTERED_PRODUCTS = 'SET_FILTERED_PRODUCTS'
 
 // // ACTION CREATORS
 export const getProduct = product => ({
@@ -23,6 +24,11 @@ export const addProduct = product => ({
 export const addProductCategory = productCategory => ({
   type: ADD_PRODUCT_CATEGORY,
   productCategory
+})
+
+export const setNewProducts = newProducts => ({
+  type: SET_FILTERED_PRODUCTS,
+  newProducts
 })
 
 // // THUNKS
@@ -102,6 +108,8 @@ export const allProducts = (state = [], action) => {
       return action.products
     case ADD_PRODUCT:
       return [...state, action.product]
+    case SET_FILTERED_PRODUCTS:
+      return action.newProducts
     default:
       return state
   }
