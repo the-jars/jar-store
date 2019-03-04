@@ -1,11 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import AddProductCategory from './AddProductCategory'
-
-import {
-  fetchSingleProduct,
-  editSingleProduct
-} from '../store/product'
+import {fetchSingleProduct, editSingleProduct} from '../store/product'
 
 class EditProduct extends React.Component {
   constructor() {
@@ -70,6 +65,7 @@ class EditProduct extends React.Component {
       available: !this.props.productToEdit.available
     })
   }
+
   render() {
     const productToEdit = this.props.productToEdit
     return (
@@ -116,8 +112,7 @@ class EditProduct extends React.Component {
 }
 
 const mapState = state => ({
-  productToEdit: state.singleProduct,
-  categories: state.categories
+  productToEdit: state.singleProduct
 })
 
 const mapDispatch = (dispatch, ownProps) => ({
