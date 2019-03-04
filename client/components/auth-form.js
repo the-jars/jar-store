@@ -36,16 +36,12 @@ const AuthForm = props => {
           <Form size="large" onSubmit={handleSubmit} name={name}>
             <Segment stacked>
               <Form.Input
-
-                // fluid
                 icon="user"
                 iconPosition="left"
                 placeholder="E-mail address"
                 name="email"
               />
               <Form.Input
-
-                // fluid
                 icon="lock"
                 iconPosition="left"
                 placeholder="Password"

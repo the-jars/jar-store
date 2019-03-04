@@ -105,19 +105,19 @@ const categoryData = [
   {name: 'Nut Butters'}
 ]
 
-const productCategoryData = [
-  {productId: 1, categoryId: 1},
-  {productId: 2, categoryId: 1},
-  {productId: 3, categoryId: 1},
-  {productId: 4, categoryId: 2},
-  {productId: 5, categoryId: 2},
-  {productId: 6, categoryId: 3},
-  {productId: 7, categoryId: 3},
-  {productId: 8, categoryId: 1},
-  {productId: 8, categoryId: 3},
-  {productId: 9, categoryId: 1},
-  {productId: 9, categoryId: 2}
-]
+// const productCategoryData = [
+//   {productId: 1, categoryId: 1},
+//   {productId: 2, categoryId: 1},
+//   {productId: 3, categoryId: 1},
+//   {productId: 4, categoryId: 2},
+//   {productId: 5, categoryId: 2},
+//   {productId: 6, categoryId: 3},
+//   {productId: 7, categoryId: 3},
+//   {productId: 8, categoryId: 1},
+//   {productId: 8, categoryId: 3},
+//   {productId: 9, categoryId: 1},
+//   {productId: 9, categoryId: 2}
+// ]
 
 const reviewData = [
   {
@@ -221,7 +221,20 @@ const userData = [
   }
 ]
 
-const orderProductData = [{quantity: 12}, {quantity: 12}, {quantity: 12}]
+const orderProductData = [
+  {quantity: 1},
+  {quantity: 3},
+  {quantity: 6},
+  {quantity: 2},
+  {quantity: 14},
+  {quantity: 7},
+  {quantity: 2},
+  {quantity: 1},
+  {quantity: 5},
+  {quantity: 6},
+  {quantity: 23},
+  {quantity: 3}
+]
 
 const cartData = [
   {
@@ -244,20 +257,20 @@ const cartItemData = [
   {quantity: 2},
   {quantity: 2},
   {quantity: 3},
+  {quantity: 3},
+  {quantity: 1},
+  {quantity: 1},
+  {quantity: 2},
+  {quantity: 2},
+  {quantity: 3},
   {quantity: 3}
-  // {quantity: 1},
-  // {quantity: 1},
-  // {quantity: 2},
-  // {quantity: 2},
-  // {quantity: 3},
-  // {quantity: 3}
 ]
 
 module.exports = {
   addressData,
   productData,
   categoryData,
-  productCategoryData,
+  //productCategoryData,
   reviewData,
   orderData,
   userData,
