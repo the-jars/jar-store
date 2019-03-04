@@ -1,11 +1,12 @@
 import axios from 'axios'
 
-// ACTION TYPES
+// // ACTION TYPES
 const GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT'
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const ADD_PRODUCT = 'ADD_PRODUCT'
+const ADD_PRODUCT_CATEGORY = 'ADD_PRODUCT_CATEGORY'
 
-// ACTION CREATORS
+// // ACTION CREATORS
 export const getProduct = product => ({
   type: GET_SINGLE_PRODUCT,
   product
@@ -19,8 +20,12 @@ export const addProduct = product => ({
   type: ADD_PRODUCT,
   product
 })
+export const addProductCategory = productCategory => ({
+  type: ADD_PRODUCT_CATEGORY,
+  productCategory
+})
 
-// THUNKS
+// // THUNKS
 export const fetchSingleProduct = productId => async dispatch => {
   try {
     const res = await axios.get(`/api/products/${productId}`)
@@ -50,7 +55,7 @@ export const fetchProducts = () => async dispatch => {
   }
 }
 
-// thunk for editing selected project
+// // thunk for editing selected project
 export const editSingleProduct = (id, editField) => dispatch => {
   axios
     .put(`/api/products/${id}`, editField)
@@ -63,6 +68,20 @@ export const addProductThunk = newProductInfo => dispatch => {
     .post(`/api/products`, newProductInfo)
     .then(res => dispatch(addProduct(res.data)))
     .catch(console.log)
+}
+
+export const fetchNewProductCategory = (
+  categoryId,
+  productId
+) => async dispatch => {
+  try {
+    const newProductCategory = await axios.post(
+      `/api/products/${productId}/categories/${categoryId}`
+    )
+    console.log('created new produtcategory: ', newProductCategory.data)
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 //REDUCER(S?)

@@ -17,6 +17,8 @@ import {
 import {fetchProducts, filterCategories} from '../store/product'
 import {fetchCategories} from '../store/category'
 import Product from './Product'
+import AddItemButton from './AddItemToCart'
+import {cart} from '../store/cart'
 
 export class ProductList extends Component {
   constructor() {
@@ -162,8 +164,7 @@ export class ProductList extends Component {
 
 const mapStateToProps = state => ({
   user: state.user,
-  products: state.allProducts,
-  categories: state.categories
+  products: state.allProducts
 })
 
 const mapDispatchToProps = dispatch => ({

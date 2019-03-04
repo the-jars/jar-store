@@ -2,8 +2,9 @@ import axios from 'axios'
 
 // ACTION TYPES
 const SET_CART = 'SET_CART'
+const RESET_CART = 'RESET_CART'
+const SET_META_DATA = 'SET_META_DATA'
 const UPDATE_QTY = 'UPDATE_QTY'
-const INSTANTIATE_CART = 'INSTANTIATE_CART'
 const ADDED_ITEM_TO_CART = 'ADDED_ITEM_TO_CART'
 const DELETE_ITEM = 'DELETE_ITEM'
 
@@ -14,20 +15,15 @@ export const setCart = cart => ({
   cart
 })
 
-export const instantiateCart = cartInfo => ({
-  type: INSTANTIATE_CART,
+export const setMetaData = cartInfo => ({
+  type: SET_META_DATA,
   cartInfo
 })
 
-export const addedItemToCart = (productId, cartId) => ({
+export const addedItemToCart = cartItem => ({
   type: ADDED_ITEM_TO_CART,
-  productId: productId,
-  cartId: cartId
+  cartItem
 })
-
-//check to see if cart exists
-//if it does, we run xyz
-//if no, we create cart and then call the thunk that adds item to it
 
 export const deleteItem = itemToDelete => ({
   type: DELETE_ITEM,
@@ -40,11 +36,15 @@ export const updateQty = updatedCartItem => ({
 })
 
 // THUNKS
-// - for fetching all items in carts
-export const fetchCartItems = userId => async dispatch => {
+// - for fetching all items in carts along with metadata
+export const fetchCartInfo = userId => async dispatch => {
   try {
-    const cart = await axios.get(`/api/carts/${userId}`)
-    dispatch(setCart(cart.data))
+    if (!userId) {
+      userId = 'null'
+    }
+    const cartInfo = await axios.post(`/api/carts/${userId}`)
+    dispatch(setCart(cartInfo.data.items))
+    dispatch(setMetaData(cartInfo.data.cart))
   } catch (error) {
     console.error(error)
   }
@@ -65,6 +65,7 @@ export const deleteCartItem = itemToDelete => dispatch => {
     .catch(console.log)
 }
 
+// add item to cart if it exists
 export const putItemQty = (editedCartItem, value) => async dispatch => {
   try {
     const {data: updatedCartItem} = await axios.put(
@@ -76,21 +77,31 @@ export const putItemQty = (editedCartItem, value) => async dispatch => {
     console.error(err)
   }
 }
-export const fetchCartInfo = userId => async dispatch => {
+
+export const addItemToCart = (productId, cartId) => async dispatch => {
   try {
-    const cartInfo = await axios.post(`/api/carts`, userId)
-    dispatch(instantiateCart(cartInfo))
+    if (!cartId === undefined) {
+      cartId = 'null'
+    }
+    const response = await axios.post(
+      `/api/carts/${cartId}/products/${productId}`
+    )
+    const cartItem = response.data
+    dispatch(addedItemToCart(cartItem))
   } catch (error) {
     console.error(error)
   }
 }
 
-// export const addItemToCart = () => async dispatch => {
-//   // try {
-//   // } catch (err) {
-//   //   console.error(err)
-//   // }
-// }
+// Helper function for updating state with a new quantity of an item
+const filterHelper = (state, updatedItem) => {
+  if (state.length > 1) {
+    const filteredState = state.filter(item => item.id !== updatedItem.id)
+    return [...filteredState, updatedItem]
+  }
+
+  return [updatedItem]
+}
 
 // REDUCER
 export const cart = (state = [], action) => {
@@ -101,6 +112,10 @@ export const cart = (state = [], action) => {
       return state.filter(
         value => value.productId !== action.itemToDelete.productId
       )
+    case ADDED_ITEM_TO_CART:
+      return filterHelper(state, action.cartItem)
+    case RESET_CART:
+      return []
     case UPDATE_QTY:
       return state.map(item => {
         if (item.id === action.updatedCartItem.id) {
@@ -115,7 +130,7 @@ export const cart = (state = [], action) => {
 
 export const cartMeta = (state = {}, action) => {
   switch (action.type) {
-    case INSTANTIATE_CART:
+    case SET_META_DATA:
       return action.cartInfo
     default:
       return state
