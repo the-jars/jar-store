@@ -35,7 +35,6 @@ router.post('/:id/cart', async (req, res, next) => {
         }
       })
     }
-    console.log(userCart[0].items)
     res.json(userCart[0])
   } catch (error) {
     next(error)

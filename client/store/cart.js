@@ -40,24 +40,13 @@ export const fetchCartItems = userId => async dispatch => {
   }
 }
 
-// export const fetchCartItemsByCartId = cartId => async dispatch => {
-//   try {
-//     const cart = await axios.get(`/api/carts/${userId}`)
-//     dispatch(setCart(cart.data))
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
-
 // fetches active cart metadata and cartItems and puts it on state
 export const fetchCartInfo = userId => async dispatch => {
   try {
     if (!userId) {
       userId = 'null'
     }
-    console.log('fetchingCartInfo', userId)
     const cartInfo = await axios.post(`/api/carts/${userId}`)
-    console.log(cartInfo)
     dispatch(setCart(cartInfo.data.items))
     dispatch(setMetaData(cartInfo.data.cart))
   } catch (error) {
@@ -66,7 +55,6 @@ export const fetchCartInfo = userId => async dispatch => {
 }
 // - for deleting one item from the array
 export const deleteCartItem = itemToDelete => dispatch => {
-  console.log('to Delete', itemToDelete)
   axios
     .delete(`/api/carts/${itemToDelete.cartId}/${itemToDelete.id}`)
     .then(res => {
@@ -84,7 +72,6 @@ export const deleteCartItem = itemToDelete => dispatch => {
 // add item to cart if it exists
 export const addItemToCart = (productId, cartId) => async dispatch => {
   try {
-    console.log('I am addItemToCart thunk')
     if (!cartId === undefined) {
       cartId = 'null'
     }
@@ -92,32 +79,14 @@ export const addItemToCart = (productId, cartId) => async dispatch => {
       `/api/carts/${cartId}/products/${productId}`
     )
     const cartItem = response.data
-    console.log('im a cart item', cartItem)
     dispatch(addedItemToCart(cartItem))
   } catch (error) {
     console.error(error)
   }
 }
 
-// // creates a cart and add and item to it if it is passed a productID
-// export const createNewCart = (userId, productId) => async dispatch => {
-//   try {
-//     console.log('I am creatNewCart thunk')
-//     const response = await axios.post(`/api/users/${userId}/cart`)
-//     const newCart = response.data
-//     console.log('I am a new cart', newCart)
-//     // dispatch(instantiateCart(newCart))
-//     dispatch(setCart(newCart))
-//     if (productId) {
-//       dispatch(addItemToCart(productId, newCart.id))
-//     }
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
-
+// Helper function for updating state with a new quantity of an item
 const filterHelper = (state, updatedItem) => {
-  console.log('updatedItem', updatedItem)
   if (state.length > 1) {
     const filteredState = state.filter(item => item.id !== updatedItem.id)
     return [...filteredState, updatedItem]

@@ -3,14 +3,13 @@ const {Cart, CartItem, Product} = require('../db/models')
 // Routes for /api/carts
 
 // POST/api/carts
-
 // if passed a userId, will find or create an active cart for that user
 // if passed the string 'null' for userId, it will create an an active cart using the sessionId instead
 router.post('/:userId', async (req, res, next) => {
   try {
     let userId = req.params.userId
     let response
-    console.log('im the userId on the body', userId)
+    // creates a session Cart for unauthenticated users
     if (userId === 'null') {
       userId = req.session.id
       response = await Cart.findOrCreate({
@@ -20,6 +19,7 @@ router.post('/:userId', async (req, res, next) => {
         }
       })
     } else {
+      // or finds any active user Carts, and creates one if there aren't any
       response = await Cart.findOrCreate({
         where: {
           userId: userId,
@@ -37,7 +37,6 @@ router.post('/:userId', async (req, res, next) => {
       //eager load product info
       include: [{model: Product}]
     })
-    // console.log('i am items', items)
     res.json({cart, items})
   } catch (error) {
     next(error)
@@ -57,7 +56,6 @@ router.post('/:cartId/products/:productId', async (req, res, next) => {
       },
       include: [{model: Product}]
     })
-    // console.log(Object.keys(isAlreadyInCart.__proto__))
     if (isAlreadyInCart) {
       await isAlreadyInCart.increment('quantity', {by: 1})
       res.json(isAlreadyInCart)
@@ -73,12 +71,6 @@ router.post('/:cartId/products/:productId', async (req, res, next) => {
         },
         include: [{model: Product}]
       })
-
-      // const createdItemsProduct = await createdCartItem.getProduct()
-      // createdCartItem.product = createdItemsProduct
-      // console.log(createdItemsProduct.data)
-      // console.log(Object.keys(createdCartItem.__proto__))
-      // console.log(createdWithProduct)
       res.json(createdWithProduct)
     }
   } catch (error) {
@@ -150,7 +142,9 @@ router.get('/unauth/', async (req, res, next) => {
 })
 
 // Routes for /api/carts
-//GET /api/cart/userId for getting cart by the logged in user
+// We might be able to get rid of this route since the post route for the same endpoint
+// returns the same info but also creates a cart if there isn't one
+// GET /api/cart/userId for getting cart by the logged in user
 router.get('/:userId', async (req, res, next) => {
   try {
     //pull cartId with userid && active in cart table

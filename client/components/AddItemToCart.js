@@ -5,7 +5,6 @@ import {createNewCart, addItemToCart} from '../store/cart'
 
 const AddItemButton = props => {
   const handleClick = () => {
-    console.log(props)
     if (!props.cart.id) {
       props.createNewCart(props.userId, props.productId)
     } else {
