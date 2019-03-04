@@ -40,8 +40,6 @@ describe('Cart routes', () => {
       .catch(console.log)
   })
 
-  afterEach(() => db.sync({force: true}))
-
   describe('DELETE /api/carts/:cartId/:itemId', () => {
     it('deletes the item from the cartItem', async () => {
       // deletes the provided jar

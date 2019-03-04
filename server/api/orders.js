@@ -24,7 +24,8 @@ router.get(
  * - allows non-member user to make order
  * - recieves the new order info by:
  * - req.body: {
- * * - cart: { id, cartitem<Array> }
+ * * - cartId,
+ * * - cartitem<Array>
  * * - userId(optional): only when order is made by user
  * * - orderInfo: {
  *      email,
@@ -39,31 +40,32 @@ router.get(
  * - TODO:
  * * Test
  */
-router.post(
-  '/',
-  (req, res, next) =>
-    Cart.findById(req.body.cart.id) // finding the associated cart to set it inactive
-      .then(cart => cart.update({status: 'inactive'}, {fields: ['stataus']}))
-      .then(() => {
-        // creates a new order and returns it to next .then() chain
-        return Order.create().then(newOrder => newOrder)
-      })
-      .then(order => {
-        // looping through array of cart item that is being ordered
-        // - create new orderProduct instance and set the assosiation with the product
-        return req.body.cartitems.map(item => {
-          return order // create order product on each loop corresponding to the item
-            .createOrderProduct({
-              email: req.body.email,
-              quantity: item.quantity
-            })
-            .then(orderedProduct => orderedProduct.setProduct(item.productId))
-            .then(() => order) // return order for chaning
-            .catch(next)
-        }) // return the order to nex then() chain after setting the product
-      })
-      .then(order => order) // finally return order
-)
+router.post('/', (req, res, next) => {
+  console.log(req.body)
+  Cart.findById(req.body.cartId) // finding the associated cart to set it inactive
+    .then(cart => cart.update({status: 'inactive'}, {fields: ['stataus']}))
+    .then(() => {
+      const {email, shippingAddressId, billingAddressId} = req.body.orderInfo
+      // creates a new order and returns it to next .then() chain
+      return Order.create({email}).then(newOrder => newOrder)
+    })
+    .then(order => {
+      // looping through array of cart item that is being ordered
+      // - create new orderProduct instance and set the assosiation with the product
+      req.body.cartitems.map(item =>
+        order // create order product on each loop corresponding to the item
+          .createOrderProduct({
+            quantity: item.quantity
+          })
+          .then(orderedProduct => orderedProduct.setProduct(item.productId))
+          .catch(next)
+      )
+      return order
+      // return the order to nex then() chain after setting the product
+    })
+    .then(order => res.send(order)) // finally return order
+    .catch(next)
+})
 
 /** GET /api/orders/myOrder
  * - gets all order made by logged in user
@@ -106,7 +108,5 @@ router.param('orderId', (req, res, next, id) =>
  * * Test
  */
 router.get('/:orderId', (req, res, next) => res.send(req.order))
-
-router.get('/:')
 
 module.exports = router
