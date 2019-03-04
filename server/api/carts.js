@@ -218,7 +218,6 @@ router.delete('/:cartId/:itemId', (req, res, next) =>
 router.get('/:userId', async (req, res, next) => {
   try {
     //pull cartId with userid && active in cart table
-    console.log('id', req.body.userId)
     const cart = await Cart.findOne({
       where: {
         userId: req.params.userId,
