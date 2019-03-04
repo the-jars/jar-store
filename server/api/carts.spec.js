@@ -6,6 +6,7 @@ const app = require('../index')
 const Cart = db.model('cart')
 const CartItem = db.model('cartitem')
 const Product = db.model('product')
+const User = db.model('user')
 
 describe('Cart routes', () => {
   let cart
@@ -15,6 +16,8 @@ describe('Cart routes', () => {
   let twoBarfJar
   // set up cart route test
   // the test cart has one fart jar and two barf jar pre-loaded
+
+  // before each test
   beforeEach(async () => {
     await db.sync({force: true})
     cart = await Cart.create()
@@ -40,10 +43,27 @@ describe('Cart routes', () => {
       .catch(console.log)
   })
 
-  afterEach(() => db.sync({force: true}))
+  // after each test
+  //afterEach(() => db.sync({force: true}))
+
+  describe('GET /api/carts/:userId', () => {
+    let user
+
+    beforeEach(async () => {
+      user = await User.create({name: 'test boi', email: 'fake'})
+
+      await user.setCart(cart)
+      await cart.setUser(user)
+    })
+
+    it('gets the array of item in the cart of the specified user', async () => {
+      const response = await request(app).get(`/api/carts/${user.id}`)
+      expect(response.body.length).to.be.equal(2)
+    })
+  })
 
   describe('DELETE /api/carts/:cartId/:itemId', () => {
-    it('deletes the item from the cartItem', async () => {
+    it('responds with 204 after deleting the item from the cartItem', async () => {
       // deletes the provided jar
       await request(app)
         .delete(`/api/carts/${cart.id}/${oneFartJar.id}`)
