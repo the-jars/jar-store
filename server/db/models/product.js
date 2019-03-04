@@ -24,13 +24,13 @@ const Product = db.define(
       type: Sequelize.ENUM('small', 'medium', 'large'),
       defaultValue: 'small'
     },
-    flavor: {
-      type: Sequelize.STRING,
-      validate: {
-        notEmpty: true
-      },
-      defaultValue: 'none'
-    },
+    // flavor: {
+    //   type: Sequelize.STRING,
+    //   validate: {
+    //     notEmpty: true
+    //   },
+    //   defaultValue: 'none'
+    // },
     description: {
       type: Sequelize.TEXT,
       defaultValue: 'Jar full of goodies'
@@ -44,7 +44,7 @@ const Product = db.define(
     },
     imgUrl: {
       type: Sequelize.STRING,
-      allowNull: false,
+      // allowNull: false,
       defaultValue:
         'http://images.bigoven.com/image/upload/t_recipe-256/cherry-jam-3.jpg'
     },

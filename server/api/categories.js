@@ -9,6 +9,17 @@ router.get('/', (req, res, next) =>
     .catch(next)
 )
 
+router.post('/', async (req, res, next) => {
+  try {
+    const newCategory = await Category.create({
+      name: req.body.name
+    })
+    res.json(newCategory)
+  } catch (err) {
+    next(err)
+  }
+})
+
 // GET /api/categories/filter
 router.get('/filterProduct', async (req, res, next) => {
   try {

@@ -7,7 +7,11 @@ import {me} from './store'
 import singleProduct from './components/singleProduct'
 import ProductList from './components/ProductList'
 import AddProduct from './components/AddProduct.js'
+import AddCategory from './components/AddCategory.js'
+
 import Cart from './components/Cart'
+import AddReview from './components/AddReview'
+import Review from './components/Review'
 /**
  * COMPONENT
  */
@@ -23,10 +27,12 @@ class Routes extends Component {
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
+        <Route path="/signup" render={() => <Signup type="signup" />} />
         <Route path="/cart" render={() => <Cart {...this.props} />} />
+        <Route exact path="/review/add" component={AddReview} />
+        <Route exact path="/review" component={Review} />
         <Route exact path="/products/add" component={AddProduct} />
-
+        <Route exact path="/categories/add" component={AddCategory} />
         <Route exact path="/products" component={ProductList} />
         <Redirect exact from="/products/" to="/products" />
 
@@ -54,7 +60,8 @@ const mapState = state => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
-    user: state.user
+    user: state.user,
+    cart: state.cart
   }
 }
 

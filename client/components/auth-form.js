@@ -11,7 +11,7 @@ import {
   Message,
   Segment
 } from 'semantic-ui-react'
-
+import {Link} from 'react-router-dom'
 /**
  * COMPONENT
  */
@@ -30,35 +30,57 @@ const AuthForm = props => {
       <Grid textAlign="center" style={{height: '100%'}} verticalAlign="middle">
         <Grid.Column style={{maxWidth: 450}}>
           <Header as="h2" color="teal" textAlign="center">
-            <Image src="screen_shot_2019-02-27_at_3.40.20_pm.png" /> Log into
-            your account
+            <Image src="screen_shot_2019-02-27_at_3.40.20_pm.png" />{' '}
+            {displayName}
           </Header>
           <Form size="large" onSubmit={handleSubmit} name={name}>
             <Segment stacked>
               <Form.Input
-                // fluid
                 icon="user"
                 iconPosition="left"
                 placeholder="E-mail address"
                 name="email"
               />
               <Form.Input
-                // fluid
                 icon="lock"
                 iconPosition="left"
                 placeholder="Password"
                 type="password"
                 name="password"
               />
+              {props.type === 'signup' ? (
+                <div>
+                  <Form.Input
+                    // fluid
+                    placeholder="Username"
+                    type="text"
+                    name="username"
+                  />
+                  <Form.Input
+                    // fluid
+                    placeholder="First Name"
+                    type="text"
+                    name="firstName"
+                  />
+                  <Form.Input
+                    // fluid
+                    placeholder="Last Name"
+                    type="text"
+                    name="lastName"
+                  />
+                </div>
+              ) : null}
 
               <Button color="teal" fluid size="large" type="submit">
-                Login
+                {displayName}
               </Button>
             </Segment>
           </Form>
-          <Message>
-            New to us? <a href="#"> Sign Up</a>
-          </Message>
+          {props.type !== 'signup' ? (
+            <Message>
+              New to us? <Link to="/signup"> Sign Up</Link>
+            </Message>
+          ) : null}
           <a href="/auth/google">{displayName} with Google</a>
         </Grid.Column>
       </Grid>
@@ -89,14 +111,25 @@ const mapSignup = state => {
   }
 }
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch, ownProps) => {
   return {
     handleSubmit(evt) {
       evt.preventDefault()
       const formName = evt.target.name
+      let authData
+      if (ownProps.type === 'signup') {
+        authData = {
+          username: evt.target.username.value || '',
+          firstName: evt.target.firstName.value || '',
+          lastName: evt.target.lastName.value || ''
+        }
+      } else {
+        authData = {}
+      }
+
       const email = evt.target.email.value
       const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
+      dispatch(auth(email, password, formName, authData))
     }
   }
 }

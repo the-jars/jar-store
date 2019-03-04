@@ -27,7 +27,7 @@ Product.hasMany(Review)
 CartItem.belongsTo(Cart)
 Cart.hasMany(CartItem)
 Cart.belongsTo(User)
-User.hasOne(Cart)
+User.hasMany(Cart)
 CartItem.belongsTo(Product)
 
 //Orders:

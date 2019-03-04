@@ -32,7 +32,7 @@ class Navbar extends React.Component {
                 active={this.props.activeItem === 'logout'}
                 onClick={this.handleItemClick}
               >
-                <Link to="#" onClick={this.props.handleClick}>
+                <Link to="/login" onClick={this.props.handleClick}>
                   Logout
                 </Link>
               </Menu.Item>
@@ -43,14 +43,41 @@ class Navbar extends React.Component {
               >
                 <Link to="/products">Jars!</Link>
               </Menu.Item>
+              <Menu.Item
+                name="cart"
+                active={this.props.activeItem === 'cart'}
+                onClick={this.handleItemClick}
+              >
+                <Link to="/cart">Cart</Link>
+              </Menu.Item>
             </Menu>
           </div>
         ) : (
           <div>
-            {/* The navbar will show these links before you log in */}
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
-            <Link to="/products">Jars!</Link>
+            <Menu secondary>
+              {/* The navbar will show these links before you log in */}
+              <Menu.Item
+                name="home"
+                active={this.props.activeItem === 'home'}
+                onClick={this.handleItemClick}
+              >
+                <Link to="/login">Login</Link>
+              </Menu.Item>
+              <Menu.Item
+                name="home"
+                active={this.props.activeItem === 'home'}
+                onClick={this.handleItemClick}
+              >
+                <Link to="/signup">Sign Up</Link>
+              </Menu.Item>
+              <Menu.Item
+                name="home"
+                active={this.props.activeItem === 'home'}
+                onClick={this.handleItemClick}
+              >
+                <Link to="/products">Jars!</Link>
+              </Menu.Item>
+            </Menu>
           </div>
         )}
       </div>
