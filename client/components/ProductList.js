@@ -110,6 +110,16 @@ export class ProductList extends Component {
               >
                 Filter
               </Button>
+              {user.id && user.isAdmin ? (
+                <Link to="/products/add">
+                  <Button type="button">Add Product</Button>
+                </Link>
+              ) : null}
+              {user.id && user.isAdmin ? (
+                <Link to="/category/add">
+                  <Button type="button">Add Category</Button>
+                </Link>
+              ) : null}
             </div>
           </div>
           <br />
@@ -132,13 +142,7 @@ export class ProductList extends Component {
             </Grid>
           </div>
           <br />
-          <div>
-            {user.id && user.isAdmin ? (
-              <Link to="/products/add">
-                <button type="button">Add Product</button>
-              </Link>
-            ) : null}
-          </div>
+
           {pageNumbers.map(number => {
             return (
               <button

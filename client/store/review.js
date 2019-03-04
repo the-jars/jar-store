@@ -57,10 +57,11 @@ export const getReviews = productId => async dispatch => {
 
 export const reviews = (state = initialState, action) => {
   switch (action.type) {
-    // case SUBMIT_REVIEW:
-    // return {
-    //   ...state, ratings:
-    // }
+    case SUBMIT_REVIEW:
+      return {
+        ...state,
+        ratings: [...state.reviews, action.newReview]
+      }
     case SET_REVIEWS:
       return {...state, reviews: action.reviews}
     case SHOW_ADD_REVIEW:

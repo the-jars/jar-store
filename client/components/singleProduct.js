@@ -26,10 +26,12 @@ class SingleProduct extends Component {
     const categories = product.categories || []
     const user = this.props.user
     const totalRating = this.props.reviews.length
-      ? this.props.reviews.reduce((acc, cv) => {
-          acc += cv.rating
-          return acc
-        }, 0) / this.props.reviews.length.toFixed(2)
+      ? (
+          this.props.reviews.reduce((acc, cv) => {
+            acc += cv.rating
+            return acc
+          }, 0) / this.props.reviews.length
+        ).toFixed(2)
       : 'No reviews yet!'
     if (!product) {
       return <h1>Product Not Found</h1>
