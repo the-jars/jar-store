@@ -51,7 +51,7 @@ describe('Cart routes', () => {
     beforeEach(async () => {
       user = await User.create({name: 'test boi', email: 'fake'})
 
-      await user.setCart(cart)
+      await user.addCart(cart)
       await cart.setUser(user)
     })
 
