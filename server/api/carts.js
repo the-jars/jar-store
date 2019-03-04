@@ -54,8 +54,10 @@ router.post('/:cartId/products/:productId', async (req, res, next) => {
       where: {
         cartId: cartId,
         productId: productId
-      }
+      },
+      include: [{model: Product}]
     })
+    // console.log(Object.keys(isAlreadyInCart.__proto__))
     if (isAlreadyInCart) {
       await isAlreadyInCart.increment('quantity', {by: 1})
       res.json(isAlreadyInCart)
@@ -65,7 +67,19 @@ router.post('/:cartId/products/:productId', async (req, res, next) => {
         productId: productId,
         quantity: 1
       })
-      res.json(createdCartItem)
+      const createdWithProduct = await CartItem.findOne({
+        where: {
+          id: createdCartItem.id
+        },
+        include: [{model: Product}]
+      })
+
+      // const createdItemsProduct = await createdCartItem.getProduct()
+      // createdCartItem.product = createdItemsProduct
+      // console.log(createdItemsProduct.data)
+      // console.log(Object.keys(createdCartItem.__proto__))
+      // console.log(createdWithProduct)
+      res.json(createdWithProduct)
     }
   } catch (error) {
     next(error)

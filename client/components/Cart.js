@@ -18,10 +18,12 @@ export class Cart extends Component {
   // }
 
   componentDidMount() {
+    console.log('im component did mount')
     this.props.fetchCartInfo(this.props.user.id)
   }
 
   total(cartData) {
+    console.log('im cartData', cartData)
     return cartData.reduce((acc, item) => {
       acc += item.quantity * item.product.price
       return acc

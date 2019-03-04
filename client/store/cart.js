@@ -52,6 +52,9 @@ export const fetchCartItems = userId => async dispatch => {
 // fetches active cart metadata and cartItems and puts it on state
 export const fetchCartInfo = userId => async dispatch => {
   try {
+    if (!userId) {
+      userId = 'null'
+    }
     console.log('fetchingCartInfo', userId)
     const cartInfo = await axios.post(`/api/carts/${userId}`)
     console.log(cartInfo)
@@ -120,7 +123,7 @@ const filterHelper = (state, updatedItem) => {
     return [...filteredState, updatedItem]
   }
 
-  return updatedItem
+  return [updatedItem]
 }
 
 // REDUCER
