@@ -3,7 +3,20 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import queryString from 'query-string'
-import {Menu, Sidebar} from 'semantic-ui-react'
+import {
+  Menu,
+  Sidebar,
+  Grid,
+  Dropdown,
+  Button,
+  Segment,
+  Card,
+  Search,
+  Form,
+  Input,
+  Icon
+} from 'semantic-ui-react'
+
 // internal moduels
 import {fetchProducts, filterCategories} from '../store/product'
 import {fetchCategories} from '../store/category'
@@ -16,9 +29,13 @@ export class ProductList extends Component {
     super()
     this.state = {
       currentPage: 1,
-      productsPerPage: 20
+      productsPerPage: 30,
+      filter: 'All',
+      searchValue: '',
+      products: []
     }
     this.handleClick = this.handleClick.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleClick(event) {
@@ -34,10 +51,28 @@ export class ProductList extends Component {
     this.props.fetchCategories()
   }
 
-  handleChange = event => {
-    const filter = event.target.value
-    this.props.applyFilter(filter)
-    this.props.history.push(`/products?filter=${filter}`)
+  handleChange = (event, {value}) => {
+    this.setState({
+      filter: value
+    })
+    this.props.applyFilter(this.state.filter)
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    const filteredProducts = this.props.products.filter(product => {
+      return (
+        product.name
+          .toLowerCase()
+          .includes(event.target.search.value.toLowerCase()) ||
+        product.description
+          .toLowerCase()
+          .includes(event.target.search.value.toLowerCase())
+      )
+    })
+    this.setState({
+      products: filteredProducts
+    })
   }
 
   render() {
@@ -59,7 +94,14 @@ export class ProductList extends Component {
     for (let i = 1; i <= Math.ceil(products.length / productsPerPage); i++) {
       pageNumbers.push(i)
     }
-
+    //category options
+    const categoryOptions = categories.map((category, idx) => {
+      return {key: idx, text: category.name, value: category.name}
+    })
+    categoryOptions.push({key: 10, text: 'All', value: 'All'})
+    const productsToMap = this.state.products.length
+      ? this.state.products
+      : currentProducts
     if (!products) {
       return <h1>nope</h1>
     } else
@@ -67,51 +109,83 @@ export class ProductList extends Component {
         <div>
           <div>
             <h1>Product List!</h1>
-            <select
-              type="text"
-              name="filterByCategory"
-              defaultValue="All"
-              onChange={this.handleChange}
-            >
-              <option value="All">All</option>
-              {!categories
-                ? ''
-                : categories.map(category => (
-                    <option key={category.id} value={category.name}>
-                      {category.name}
-                    </option>
-                  ))}
-            </select>
-          </div>
-          <div className="grid-container">
-            {currentProducts.map(
-              product =>
-                product.available ? (
-                  <div key={product.id}>
-                    <Product className="grid-item" product={product} />
-                    <AddItemButton
-                      productId={product.id}
-                      userId={this.props.user.id}
-                    />
-                  </div>
-                ) : (
-                  ''
-                )
-            )}
+            <div>
+              <Dropdown
+                // type="text"
+                name="filterByCategory"
+                placeholder="All"
+                selection
+                value={this.state.filter}
+                onChange={this.handleChange}
+                options={categoryOptions}
+              >
+                {/* <option value="All">All</option>
+                {!categories
+                  ? ''
+                  : categories.map(category => (
+                      <option key={category.id} value={category.name}>
+                        {category.name}
+                      </option>
+                    ))} */}
+              </Dropdown>
+              <Button
+                onClick={() => {
+                  this.props.applyFilter(this.state.filter)
+                  this.props.history.push(
+                    `/products?filter=${this.state.filter}`
+                  )
+                }}
+              >
+                Filter
+              </Button>
+              {user.id && user.isAdmin ? (
+                <Link to="/products/add">
+                  <Button type="button">Add Product</Button>
+                </Link>
+              ) : null}
+              {user.id && user.isAdmin ? (
+                <Link to="/categories/add">
+                  <Button type="button">Add Category</Button>
+                </Link>
+              ) : null}
+              <Form onSubmit={this.handleSubmit}>
+                <Form.Input
+                  //onChange={this.handleChangeSearch}
+                  placeholder="Search"
+                  type="text"
+                  name="search"
+                />
+                <Button>
+                  <Icon name="search" />{' '}
+                </Button>
+              </Form>
+              <Link to="/category/add">
+                <Button type="button">Add Category</Button>
+              </Link>
+              ) : null}
+            </div>
           </div>
           <br />
           <div>
-            {user.id && user.isAdmin ? (
-              <div>
-                <Link to="/products/add">
-                  <button type="button">Add Product</button>
-                </Link>
-                <Link to="categories/add">
-                  <button type="button">Add Category</button>
-                </Link>
-              </div>
-            ) : null}
+            <Grid>
+              {/* <Grid.Column> */}
+              {productsToMap.map(
+                product =>
+                  product.available ? (
+                    <Product
+                      key={product.id}
+                      className="grid-item"
+                      product={product}
+                    />
+                  ) : (
+                    ''
+                  )
+              )}
+              {/* </Grid.Column> */}
+            </Grid>
           </div>
+          <br />
+
           {pageNumbers.map(number => {
             return (
               <button
@@ -131,7 +205,8 @@ export class ProductList extends Component {
 
 const mapStateToProps = state => ({
   user: state.user,
-  products: state.allProducts
+  products: state.allProducts,
+  categories: state.categories
 })
 
 const mapDispatchToProps = dispatch => ({

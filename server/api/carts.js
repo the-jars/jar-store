@@ -71,7 +71,6 @@ router.param('itemId', (req, res, next, itemId) =>
  * - uses magic method on the cart instance to unassociate the specific item
  * - after, remove that item from the database cartItem model
  */
-
 router.delete('/:cartId/:itemId', (req, res, next) =>
   req.cart
     .removeCartitem(req.item.id)
@@ -115,17 +114,52 @@ router.put('/:cartId/:productId', async (req, res, next) => {
 router.get('/:userId', async (req, res, next) => {
   try {
     //pull cartId with userid && active in cart table
-    const cart = await Cart.findOne({
+    // console.log('id', req.body.userId)
+    const carts = await Cart.findAll({
       where: {
         userId: req.params.userId,
         status: 'active'
       }
     })
-    const cartId = cart.id
-    //pull everything from cartitems with cartid
+    const cartIds = carts.map(cart => {
+      return cart.id
+    })
+    // pull everything from cartitems with cartid
     const items = await CartItem.findAll({
       where: {
-        cartId: cartId
+        cartId: {
+          $in: cartIds
+        }
+      },
+      //eager load product info
+      include: [{model: Product}]
+    })
+    res.json(items)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// Routes for /api/carts
+//GET /api/cart for getting cart by the logged in user
+router.get('/:userId', async (req, res, next) => {
+  try {
+    //pull cartId with userid && active in cart table
+    const carts = await Cart.findAll({
+      where: {
+        userId: req.params.userId,
+        status: 'active'
+      }
+    })
+    const cartIds = carts.map(cart => {
+      return cart.id
+    })
+    // pull everything from cartitems with cartid
+    const items = await CartItem.findAll({
+      where: {
+        cartId: {
+          $in: cartIds
+        }
       },
       //eager load product info
       include: [{model: Product}]

@@ -1,5 +1,7 @@
 const router = require('express').Router()
-const {Product, Category} = require('../db/models/product')
+const {Category} = require('../db/models')
+const {Product} = require('../db/models/product')
+const {Review} = require('../db/models/reviews')
 //GET /api/products
 router.get('/', async (req, res, next) => {
   try {
@@ -66,7 +68,7 @@ router.param('id', (req, res, next, id) =>
 router.get('/:id', async (req, res, next) => {
   try {
     const singleProduct = await Product.findById(req.params.id, {
-      include: [Category]
+      include: [{model: Category}]
     })
     if (!singleProduct) {
       res.sendStatus(404)
