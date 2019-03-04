@@ -12,6 +12,7 @@ import {
   Form,
   Input
 } from 'semantic-ui-react'
+import OrderRow from './OrderRow'
 
 //we want a list of every order by the user
 //we want it to have
@@ -26,59 +27,25 @@ export class UserOrderList extends Component {
   }
 
   render() {
-    return (
+    const orders = this.props.userOrders
+    console.log('orders', orders)
+    return !orders || !orders.length ? (
+      <h1>No Orders</h1>
+    ) : (
       <div>
         <Grid columns={1} padded>
           <Grid.Column>
             <h1>Your Orders</h1>
           </Grid.Column>
         </Grid>
-        <div>
-          <Card color="pink" fluid>
-            <Card.Content>
-              <Grid columns={5}>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Image src="/images/raspberry.png" circular size="small" />
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Card.Header>date: june 11 2017 4 pm</Card.Header>
-                    <Feed>
-                      <Feed.Content>
-                        <Card.Meta>
-                          items: strawberry jelly, peach salsa, and more
-                        </Card.Meta>
-                      </Feed.Content>
-                    </Feed>
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Card.Content>cost: $10</Card.Content>
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Card.Header>status: processed</Card.Header>
-                    <Feed>
-                      <Feed.Content>
-                        <Card.Meta>click here for more info</Card.Meta>
-                      </Feed.Content>
-                    </Feed>
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Button
-                    // onClick={() => this.props.deleteCartItem(item)}
-                    >
-                      Details
-                    </Button>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-            </Card.Content>
-          </Card>
-        </div>
+        {orders.map(order => <OrderRow key={order.id} order={order} />)}
       </div>
     )
   }
 }
 
-const mapStateToProps = state => {}
+const mapStateToProps = state => ({
+  userOrders: state.UserOrderList
+})
 
 export default connect(mapStateToProps)(UserOrderList)
