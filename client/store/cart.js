@@ -31,16 +31,6 @@ export const deleteItem = itemToDelete => ({
 
 // THUNKS
 // - for fetching all items in carts along with metadata
-export const fetchCartItems = userId => async dispatch => {
-  try {
-    const cart = await axios.get(`/api/carts/${userId}`)
-    dispatch(setCart(cart.data))
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-// fetches active cart metadata and cartItems and puts it on state
 export const fetchCartInfo = userId => async dispatch => {
   try {
     if (!userId) {
