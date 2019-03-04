@@ -113,16 +113,22 @@ const mapSignup = state => {
   }
 }
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch, ownProps) => {
   return {
     handleSubmit(evt) {
       evt.preventDefault()
       const formName = evt.target.name
-      const authData = {
-        username: evt.target.username.value,
-        firstName: evt.target.firstName.value,
-        lastName: evt.target.lastName.value
+      let authData
+      if (ownProps.type === 'signup') {
+        authData = {
+          username: evt.target.username.value || '',
+          firstName: evt.target.firstName.value || '',
+          lastName: evt.target.lastName.value || ''
+        }
+      } else {
+        authData = {}
       }
+
       const email = evt.target.email.value
       const password = evt.target.password.value
       dispatch(auth(email, password, formName, authData))

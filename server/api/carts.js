@@ -106,17 +106,21 @@ router.get('/:userId', async (req, res, next) => {
   try {
     //pull cartId with userid && active in cart table
     // console.log('id', req.body.userId)
-    const cart = await Cart.findOne({
+    const carts = await Cart.findAll({
       where: {
         userId: req.params.userId,
         status: 'active'
       }
     })
-    const cartId = cart.id
-    //pull everything from cartitems with cartid
+    const cartIds = carts.map(cart => {
+      return cart.id
+    })
+    // pull everything from cartitems with cartid
     const items = await CartItem.findAll({
       where: {
-        cartId: cartId
+        cartId: {
+          $in: cartIds
+        }
       },
       //eager load product info
       include: [{model: Product}]
