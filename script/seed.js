@@ -97,6 +97,7 @@ const seed = db
       // op2.setOrder(o2),
       // op3.setOrder(o3),
 
+
       orderproducts.forEach(order => {
         order.setProduct(
           productData[Math.floor(Math.random() * productData.length)]
