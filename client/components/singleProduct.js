@@ -19,6 +19,9 @@ import AddReview from './AddReview.js'
 import AddItemToCart from './AddItemToCart.js'
 
 class SingleProduct extends Component {
+  constructor() {
+    super()
+  }
   componentDidMount() {
     const currentProductId = this.props.match.params.id
     this.props.setProduct(currentProductId)

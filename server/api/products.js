@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const {Category} = require('../db/models')
 const {Product} = require('../db/models/product')
+const {Review} = require('../db/models/reviews')
 //GET /api/products
 router.get('/', async (req, res, next) => {
   try {

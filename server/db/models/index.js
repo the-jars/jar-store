@@ -34,6 +34,20 @@ CartItem.belongsTo(Product)
 Order.belongsTo(User)
 User.hasMany(Order)
 
+// has two types of address
+Order.hasOne(Address, {
+  as: 'sippingAddress',
+  constraints: false,
+  allowNull: true,
+  defaultValue: null
+})
+Order.hasOne(Address, {
+  as: 'billingAddress',
+  constraints: false,
+  allowNull: true,
+  defaultValue: null
+})
+
 //OrderProducts:
 OrderProduct.belongsTo(Order)
 Order.hasMany(OrderProduct)
@@ -55,6 +69,7 @@ module.exports = {
   Address,
   Review,
   Order,
+  OrderProduct,
   Product,
   Category,
   Cart,

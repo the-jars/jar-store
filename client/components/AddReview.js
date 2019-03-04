@@ -18,6 +18,7 @@ export class AddReview extends Component {
 
   handleRate = (e, {rating, maxRating}) => this.setState({rating, maxRating})
   handleChange = (e, {name, value}) => this.setState({[name]: value})
+
   handleSubmit = async e => {
     e.preventDefault()
     await this.props.addNewReview(
