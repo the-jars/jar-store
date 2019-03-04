@@ -2,6 +2,8 @@ const router = require('express').Router()
 const {Cart, CartItem, Product} = require('../db/models')
 // Routes for /api/carts
 
+// Routes for /api/carts
+
 // POST/api/carts
 // if passed a userId, will find or create an active cart for that user
 // if passed the string 'null' for userId, it will create an an active cart using the sessionId instead
