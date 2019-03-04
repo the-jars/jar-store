@@ -109,4 +109,54 @@ router.param('orderId', (req, res, next, id) =>
  */
 router.get('/:orderId', (req, res, next) => res.send(req.order))
 
+router.get('/filterUserOrders', async (req, res, next) => {
+  try {
+    let filteredOrders
+    if (req.query.status === 'All') {
+      filteredOrders = await Order.findAll({
+        where: {userId: req.user.id},
+        include: [{all: true, nested: true}]
+      })
+    } else {
+      filteredOrders = await Order.findAll({
+        where: {
+          userId: req.user.id,
+          status: req.query.status
+        },
+        include: [{all: true, nested: true}]
+      })
+    }
+    res.json(filteredOrders)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/filterAdminOrders', async (req, res, next) => {
+  try {
+    if (!req.user.isAdmin) {
+      res.send()
+    }
+
+    let filteredOrders
+    if (req.query.status === 'All') {
+      filteredOrders = await Order.findAll({
+        where: {userId: req.user.id},
+        include: [{all: true, nested: true}]
+      })
+    } else {
+      filteredOrders = await Order.findAll({
+        where: {
+          userId: req.user.id,
+          status: req.query.status
+        },
+        include: [{all: true, nested: true}]
+      })
+    }
+    res.json(filteredOrders)
+  } catch (error) {
+    next(error)
+  }
+})
+
 module.exports = router
