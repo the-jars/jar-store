@@ -1,9 +1,10 @@
 import {expect} from 'chai'
-import {deleteItem, deleteCartItem} from './cart'
+import {deleteCartItem} from './cart'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import configureMockStore from 'redux-mock-store'
 import thunkMiddleware from 'redux-thunk'
+import {stat} from 'fs'
 
 const middlewares = [thunkMiddleware]
 const mockStore = configureMockStore(middlewares)
@@ -11,7 +12,7 @@ const mockStore = configureMockStore(middlewares)
 describe('Cart redux state', () => {
   let store
   let mockAxios
-  const fakeItem1 = {cartId: 1, productId: 1}
+  const fakeItem1 = {cartId: 1, id: 1}
 
   // the cart is an array of cartItems
   const initialState = {cart: [fakeItem1]}

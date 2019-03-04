@@ -50,7 +50,7 @@ export const fetchCartInfo = userId => async dispatch => {
   }
 }
 // - for deleting one item from the array
-export const deleteCartItem = itemToDelete => dispatch => {
+export const deleteCartItem = itemToDelete => dispatch =>
   axios
     .delete(`/api/carts/${itemToDelete.cartId}/${itemToDelete.id}`)
     .then(res => {
@@ -63,7 +63,6 @@ export const deleteCartItem = itemToDelete => dispatch => {
       return res.status
     })
     .catch(console.log)
-}
 
 export const putItemQty = (editedCartItem, value) => async dispatch => {
   try {
