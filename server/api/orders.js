@@ -41,7 +41,6 @@ router.get(
  * * Test
  */
 router.post('/', (req, res, next) => {
-  console.log(req.body)
   Cart.findById(req.body.cartId) // finding the associated cart to set it inactive
     .then(cart => cart.update({status: 'inactive'}, {fields: ['stataus']}))
     .then(() => {
