@@ -29,7 +29,9 @@ export const me = () => async dispatch => {
     const res = await axios.get('/auth/me')
     dispatch(getUser(res.data || defaultUser))
     //const cart = await axios.get('/api/carts', { userId })
-    dispatch(fetchCartItems(res.data.id))
+    if (res.data.id) {
+      dispatch(fetchCartItems(res.data.id))
+    }
   } catch (err) {
     console.error(err)
   }

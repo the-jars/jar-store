@@ -5,11 +5,12 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 // import reducers to combine
 import {categories} from './category'
 import user from './user'
-import {cart} from './cart'
+import {cart, cartMeta} from './cart'
 import {singleProduct, allProducts} from './product'
 
 const reducer = combineReducers({
   cart,
+  cartMeta,
   user,
   singleProduct,
   allProducts,

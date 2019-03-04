@@ -21,7 +21,7 @@ class EditProduct extends React.Component {
      * initializes project with the corresponding id provided in the url
      * *****
      * TODO:
-     * - prevent re-render when state is already set correctly or updaated correctly
+     * - prevent re-render when state is already set correctly or updated correctly
      */
     this.props.initializeProduct()
   }
@@ -59,10 +59,7 @@ class EditProduct extends React.Component {
     this.props.editProduct(editField)
   }
 
-  toggleAvailability(evt) {
-    // this.props.editProduct({
-    //   available: !this.props.productToEdit.available
-    // })
+  toggleAvailability() {
     this.props.editProduct({
       ...this.props.productToEdit,
       available: !this.props.productToEdit.available

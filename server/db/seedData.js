@@ -79,7 +79,8 @@ const productData = [
   {
     name: 'Serrano Pepper Salsa',
     price: 10.0,
-    status: true
+    status: true,
+    inventory: 7
   },
   {
     name: 'Hatch Chile & Tomatillo Salsa',
@@ -165,7 +166,7 @@ const orderData = [
 const userData = [
   {
     email: 'usera@test.test',
-    password: 'kdsjghdkaj',
+    password: 'password',
     username: 'usera',
     firstName: 'AFirstName',
     lastName: 'ALastName',
@@ -173,7 +174,7 @@ const userData = [
   },
   {
     email: 'userb@test.test',
-    password: 'kdsjghdkaj',
+    password: 'password',
     username: 'userb',
     firstName: 'BFirstName',
     lastName: 'BLastName',
@@ -181,7 +182,7 @@ const userData = [
   },
   {
     email: 'userc@test.test',
-    password: 'kdsjghdkaj',
+    password: 'password',
     username: 'userc',
     firstName: 'CFirstName',
     lastName: 'CLastName',
@@ -189,7 +190,7 @@ const userData = [
   },
   {
     email: 'alex@test.test',
-    password: 'kdsjghdkaj',
+    password: 'password',
     username: 'alex',
     firstName: 'Alex',
     lastName: 'L',
@@ -197,7 +198,7 @@ const userData = [
   },
   {
     email: 'steffeni@test.test',
-    password: 'kdsjghdkaj',
+    password: 'password',
     username: 'steffeni',
     firstName: 'Steffeni',
     lastName: 'V',
@@ -205,14 +206,14 @@ const userData = [
   },
   {
     email: 'jake@test.test',
-    password: 'kdsjghdkaj',
+    password: 'password',
     username: 'jake',
     firstName: 'Jake',
     lastName: 'H'
   },
   {
     email: 'rose@test.test',
-    password: 'kdsjghdkaj',
+    password: 'password',
     username: 'rose',
     firstName: 'Rose',
     lastName: 'G',
@@ -223,10 +224,18 @@ const userData = [
 const orderProductData = [{quantity: 12}, {quantity: 12}, {quantity: 12}]
 
 const cartData = [
-  {status: 'active'},
-  {status: 'active'},
-  {status: 'inactive'},
-  {status: 'inactive'}
+  {
+    status: 'active'
+  },
+  {
+    status: 'active'
+  },
+  {
+    status: 'inactive'
+  },
+  {
+    status: 'inactive'
+  }
 ]
 
 const cartItemData = [

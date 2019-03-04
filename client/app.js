@@ -8,16 +8,16 @@ const App = () => {
   return (
     <div>
       <Navbar />
-      <Grid padded>
-        <Grid.Row columns={7} padded>
+      {/* <Grid padded>
+        <Grid.Row columns={15} padded>
           <GridColumn width={3}>
             <Sidebar />
           </GridColumn>
-          <GridColumn width={4}>
-            <Routes />
-          </GridColumn>
+          <GridColumn width={7}> */}
+      <Routes />
+      {/* </GridColumn>
         </Grid.Row>
-      </Grid>
+      </Grid> */}
     </div>
   )
 }
