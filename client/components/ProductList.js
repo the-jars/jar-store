@@ -164,7 +164,8 @@ export class ProductList extends Component {
 
 const mapStateToProps = state => ({
   user: state.user,
-  products: state.allProducts
+  products: state.allProducts,
+  categories: state.categories
 })
 
 const mapDispatchToProps = dispatch => ({
