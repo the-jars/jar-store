@@ -36,6 +36,7 @@ const AuthForm = props => {
           <Form size="large" onSubmit={handleSubmit} name={name}>
             <Segment stacked>
               <Form.Input
+
                 // fluid
                 icon="user"
                 iconPosition="left"
@@ -43,6 +44,7 @@ const AuthForm = props => {
                 name="email"
               />
               <Form.Input
+
                 // fluid
                 icon="lock"
                 iconPosition="left"
