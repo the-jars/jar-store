@@ -10,7 +10,11 @@ import {
   Dropdown,
   Button,
   Segment,
-  Card
+  Card,
+  Search,
+  Form,
+  Input,
+  Icon
 } from 'semantic-ui-react'
 
 // internal moduels
@@ -24,9 +28,12 @@ export class ProductList extends Component {
     this.state = {
       currentPage: 1,
       productsPerPage: 30,
-      filter: 'All'
+      filter: 'All',
+      searchValue: '',
+      products: []
     }
     this.handleClick = this.handleClick.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleClick(event) {
@@ -47,6 +54,23 @@ export class ProductList extends Component {
       filter: value
     })
     this.props.applyFilter(this.state.filter)
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    const filteredProducts = this.props.products.filter(product => {
+      return (
+        product.name
+          .toLowerCase()
+          .includes(event.target.search.value.toLowerCase()) ||
+        product.description
+          .toLowerCase()
+          .includes(event.target.search.value.toLowerCase())
+      )
+    })
+    this.setState({
+      products: filteredProducts
+    })
   }
 
   render() {
@@ -73,7 +97,9 @@ export class ProductList extends Component {
       return {key: idx, text: category.name, value: category.name}
     })
     categoryOptions.push({key: 10, text: 'All', value: 'All'})
-
+    const productsToMap = this.state.products.length
+      ? this.state.products
+      : currentProducts
     if (!products) {
       return <h1>nope</h1>
     } else
@@ -116,17 +142,28 @@ export class ProductList extends Component {
                 </Link>
               ) : null}
               {user.id && user.isAdmin ? (
-                <Link to="/category/add">
+                <Link to="/categories/add">
                   <Button type="button">Add Category</Button>
                 </Link>
               ) : null}
+              <Form onSubmit={this.handleSubmit}>
+                <Form.Input
+                  //onChange={this.handleChangeSearch}
+                  placeholder="Search"
+                  type="text"
+                  name="search"
+                />
+                <Button>
+                  <Icon name="search" />{' '}
+                </Button>
+              </Form>
             </div>
           </div>
           <br />
           <div>
             <Grid>
               {/* <Grid.Column> */}
-              {currentProducts.map(
+              {productsToMap.map(
                 product =>
                   product.available ? (
                     <Product
