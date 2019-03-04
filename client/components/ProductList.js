@@ -14,8 +14,7 @@ import {
   Search,
   Form,
   Input,
-  Icon,
-  Card
+  Icon
 } from 'semantic-ui-react'
 
 // internal moduels
@@ -160,9 +159,9 @@ export class ProductList extends Component {
                   <Icon name="search" />{' '}
                 </Button>
               </Form>
-                <Link to="/category/add">
-                  <Button type="button">Add Category</Button>
-                </Link>
+              <Link to="/category/add">
+                <Button type="button">Add Category</Button>
+              </Link>
               ) : null}
             </div>
           </div>

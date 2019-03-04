@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import {fetchCartItems, deleteCartItem, putItemQty} from '../store/cart'
 import {fetchCartInfo, deleteCartItem, putItemQty} from '../store/cart'
 import {connect} from 'react-redux'
 import {
