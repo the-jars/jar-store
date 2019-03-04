@@ -19,7 +19,6 @@ describe('Cart redux state', () => {
   beforeEach(() => {
     mockAxios = new MockAdapter(axios)
     store = mockStore(initialState)
-    console.log(store.getState())
   })
 
   afterEach(() => {
@@ -28,10 +27,12 @@ describe('Cart redux state', () => {
   })
 
   describe('deleting items from cart', () => {
+    beforeEach(() => {
+      mockAxios.onDelete('/api/carts/1/1').replyOnce(204)
+    })
     describe('deleteCartItem thunk', () => {
       it('makes axios request to /api/carts/1/1', async () => {
         // set-up fake axios
-        mockAxios.onDelete('/api/carts/1/1').replyOnce(204)
         const status = await store.dispatch(deleteCartItem(fakeItem1))
         expect(status).to.be.equal(204)
       })
