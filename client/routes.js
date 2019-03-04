@@ -8,7 +8,7 @@ import singleProduct from './components/singleProduct'
 import ProductList from './components/ProductList'
 import AddProduct from './components/AddProduct.js'
 import AddCategory from './components/AddCategory.js'
-
+import UserOrderList from './components/UserOrderList.js'
 import Cart from './components/Cart'
 /**
  * COMPONENT
@@ -30,6 +30,7 @@ class Routes extends Component {
         <Route exact path="/products/add" component={AddProduct} />
         <Route exact path="/categories/add" component={AddCategory} />
         <Route exact path="/products" component={ProductList} />
+        <Route path="/users/:id/orders" component={UserOrderList} />
         <Redirect exact from="/products/" to="/products" />
 
         <Route path="/products/:id/edit" component={EditProduct} />
