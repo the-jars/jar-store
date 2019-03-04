@@ -75,7 +75,7 @@ router.post('/', (req, res, next) => {
  * * Test
  */
 router.get(
-  '/myOrder',
+  '/myOrders',
   (req, res, next) =>
     req.user.id &&
     req.user
