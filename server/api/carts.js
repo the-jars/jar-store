@@ -5,26 +5,41 @@ const {Cart, CartItem, Product} = require('../db/models')
 // Routes for /api/carts
 
 // POST/api/carts
-router.post('/', async (req, res, next) => {
+// if passed a userId, will find or create an active cart for that user
+// if passed the string 'null' for userId, it will create an an active cart using the sessionId instead
+router.post('/:userId', async (req, res, next) => {
   try {
-    let userId = req.body.userId
-    if (!userId) {
+    let userId = req.params.userId
+    let response
+    // creates a session Cart for unauthenticated users
+    if (userId === 'null') {
       userId = req.session.id
-      const response = await Cart.findOrCreate({
+      response = await Cart.findOrCreate({
         where: {
           sessionId: userId,
           status: 'active'
         }
       })
-      res.json(response[0])
+    } else {
+      // or finds any active user Carts, and creates one if there aren't any
+      response = await Cart.findOrCreate({
+        where: {
+          userId: userId,
+          status: 'active'
+        }
+      })
     }
-    const response = await Cart.findOrCreate({
+    const cart = response[0]
+    const cartId = cart.id
+    //pull everything from cartitems with cartid
+    const items = await CartItem.findAll({
       where: {
-        userId: userId,
-        status: 'active'
-      }
+        cartId: cartId
+      },
+      //eager load product info
+      include: [{model: Product}]
     })
-    res.json(response[0])
+    res.json({cart, items})
   } catch (error) {
     next(error)
   }
@@ -89,13 +104,6 @@ router.put('/:cartId/:productId', async (req, res, next) => {
         }
       }
     )
-    // const [num, updatedCartItem] = await cartItemToUpdate.update(
-    //   {
-    //     quantity: Number(req.body.value)
-    //   },
-    //   {returning: true}
-    // )
-    //console.log(updatedCartItem)
     res.json(updatedCartItem)
   } catch (err) {
     next(err)
@@ -107,7 +115,6 @@ router.put('/:cartId/:productId', async (req, res, next) => {
 router.get('/:userId', async (req, res, next) => {
   try {
     //pull cartId with userid && active in cart table
-    // console.log('id', req.body.userId)
     const cart = await Cart.findOne({
       where: {
         userId: req.params.userId,
@@ -129,19 +136,19 @@ router.get('/:userId', async (req, res, next) => {
   }
 })
 
-//if cartitem has this productid + cartid combo, increment that quantity
-//else create productid + cartid combo w quantity 1
+// POST /api/carts/:cartID/products/:productID
+// Adds product to cart or increments it if it's already there
 router.post('/:cartId/products/:productId', async (req, res, next) => {
   try {
     const cartId = req.params.cartId
     const productId = req.params.productId
-
-    //check cartitem
     const isAlreadyInCart = await CartItem.findOne({
       where: {
         cartId: cartId,
         productId: productId
-      }
+      },
+      //eager loads product
+      include: [{model: Product}]
     })
     if (isAlreadyInCart) {
       await isAlreadyInCart.increment('quantity', {by: 1})
@@ -152,7 +159,15 @@ router.post('/:cartId/products/:productId', async (req, res, next) => {
         productId: productId,
         quantity: 1
       })
-      res.json(createdCartItem)
+      // you can't eager laod on a create, so now we have to find the cart we just created
+      const createdWithProduct = await CartItem.findOne({
+        where: {
+          id: createdCartItem.id
+        },
+        //eager load product
+        include: [{model: Product}]
+      })
+      res.json(createdWithProduct)
     }
   } catch (error) {
     next(error)
@@ -196,11 +211,13 @@ router.delete('/:cartId/:itemId', (req, res, next) =>
     .catch(next)
 )
 
-//GET /api/cart for getting cart by the logged in user
+// Routes for /api/carts
+// We might be able to get rid of this route since the post route for the same endpoint
+// returns the same info but also creates a cart if there isn't one
+// GET /api/cart/userId for getting cart by the logged in user
 router.get('/:userId', async (req, res, next) => {
   try {
     //pull cartId with userid && active in cart table
-    // console.log('id', req.body.userId)
     const cart = await Cart.findOne({
       where: {
         userId: req.params.userId,

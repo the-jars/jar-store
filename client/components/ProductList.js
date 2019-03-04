@@ -8,6 +8,8 @@ import {Menu, Sidebar} from 'semantic-ui-react'
 import {fetchProducts, filterCategories} from '../store/product'
 import {fetchCategories} from '../store/category'
 import Product from './Product'
+import AddItemButton from './AddItemToCart'
+import {cart} from '../store/cart'
 
 export class ProductList extends Component {
   constructor() {
@@ -85,11 +87,13 @@ export class ProductList extends Component {
             {currentProducts.map(
               product =>
                 product.available ? (
-                  <Product
-                    key={product.id}
-                    className="grid-item"
-                    product={product}
-                  />
+                  <div key={product.id}>
+                    <Product className="grid-item" product={product} />
+                    <AddItemButton
+                      productId={product.id}
+                      userId={this.props.user.id}
+                    />
+                  </div>
                 ) : (
                   ''
                 )
@@ -127,8 +131,7 @@ export class ProductList extends Component {
 
 const mapStateToProps = state => ({
   user: state.user,
-  products: state.allProducts,
-  categories: state.categories
+  products: state.allProducts
 })
 
 const mapDispatchToProps = dispatch => ({

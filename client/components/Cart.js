@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {fetchCartItems, deleteCartItem, putItemQty} from '../store/cart'
+import {fetchCartInfo, deleteCartItem, putItemQty} from '../store/cart'
 import {connect} from 'react-redux'
 import {
   Card,
@@ -192,7 +192,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchCartItems: userId => dispatch(fetchCartItems(userId)),
+  fetchCartInfo: userId => dispatch(fetchCartInfo(userId)),
   deleteCartItem: itemToDelete => dispatch(deleteCartItem(itemToDelete)),
   putItemQty: (editedCartItem, qty) => dispatch(putItemQty(editedCartItem, qty))
 })
