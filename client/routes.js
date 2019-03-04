@@ -10,6 +10,8 @@ import AddProduct from './components/AddProduct.js'
 import AddCategory from './components/AddCategory.js'
 
 import Cart from './components/Cart'
+import AddReview from './components/AddReview'
+import Review from './components/Review'
 /**
  * COMPONENT
  */
@@ -25,8 +27,10 @@ class Routes extends Component {
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
+        <Route path="/signup" render={() => <Signup type="signup" />} />
         <Route path="/cart" render={() => <Cart {...this.props} />} />
+        <Route exact path="/review/add" component={AddReview} />
+        <Route exact path="/review" component={Review} />
         <Route exact path="/products/add" component={AddProduct} />
         <Route exact path="/categories/add" component={AddCategory} />
         <Route exact path="/products" component={ProductList} />
