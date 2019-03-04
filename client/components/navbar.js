@@ -47,10 +47,30 @@ class Navbar extends React.Component {
           </div>
         ) : (
           <div>
-            {/* The navbar will show these links before you log in */}
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
-            <Link to="/products">Jars!</Link>
+            <Menu secondary>
+              {/* The navbar will show these links before you log in */}
+              <Menu.Item
+                name="home"
+                active={this.props.activeItem === 'home'}
+                onClick={this.handleItemClick}
+              >
+                <Link to="/login">Login</Link>
+              </Menu.Item>
+              <Menu.Item
+                name="home"
+                active={this.props.activeItem === 'home'}
+                onClick={this.handleItemClick}
+              >
+                <Link to="/signup">Sign Up</Link>
+              </Menu.Item>
+              <Menu.Item
+                name="home"
+                active={this.props.activeItem === 'home'}
+                onClick={this.handleItemClick}
+              >
+                <Link to="/products">Jars!</Link>
+              </Menu.Item>
+            </Menu>
           </div>
         )}
       </div>

@@ -14,7 +14,7 @@ export class ProductList extends Component {
     super()
     this.state = {
       currentPage: 1,
-      productsPerPage: 3
+      productsPerPage: 20
     }
     this.handleClick = this.handleClick.bind(this)
   }
