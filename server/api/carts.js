@@ -54,6 +54,7 @@ router.post('/:cartId/products/:productId', async (req, res, next) => {
         cartId: cartId,
         productId: productId
       },
+      //eager loads product
       include: [{model: Product}]
     })
     if (isAlreadyInCart) {
@@ -65,10 +66,12 @@ router.post('/:cartId/products/:productId', async (req, res, next) => {
         productId: productId,
         quantity: 1
       })
+      // you can't eager laod on a create, so now we have to find the cart we just created
       const createdWithProduct = await CartItem.findOne({
         where: {
           id: createdCartItem.id
         },
+        //eager load product
         include: [{model: Product}]
       })
       res.json(createdWithProduct)
@@ -105,7 +108,7 @@ router.param('itemId', (req, res, next, itemId) =>
  * - uses magic method on the cart instance to unassociate the specific item
  * - after, remove that item from the database cartItem model
  */
-router.delete('/:cartId/:itemId', (req, res, next) => {
+router.delete('/:cartId/:itemId', (req, res, next) =>
   req.cart
     .removeCartitem(req.item.id)
     // if item was succesfully removed, also delete it from the cartItem
@@ -113,33 +116,7 @@ router.delete('/:cartId/:itemId', (req, res, next) => {
     .then(() => req.item.destroy())
     .then(() => res.sendStatus(204))
     .catch(next)
-})
-
-// GET /api/cart/unauth/ for getting cart by sessionId for unauthenticated users
-router.get('/unauth/', async (req, res, next) => {
-  try {
-    //pull cartId with userid && active in cart table
-    console.log('id', req.body.userId)
-    const cart = await Cart.findOne({
-      where: {
-        userId: req.session.id,
-        status: 'active'
-      }
-    })
-    const cartId = cart.id
-    //pull everything from cartitems with cartid
-    const items = await CartItem.findAll({
-      where: {
-        cartId: cartId
-      },
-      //eager load product info
-      include: [{model: Product}]
-    })
-    res.json(items)
-  } catch (err) {
-    next(err)
-  }
-})
+)
 
 // Routes for /api/carts
 // We might be able to get rid of this route since the post route for the same endpoint

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import history from '../history'
-import {fetchCartItems, fetchCartInfo, createNewCart, setCart} from './cart'
+import {fetchCartInfo} from './cart'
 
 /**
  * ACTION TYPES
@@ -45,7 +45,6 @@ export const auth = (email, password, method) => async dispatch => {
   }
 
   try {
-    console.log('I am a user object', res.data)
     dispatch(getUser(res.data))
     dispatch(fetchCartInfo(res.data.id))
     history.push('/home')
