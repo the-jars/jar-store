@@ -10,6 +10,7 @@ import AddProduct from './components/AddProduct.js'
 import Cart from './components/Cart'
 import AddReview from './components/AddReview'
 import Review from './components/Review'
+import Users from './components/Users'
 /**
  * COMPONENT
  */
@@ -30,6 +31,7 @@ class Routes extends Component {
         <Route exact path="/review/add" component={AddReview} />
         <Route exact path="/review" component={Review} />
         <Route exact path="/products/add" component={AddProduct} />
+        <Route exact path="/users" component={Users} />
 
         <Route exact path="/products" component={ProductList} />
         <Redirect exact from="/products/" to="/products" />
