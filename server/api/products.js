@@ -1,6 +1,5 @@
 const router = require('express').Router()
-const {Category} = require('../db/models')
-const {Product} = require('../db/models/product')
+const {Product, Category} = require('../db/models/product')
 //GET /api/products
 router.get('/', async (req, res, next) => {
   try {
@@ -106,5 +105,18 @@ router.put('/:id', (req, res, next) =>
      */
     .catch(next)
 )
+
+router.post('/:id/categories/:categoryId', async (req, res, next) => {
+  try {
+    const productId = req.params.id
+    const categoryId = req.params.categoryId
+    const product = await Product.findById(productId)
+    const category = await Category.findById(categoryId)
+    const newProductCategory = await category.addProduct(product)
+    res.json(newProductCategory)
+  } catch (err) {
+    next(err)
+  }
+})
 
 module.exports = router

@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import queryString from 'query-string'
 import {Menu, Sidebar} from 'semantic-ui-react'
-
 // internal moduels
 import {fetchProducts, filterCategories} from '../store/product'
 import {fetchCategories} from '../store/category'
@@ -103,9 +102,14 @@ export class ProductList extends Component {
           <br />
           <div>
             {user.id && user.isAdmin ? (
-              <Link to="/products/add">
-                <button type="button">Add Product</button>
-              </Link>
+              <div>
+                <Link to="/products/add">
+                  <button type="button">Add Product</button>
+                </Link>
+                <Link to="categories/add">
+                  <button type="button">Add Category</button>
+                </Link>
+              </div>
             ) : null}
           </div>
           {pageNumbers.map(number => {
