@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {fetchCartInfo, deleteCartItem} from '../store/cart'
+import {fetchCartInfo, deleteCartItem, putItemQty} from '../store/cart'
 import {connect} from 'react-redux'
 import {
   Card,
@@ -9,12 +9,40 @@ import {
   Table,
   Dropdown,
   Header,
-  Button
+  Button,
+  Form,
+  Input
 } from 'semantic-ui-react'
 
 export class Cart extends Component {
-  componentDidMount() {
-    this.props.fetchCartInfo(this.props.user.id)
+  constructor(props) {
+    super(props)
+    this.state = {
+      qty: 0,
+      currentItem: {}
+    }
+    //this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  total(cartData) {
+    return cartData.reduce((acc, item) => {
+      acc += item.quantity * item.product.price
+      return acc
+    }, 0)
+  }
+
+  // handleSubmit(event) {
+  //   event.preventDefault()
+  //   this.props.putItemQty(this.state.currentItem, this.state.qty)
+  //   console.log(this.state.currentItem, this.state.qty)
+  // }
+
+  handleChange(event, {value, currentitem}) {
+    this.setState({
+      qty: value,
+      currentItem: currentitem
+    })
   }
 
   total(cartData) {
@@ -29,6 +57,8 @@ export class Cart extends Component {
     const itemTotal = this.total(cart)
     const tax = itemTotal * 0.1
     const total = itemTotal + 5.95 + tax
+
+    const qty = this.state.qty
     return (
       <div>
         <Grid columns={1} padded>
@@ -64,11 +94,31 @@ export class Cart extends Component {
                             </Feed>
                           </Grid.Column>
                           <Grid.Column>
-                            <Dropdown
-                              placeholder={`${item.quantity}`}
-                              options={quantityOptions}
-                            />
-                            <Button>Update</Button>
+                            <Card.Content>{item.quantity}</Card.Content>
+                            <Form>
+                              <Form.Dropdown
+                                placeholder="Update Quantity"
+                                selection
+                                options={quantityOptions}
+                                name="quantity"
+                                value={qty}
+                                onChange={this.handleChange}
+                              />
+                              {/* <Input
+                                type="text"
+                                name="quantity"
+                                value={item.quantity}
+                                onChange={this.handleChange}
+
+                              /> */}
+                              <Button
+                                onClick={() =>
+                                  this.props.putItemQty(item, this.state.qty)
+                                }
+                              >
+                                Update
+                              </Button>
+                            </Form>
                           </Grid.Column>
                           <Grid.Column>
                             <Card.Content>
@@ -93,12 +143,12 @@ export class Cart extends Component {
             })}
           </Grid.Column>
         </Grid>
-        <Card centered padded margined>
+        <Card centered>
           <Table basic="very" celled collapsing>
             <Table.Body>
               <Table.Row>
                 <Table.Cell>
-                  <Header padded>
+                  <Header>
                     <Header.Content>Items</Header.Content>
                   </Header>
                 </Table.Cell>
@@ -143,7 +193,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchCartInfo: userId => dispatch(fetchCartInfo(userId)),
-  deleteCartItem: itemToDelete => dispatch(deleteCartItem(itemToDelete))
+  deleteCartItem: itemToDelete => dispatch(deleteCartItem(itemToDelete)),
+  putItemQty: (editedCartItem, qty) => dispatch(putItemQty(editedCartItem, qty))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)

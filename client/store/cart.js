@@ -4,6 +4,7 @@ import axios from 'axios'
 const SET_CART = 'SET_CART'
 const RESET_CART = 'RESET_CART'
 const SET_META_DATA = 'SET_META_DATA'
+const UPDATE_QTY = 'UPDATE_QTY'
 const ADDED_ITEM_TO_CART = 'ADDED_ITEM_TO_CART'
 const DELETE_ITEM = 'DELETE_ITEM'
 
@@ -27,6 +28,11 @@ export const addedItemToCart = cartItem => ({
 export const deleteItem = itemToDelete => ({
   type: DELETE_ITEM,
   itemToDelete
+})
+
+export const updateQty = updatedCartItem => ({
+  type: UPDATE_QTY,
+  updatedCartItem
 })
 
 // THUNKS
@@ -60,6 +66,18 @@ export const deleteCartItem = itemToDelete => dispatch => {
 }
 
 // add item to cart if it exists
+export const putItemQty = (editedCartItem, value) => async dispatch => {
+  try {
+    const {data: updatedCartItem} = await axios.put(
+      `/api/carts/${editedCartItem.cartId}/${editedCartItem.productId}`,
+      {value}
+    )
+    dispatch(updateQty(updatedCartItem[0]))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 export const addItemToCart = (productId, cartId) => async dispatch => {
   try {
     if (!cartId === undefined) {
@@ -98,6 +116,13 @@ export const cart = (state = [], action) => {
       return filterHelper(state, action.cartItem)
     case RESET_CART:
       return []
+    case UPDATE_QTY:
+      return state.map(item => {
+        if (item.id === action.updatedCartItem.id) {
+          item.quantity = action.updatedCartItem.quantity
+        }
+        return item
+      })
     default:
       return state
   }
