@@ -12,7 +12,8 @@ const Order = db.define('order', {
     validate: {
       isEmail: true
     }
-  }
+  },
+  sessionId: Sequelize.STRING
 })
 
 const OrderProduct = db.define('orderProduct', {

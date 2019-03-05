@@ -11,7 +11,7 @@ const mockStore = configureMockStore(middlewares)
 describe('Cart redux state', () => {
   let store
   let mockAxios
-  const fakeItem1 = {cartId: 1, productId: 1}
+  const fakeItem1 = {cartId: 1, id: 1}
 
   // the cart is an array of cartItems
   const initialState = {cart: [fakeItem1]}

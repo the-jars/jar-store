@@ -40,31 +40,58 @@ router.get(
  * - TODO:
  * * Test
  */
-router.post('/', (req, res, next) => {
-  Cart.findById(req.body.cartId) // finding the associated cart to set it inactive
-    .then(cart => cart.update({status: 'inactive'}, {fields: ['stataus']}))
-    .then(() => {
-      const {email, shippingAddressId, billingAddressId} = req.body.orderInfo
-      // creates a new order and returns it to next .then() chain
-      return Order.create({email}).then(newOrder => newOrder)
-    })
-    .then(order => {
-      // looping through array of cart item that is being ordered
+router.post(
+  '/',
+  (req, res, next) =>
+    Cart.findById(req.body.cartId) // finding the associated cart to set it inactive
+      // then inactivate the found cart
+      .then(cart => cart.update({status: 'inactive'}, {fields: ['stataus']}))
+      // then create the order
+      .then(() => {
+        const {email} = req.body.orderInfo
+        return Order.create({email}).then(newOrder => newOrder) // pass the created order to the next .then() chain
+      })
+      // then,
+      // - looping through array of cart item that is being ordered
       // - create new orderProduct instance and set the assosiation with the product
-      req.body.cartitems.map(item =>
-        order // create order product on each loop corresponding to the item
-          .createOrderProduct({
-            quantity: item.quantity
-          })
-          .then(orderedProduct => orderedProduct.setProduct(item.productId))
-          .catch(next)
+      .then(order => {
+        req.body.cartitems.map(item =>
+          order // create order product on each loop corresponding to the item
+            .createOrderProduct({
+              quantity: item.quantity
+            })
+            .then(orderedProduct => orderedProduct.setProduct(item.productId))
+            .catch(next)
+        )
+        return order // return the order to next then() chain after setting the product
+      })
+      // then set the shipping address association
+      .then(order => {
+        const {shippingAddressId} = req.body.orderInfo
+        return order.setShippingAddress(shippingAddressId).then(() => order)
+      })
+      // then set the billing address association
+      .then(order => {
+        const {billingAddressId} = req.body.orderInfo
+        return order.setBillingAddress(billingAddressId).then(() => order)
+      })
+      // then set user association
+      .then(
+        order =>
+          req.user && req.user.id
+            ? order.setUser(req.user.id, {returning: true}).then(returned => {
+                console.log(returned)
+                return order
+              })
+            : order.update(
+                {sessionId: req.session.id},
+                {returning: true, fields: ['sessionId']}
+              )
       )
-      return order
-      // return the order to nex then() chain after setting the product
-    })
-    .then(order => res.send(order)) // finally return order
-    .catch(next)
-})
+      // then finally return order
+      .then(order => res.send(order))
+      .catch(next) // move onto error handler on error
+)
 
 /** GET /api/orders/myOrder
  * - gets all order made by logged in user
