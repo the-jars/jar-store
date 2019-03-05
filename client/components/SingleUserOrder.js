@@ -25,7 +25,7 @@ export class SingleUserOrder extends Component {
     this.props.fetchSingleOrder(this.props.match.params.orderId)
   }
   render() {
-    console.log('order', this.state.currentOrder)
+    // console.log('order', this.state.currentOrder)
     return (
       <div>
         <Header as="h1" padded>
