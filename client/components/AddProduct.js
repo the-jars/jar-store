@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {addProductThunk} from '../store/product.js'
 import {connect} from 'react-redux'
 import {fetchProducts} from '../store/product'
+import {Form, Grid, Card, Button} from 'semantic-ui-react'
 class AddProduct extends Component {
   constructor(props) {
     super(props)
@@ -40,69 +41,78 @@ class AddProduct extends Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            value={this.state.name}
-            onChange={this.handleChange}
-          />
-          <label htmlFor="price">Price:</label>
-          <input
-            type="text"
-            name="price"
-            id="price"
-            value={this.state.price}
-            onChange={this.handleChange}
-          />
-          <label htmlFor="size">Size:</label>
-          <input
-            type="text"
-            name="size"
-            id="size"
-            value={this.state.size}
-            onChange={this.handleChange}
-          />
-          <label htmlFor="flavor">Flavor:</label>
-          <input
-            type="text"
-            name="flavor"
-            id="flavor"
-            value={this.state.flavor}
-            onChange={this.handleChange}
-          />
-          <label htmlFor="description">Description:</label>
-          <input
-            type="text"
-            name="description"
-            id="description"
-            value={this.state.description}
-            onChange={this.handleChange}
-          />
-          <label htmlFor="inventory">Inventory:</label>
-          <input
-            type="number"
-            min="0"
-            name="inventory"
-            id="inventory"
-            value={this.state.inventory}
-            onChange={this.handleChange}
-          />
-          <label>
-            <input type="radio" value="true" />
-            Available
-          </label>
-          <label>
-            <input type="radio" value="false" />
-            Unavailable
-          </label>
-          <br />
-          <button type="submit">Add Product</button>
-        </form>
-      </div>
+      <Card>
+        <Form onSubmit={this.handleSubmit}>
+          <Grid columns={1}>
+            <Grid.Column>
+              <Form.Field>
+                <label htmlFor="name">Name:</label>
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  value={this.state.name}
+                  onChange={this.handleChange}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label htmlFor="price">Price:</label>
+                <input
+                  type="text"
+                  name="price"
+                  id="price"
+                  value={this.state.price}
+                  onChange={this.handleChange}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label htmlFor="size">Size:</label>
+                <input
+                  type="text"
+                  name="size"
+                  id="size"
+                  value={this.state.size}
+                  onChange={this.handleChange}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label htmlFor="description">Description:</label>
+                <input
+                  type="text"
+                  name="description"
+                  id="description"
+                  value={this.state.description}
+                  onChange={this.handleChange}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label htmlFor="inventory">Inventory:</label>
+                <input
+                  type="number"
+                  min="0"
+                  name="inventory"
+                  id="inventory"
+                  value={this.state.inventory}
+                  onChange={this.handleChange}
+                />
+              </Form.Field>
+              <br />
+              <Form.Field>
+                <label>
+                  <input type="radio" value="true" />
+                  Available
+                </label>
+                <label>
+                  <input type="radio" value="false" />
+                  Unavailable
+                </label>
+              </Form.Field>
+              <br />
+              <Button type="submit">Add Product</Button>
+            </Grid.Column>
+          </Grid>
+        </Form>
+      </Card>
     )
   }
 }

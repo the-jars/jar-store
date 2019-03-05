@@ -7,10 +7,17 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const users = await User.findAll({
-      // explicitly select only the id and email fields - even though
-      // users' passwords are encrypted, it won't help if we just
-      // send everything to anyone who asks!
-      //attributes: ['id', 'email']
+      attributes: [
+        'id',
+        'email',
+        'firstName',
+        'lastName',
+        'isAdmin',
+        'forceReset',
+        'addressId',
+        'updatedAt'
+      ],
+      include: [{all: true, nested: true}]
     })
     res.json(users)
   } catch (err) {
@@ -38,5 +45,34 @@ router.post('/:id/cart', async (req, res, next) => {
     res.json(userCart[0])
   } catch (error) {
     next(error)
+  }
+})
+
+router.put('/:userId', async (req, res, next) => {
+  try {
+    const [rowsUpdated, updatedUser] = await User.update(
+      {
+        isAdmin: true
+      },
+      {
+        returning: true,
+        where: {
+          id: Number(req.params.userId)
+        }
+      }
+    )
+    res.json(updatedUser)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.delete('/:userId', async (req, res, next) => {
+  try {
+    const userToDelete = await User.findById(req.params.userId)
+    await userToDelete.destroy()
+    res.sendStatus(204)
+  } catch (err) {
+    next(err)
   }
 })

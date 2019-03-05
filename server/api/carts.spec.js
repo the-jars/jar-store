@@ -42,7 +42,6 @@ describe('Cart routes', () => {
       })
       .catch(console.log)
   })
-
   // after each test
   //afterEach(() => db.sync({force: true}))
 
@@ -52,7 +51,7 @@ describe('Cart routes', () => {
     beforeEach(async () => {
       user = await User.create({name: 'test boi', email: 'fake'})
 
-      await user.setCart(cart)
+      await user.addCart(cart)
       await cart.setUser(user)
     })
 
@@ -61,7 +60,6 @@ describe('Cart routes', () => {
       expect(response.body.length).to.be.equal(2)
     })
   })
-
   describe('DELETE /api/carts/:cartId/:itemId', () => {
     it('responds with 204 after deleting the item from the cartItem', async () => {
       // deletes the provided jar

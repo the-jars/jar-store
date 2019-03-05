@@ -54,6 +54,31 @@ class Navbar extends React.Component {
               >
                 <Link to="/cart">Cart</Link>
               </Menu.Item>
+              <Menu.Item
+                name="orders"
+                active={this.props.activeItem === 'orders'}
+                onClick={this.handleItemClick}
+              >
+                <Link to="/myorders">Previous Orders</Link>
+              </Menu.Item>
+              {this.props.isAdmin ? (
+                <Menu.Item
+                  name="allOrders"
+                  active={this.props.activeItem === 'allOrders'}
+                  onClick={this.handleItemClick}
+                >
+                  <Link to="/admin/orders">All Orders</Link>
+                </Menu.Item>
+              ) : null}
+              {this.props.isAdmin ? (
+                <Menu.Item
+                  name="users"
+                  active={this.props.activeItem === 'users'}
+                  onClick={this.handleItemClick}
+                >
+                  <Link to="/users">Users</Link>
+                </Menu.Item>
+              ) : null}
             </Menu>
           </div>
         ) : (
@@ -80,6 +105,13 @@ class Navbar extends React.Component {
                 onClick={this.handleItemClick}
               >
                 <Link to="/products">Jars!</Link>
+              </Menu.Item>
+              <Menu.Item
+                name="cart"
+                active={this.props.activeItem === 'cart'}
+                onClick={this.handleItemClick}
+              >
+                <Link to="/cart">Cart</Link>
               </Menu.Item>
             </Menu>
           </div>

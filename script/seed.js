@@ -97,7 +97,6 @@ const seed = db
       // op2.setOrder(o2),
       // op3.setOrder(o3),
 
-
       orderproducts.forEach(order => {
         order.setProduct(
           productData[Math.floor(Math.random() * productData.length)]
@@ -119,10 +118,15 @@ const seed = db
           carts[Math.floor(Math.random() * carts.length)]
           // carts[idx] ? carts[idx] : carts[carts.length - (idx - 1)]
         )
+
         cartItem.setProduct(
           productData[Math.floor(Math.random() * productData.length)]
         )
       })
+
+      // addresses.forEach(function(address, idx) {
+      //   address.setUser(users[1])
+      // })
     ])
   })
   .then(() => {
