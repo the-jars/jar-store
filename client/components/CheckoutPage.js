@@ -8,11 +8,11 @@ import {
   Header,
   Image,
   Message,
-  Segment
+  Segment,
+  Card
 } from 'semantic-ui-react'
 
 import {createOrder} from '../store/order'
-import {emit} from 'cluster'
 
 class CheckoutPage extends React.Component {
   componentDidMount() {}
@@ -20,29 +20,85 @@ class CheckoutPage extends React.Component {
   render() {
     return (
       <div>
-        <Form onSubmit={this.props.handleSubmit}>
-          <Form.Input
-            icon="user"
-            iconPosition="left"
-            placeholder="E-mail address"
-            name="email"
-            defaultValue={this.props.email}
-          />
+        <Header as="h2" color="teal" textAlign="center">
+          <Image src="screen_shot_2019-02-27_at_3.40.20_pm.png" /> Checkout
+        </Header>
+        <Grid
+          textAlign="center"
+          style={{height: '100%'}}
+          verticalAlign="middle"
+        >
+          <Form onSubmit={this.props.handleSubmit}>
+            <Form.Field>
+              <Header as="h4" color="teal" textAlign="center">
+                Email
+              </Header>
+              <input
+                icon="user"
+                iconposition="left"
+                placeholder="E-mail address"
+                name="email"
+                defaultValue={this.props.email}
+              />
+            </Form.Field>
+            <Grid.Column>
+              <Header as="h4" color="teal" textAlign="center">
+                Shipping Address
+              </Header>
+              <Card>
+                <Form.Field inline>
+                  <label>Street Address</label>
+                  <input name="shipping_line_1" />
+                </Form.Field>
+                <Form.Field inline>
+                  <label>Address 2</label>
+                  <input name="shipping_line_2" />
+                </Form.Field>
+                <Form.Field inline>
+                  <label>City</label>
+                  <input name="shipping_city" />
+                </Form.Field>
+                <Form.Field inline>
+                  <label>State</label>
+                  <input name="shipping_state" />
+                </Form.Field>
+                <Form.Field inline>
+                  <label>ZIP</label>
+                  <input name="shipping_zip" />
+                </Form.Field>
+              </Card>
+            </Grid.Column>
+            <Grid.Column>
+              <Header as="h4" color="teal" textAlign="center">
+                Shipping Address
+              </Header>
+              <Card>
+                <Form.Field inline>
+                  <label>Street Address</label>
+                  <input name="billing_line_1" />
+                </Form.Field>
+                <Form.Field inline>
+                  <label>Address 2</label>
+                  <input name="billing_line_2" />
+                </Form.Field>
+                <Form.Field inline>
+                  <label>City</label>
+                  <input name="billing_city" />
+                </Form.Field>
+                <Form.Field inline>
+                  <label>State</label>
+                  <input name="billing_state" />
+                </Form.Field>
+                <Form.Field inline>
+                  <label>ZIP</label>
+                  <input name="billing_zip" />
+                </Form.Field>
+              </Card>
+            </Grid.Column>
 
-          <Form.Input name="shipping_line_1" />
-          <Form.Input name="shipping_line_2" />
-          <Form.Input name="shipping_city" />
-          <Form.Input name="shipping_state" />
-          <Form.Input name="shipping_zip" />
-
-          <Form.Input name="billing_line_1" />
-          <Form.Input name="billing_line_2" />
-          <Form.Input name="billing_city" />
-          <Form.Input name="billing_state" />
-          <Form.Input name="billing_zip" />
-
-          <Button type="submit">Place Order</Button>
-        </Form>
+            <Button type="submit">Place Order</Button>
+          </Form>
+        </Grid>
       </div>
     )
   }
