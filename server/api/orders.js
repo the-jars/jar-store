@@ -40,9 +40,7 @@ router.get(
  * - TODO:
  * * Test
  */
-router.post(
-  '/',
-  (req, res, next) =>
+router.post('/', (req, res, next) => 
     Cart.findById(req.body.cartId) // finding the associated cart
       // then inactivate the found cart
       .then(cart => cart.update({status: 'inactive'}, {fields: ['stataus']}))
