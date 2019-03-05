@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleProduct, editSingleProduct} from '../store/product'
+import {Form, Grid, Card, Button} from 'semantic-ui-react'
 
 class EditProduct extends React.Component {
   constructor() {
@@ -71,41 +72,58 @@ class EditProduct extends React.Component {
     return (
       <div>
         <h3>{`Edit ${productToEdit.name}`}</h3>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="name">Name:</label>
-          <input type="text" name="name" id="name" ref={this.name} />
-          <label htmlFor="price">Price:</label>
-          <input type="text" name="price" id="price" ref={this.price} />
-          <label htmlFor="size">Size:</label>
-          <input type="text" name="size" id="size" ref={this.size} />
-          <label htmlFor="flavor">Flavor:</label>
-          <input type="text" name="flavor" id="flavor" ref={this.flavor} />
-          <label htmlFor="description">Description:</label>
-          <input
-            type="text"
-            name="description"
-            id="description"
-            ref={this.description}
-          />
-          <label htmlFor="inventory">Inventory:</label>
-          <input
-            type="number"
-            min="0"
-            name="inventory"
-            id="inventory"
-            ref={this.inventory}
-          />
-          <button type="submit">Edit Product</button>
-        </form>
-        <label htmlFor="availability">Availability:</label>
-        {/** TODO: display default value and updated value for button text */}
-        <input
-          type="button"
-          name="availability"
-          id="availability"
-          ref={this.availability}
-          onClick={this.toggleAvailability}
-        />
+        <Card>
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Field>
+              <label htmlFor="name">Name:</label>
+              <input type="text" name="name" id="name" ref={this.name} />
+            </Form.Field>
+            <Form.Field>
+              <label htmlFor="price">Price:</label>
+              <input type="text" name="price" id="price" ref={this.price} />
+            </Form.Field>
+            <Form.Field>
+              <label htmlFor="size">Size:</label>
+              <input type="text" name="size" id="size" ref={this.size} />
+            </Form.Field>
+            <Form.Field>
+              <label htmlFor="flavor">Flavor:</label>
+              <input type="text" name="flavor" id="flavor" ref={this.flavor} />
+            </Form.Field>
+            <Form.Field>
+              <label htmlFor="description">Description:</label>
+              <input
+                type="text"
+                name="description"
+                id="description"
+                ref={this.description}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label htmlFor="inventory">Inventory:</label>
+              <input
+                type="number"
+                min="0"
+                name="inventory"
+                id="inventory"
+                ref={this.inventory}
+              />
+            </Form.Field>
+            <br />
+            <Button type="submit">Edit Product</Button>
+            <Form.Field>
+              <label htmlFor="availability">Availability:</label>
+              {/** TODO: display default value and updated value for button text */}
+              <input
+                type="button"
+                name="availability"
+                id="availability"
+                ref={this.availability}
+                onClick={this.toggleAvailability}
+              />
+            </Form.Field>
+          </Form>
+        </Card>
       </div>
     )
   }
