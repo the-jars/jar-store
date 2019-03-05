@@ -83,14 +83,6 @@ router.delete('/:cartId/:itemId', (req, res, next) =>
 
 router.put('/:cartId/:productId', async (req, res, next) => {
   try {
-    console.log(
-      'cartId',
-      req.params.cartId,
-      'productId',
-      req.params.productId,
-      'qty',
-      req.body.value
-    )
     const [rowsUpdated, updatedCartItem] = await CartItem.update(
       {
         quantity: Number(req.body.value)

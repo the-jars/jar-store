@@ -77,6 +77,13 @@ class Navbar extends React.Component {
               >
                 <Link to="/products">Jars!</Link>
               </Menu.Item>
+              <Menu.Item
+                name="cart"
+                active={this.props.activeItem === 'cart'}
+                onClick={this.handleItemClick}
+              >
+                <Link to="/cart">Cart</Link>
+              </Menu.Item>
             </Menu>
           </div>
         )}
