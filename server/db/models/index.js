@@ -35,13 +35,13 @@ Order.belongsTo(User)
 User.hasMany(Order)
 
 // has two types of address
-Order.hasOne(Address, {
-  as: 'sippingAddress',
+Order.belongsTo(Address, {
+  as: 'shippingAddress',
   constraints: false,
   allowNull: true,
   defaultValue: null
 })
-Order.hasOne(Address, {
+Order.belongsTo(Address, {
   as: 'billingAddress',
   constraints: false,
   allowNull: true,

@@ -12,7 +12,12 @@ const Order = db.define('order', {
     validate: {
       isEmail: true
     }
-  }
+  },
+  totalCost: {
+    type: Sequelize.DECIMAL(10, 2),
+    defaultValue: 0.0
+  },
+  sessionId: Sequelize.STRING
 })
 
 const OrderProduct = db.define('orderProduct', {

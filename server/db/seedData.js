@@ -155,12 +155,36 @@ const reviewData = [
 ]
 
 const orderData = [
-  {shippingStatus: 'Delivered'},
-  {shippingStatus: 'Canceled'},
-  {shippingStatus: 'Processing'},
-  {shippingStatus: 'Processing'},
-  {shippingStatus: 'Canceled'},
-  {shippingStatus: 'Delivered'}
+  {
+    shippingStatus: 'Delivered',
+    shippingAddressId: 1,
+    billingAddressId: 1
+  },
+  {
+    shippingStatus: 'Canceled',
+    shippingAddressId: 2,
+    billingAddressId: 2
+  },
+  {
+    shippingStatus: 'Processing',
+    shippingAddressId: 4,
+    billingAddressId: 4
+  },
+  {
+    shippingStatus: 'Processing',
+    shippingAddressId: 5,
+    billingAddressId: 5
+  },
+  {
+    shippingStatus: 'Canceled',
+    shippingAddressId: 1,
+    billingAddressId: 2
+  },
+  {
+    shippingStatus: 'Delivered',
+    shippingAddressId: 3,
+    billingAddressId: 4
+  }
 ]
 
 const userData = [
