@@ -118,16 +118,7 @@ export class ProductList extends Component {
                 value={this.state.filter}
                 onChange={this.handleChange}
                 options={categoryOptions}
-              >
-                {/* <option value="All">All</option>
-                {!categories
-                  ? ''
-                  : categories.map(category => (
-                      <option key={category.id} value={category.name}>
-                        {category.name}
-                      </option>
-                    ))} */}
-              </Dropdown>
+              />
               <Button
                 onClick={() => {
                   this.props.applyFilter(this.state.filter)

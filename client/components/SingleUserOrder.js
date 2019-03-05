@@ -2,6 +2,9 @@ import {fetchSingleOrder} from '../store/order'
 import {connect} from 'react-redux'
 import {Card, Feed, Grid, Image, Table, Header, Button} from 'semantic-ui-react'
 import React, {Component} from 'react'
+import {showAddReview} from '../store/review'
+import AddReview from './AddReview.js'
+import {Link} from 'react-router-dom'
 
 export class SingleUserOrder extends Component {
   componentDidMount() {
@@ -96,6 +99,7 @@ export class SingleUserOrder extends Component {
           {!items
             ? 'nah'
             : items.map(item => {
+                console.log(item)
                 return (
                   <Card key={item.id} color="pink" fluid>
                     <Card.Content>
@@ -110,13 +114,12 @@ export class SingleUserOrder extends Component {
                           </Grid.Column>
                           <Grid.Column>
                             <Card.Header>
-                              {item.product.name}
-                              {/* <Link
-                                to={`products/${item.product.id}`}
+                              <Link
+                                to={`/products/${item.product.id}`}
                                 currentProduct={item}
                               >
                                 {item.product.name}
-                              </Link> */}
+                              </Link>
                             </Card.Header>
                             <Feed>
                               <Feed.Content>
@@ -139,11 +142,10 @@ export class SingleUserOrder extends Component {
                             </Card.Content>
                           </Grid.Column>
                           <Grid.Column>
-                            <Button
-                            // onClick={() => this.props.deleteCartItem(item)}
-                            >
-                              Review Now
-                            </Button>
+                            {/* <Button onClick={this.props.showAddReviewFunc}>
+                              Add a Review
+                            </Button> */}
+                            <AddReview product={item.product} />
                           </Grid.Column>
                         </Grid.Row>
                       </Grid>
@@ -164,7 +166,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   // const orderId = ownProps.match.params.orderId
-  fetchSingleOrder: orderId => dispatch(fetchSingleOrder(orderId))
+  fetchSingleOrder: orderId => dispatch(fetchSingleOrder(orderId)),
+  showAddReviewFunc: () => dispatch(showAddReview())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleUserOrder)

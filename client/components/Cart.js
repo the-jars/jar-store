@@ -11,7 +11,7 @@ import {
   Button,
   Form
 } from 'semantic-ui-react'
-
+import {Link} from 'react-router-dom'
 export class Cart extends Component {
   constructor(props) {
     super(props)
@@ -28,10 +28,9 @@ export class Cart extends Component {
     }, 0)
   }
 
-  handleChange(event, {value, currentitem}) {
+  handleChange(event, {value}) {
     this.setState({
-      qty: value,
-      currentItem: currentitem
+      qty: value
     })
   }
 
@@ -61,7 +60,6 @@ export class Cart extends Component {
                     quantityOptions.push({key: i, text: `${i}`, value: i})
                   }
                   return (
-                    // eslint-disable-next-line react/jsx-key
                     <div key={item.id}>
                       <Card color="pink" fluid key={item.id}>
                         <Card.Content>
@@ -76,9 +74,9 @@ export class Cart extends Component {
                               </Grid.Column>
                               <Grid.Column>
                                 <Card.Header>
-                                  <h3 className="header">
+                                  <Link to={`products/${item.product.id}`}>
                                     {item.product.name}
-                                  </h3>
+                                  </Link>
                                 </Card.Header>
                                 <Feed>
                                   <Feed.Content>
