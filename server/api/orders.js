@@ -153,13 +153,11 @@ router.get('/filterAdminOrders', async (req, res, next) => {
     let filteredOrders
     if (req.query.status === 'All') {
       filteredOrders = await Order.findAll({
-        where: {userId: req.user.id},
         include: [{all: true, nested: true}]
       })
     } else {
       filteredOrders = await Order.findAll({
         where: {
-          userId: req.user.id,
           shippingStatus: req.query.status
         },
         include: [{all: true, nested: true}]
