@@ -40,7 +40,8 @@ export class UserOrderList extends Component {
       return {key: idx, text: option, value: option}
     })
 
-    const orders = this.props.allOrders
+    const orders = this.props.adminOrderList
+    console.log(this.props)
     return !orders || !orders.length ? (
       <h1>No Orders</h1>
     ) : (
@@ -67,14 +68,16 @@ export class UserOrderList extends Component {
             <h1>Your Orders</h1>
           </Grid.Column>
         </Grid>
-        {orders.map(order => <OrderRow key={order.id} order={order} />)}
+        {orders && orders.length
+          ? orders.map(order => <OrderRow key={order.id} order={order} />)
+          : 'nah'}
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  allOrders: state.adminOrderList
+  adminOrderList: state.adminOrderList
 })
 
 const mapDispatchToProps = dispatch => ({

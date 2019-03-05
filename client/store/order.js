@@ -43,7 +43,7 @@ export const fetchUserOrders = () => async dispatch => {
 
 export const fetchAdminOrders = () => async dispatch => {
   try {
-    const orderList = await axios.get('/api/orders')
+    const orderList = await axios.get('/api/orders/')
     dispatch(setAdminOrders(orderList.data))
   } catch (error) {
     console.error(error)

@@ -43,7 +43,7 @@ router.get(
 router.post('/', (req, res, next) => {
   console.log(req.body)
   Cart.findById(req.body.cartId) // finding the associated cart to set it inactive
-    .then(cart => cart.update({status: 'inactive'}, {fields: ['stataus']}))
+    .then(cart => cart.update({status: 'inactive'}, {fields: ['status']}))
     .then(() => {
       const {email, shippingAddressId, billingAddressId} = req.body.orderInfo
       // creates a new order and returns it to next .then() chain

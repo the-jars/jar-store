@@ -3,8 +3,15 @@ import {Grid, Card, Feed, Button, Image} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 
 const OrderRow = props => {
-  const firstItem = props.order.orderProducts[0].product
+  console.log(props)
+
+  const firstItem =
+    props.order.orderProducts && props.order.orderProducts.length
+      ? props.order.orderProducts[0].product
+      : ''
   const order = props.order
+  const origDate = Date.parse(order.createdAt)
+  const dateStr = new Date(origDate).toDateString()
   return (
     <div>
       <Card color="pink" fluid>
@@ -15,11 +22,12 @@ const OrderRow = props => {
                 <Image src={firstItem.imgUrl} circular size="small" />
               </Grid.Column>
               <Grid.Column>
-                <Card.Header>{order.createdAt}</Card.Header>
+                <Card.Header>{dateStr}</Card.Header>
+                <Card.Meta>Order #{order.id}</Card.Meta>
                 <Feed>
                   <Feed.Content>
                     <Card.Meta>
-                      items:{' '}
+                      Items:
                       <ul>
                         {order.orderProducts.map((orderProduct, i) => (
                           <li key={i}>{orderProduct.product.name}</li>
@@ -30,15 +38,15 @@ const OrderRow = props => {
                 </Feed>
               </Grid.Column>
               <Grid.Column>
-                <Card.Content>total: $NEED COST STILL</Card.Content>
+                <Card.Content>Total: $55</Card.Content>
               </Grid.Column>
               <Grid.Column>
-                <Card.Header>status: {order.shippingStatus}</Card.Header>
-                <Feed>
-                  <Feed.Content>
-                    <Card.Meta>click here for shipping info</Card.Meta>
-                  </Feed.Content>
-                </Feed>
+                <Card.Header>Status: {order.shippingStatus}</Card.Header>
+                {order.shippingStatus === 'Processing' ? (
+                  <Card.Meta>Expected in 5-6 business days.</Card.Meta>
+                ) : (
+                  ''
+                )}
               </Grid.Column>
               <Grid.Column>
                 <Button>
@@ -46,12 +54,6 @@ const OrderRow = props => {
                     click here for more info
                   </Link>
                 </Button>
-
-                {/* <Button
-                // onClick={() => this.props.deleteCartItem(item)}
-                >
-                  Details
-                </Button> */}
               </Grid.Column>
             </Grid.Row>
           </Grid>

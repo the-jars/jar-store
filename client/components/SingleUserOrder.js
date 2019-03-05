@@ -27,13 +27,14 @@ export class SingleUserOrder extends Component {
   render() {
     const order = this.props.currentOrder
     const items = this.props.currentOrder.orderProducts
-
+    const origDate = Date.parse(order.createdAt)
+    const dateStr = new Date(origDate).toDateString()
     console.log('items', items)
     return (
       <div>
         <Header as="h1" padded>
           <br />
-          Your Order on {order.createdAt}
+          Your Order on {dateStr}
           <br />
           <br />
         </Header>
