@@ -2,7 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {Button, Form, Grid, Header, Image, Table, Card} from 'semantic-ui-react'
-
 import {createOrder} from '../store/order'
 
 class CheckoutPage extends React.Component {
@@ -22,6 +21,7 @@ class CheckoutPage extends React.Component {
     evt.preventDefault()
     const email = evt.target.email.value
     // get the shipping address data
+    console.log('yeah submit!!!')
     const {
       shipping_line_1,
       shipping_line_2,
@@ -51,6 +51,17 @@ class CheckoutPage extends React.Component {
       state: billing_state.value,
       zip: billing_zip.value
     }
+
+    this.props.history.push('/checkoutform', {
+      onSubmit: () =>
+        this.props.createOrderThunk(
+          this.props.cartId,
+          this.props.cartItems,
+          shippingAddress,
+          billingAddress,
+          email
+        )
+    })
 
     this.props.createOrderThunk(
       this.props.cartId,
@@ -154,8 +165,8 @@ class CheckoutPage extends React.Component {
                       </Table.Cell>
                     </Table.Row>
                   </Table.Body>
+                  <Button type="submit">Purcase</Button>
                 </Table>
-                <Button type="submit">Place Order</Button>
               </Card>
             </Grid.Row>
           </Form>

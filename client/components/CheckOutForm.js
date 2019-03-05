@@ -11,7 +11,7 @@ import {
   Segment
 } from 'semantic-ui-react'
 
-export class CheckoutForm extends Component {
+class CheckoutForm extends Component {
   render() {
     return (
       <Elements>
@@ -25,7 +25,10 @@ export class CheckoutForm extends Component {
               <Image src="screen_shot_2019-02-27_at_3.40.20_pm.png" /> Check Out
             </Header>
 
-            <StripeCheckout size="large" />
+            <StripeCheckout
+              size="large"
+              onSubmit={this.props.location.state.onSubmit}
+            />
           </Grid.Column>
         </Grid>
       </Elements>
