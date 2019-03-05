@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchUsers, updateAdmin, deleteUser} from '../store/userList'
+import {fetchUsers, updateAdmin, removeUser} from '../store/userList'
 import {Card, Button} from 'semantic-ui-react'
 
 export class Users extends Component {
@@ -35,7 +35,10 @@ export class Users extends Component {
                     <Button
                       basic
                       color="red"
-                      onClick={() => this.props.deleteUser(user.id)}
+                      onClick={() => {
+                        this.props.deleteUser(user.id)
+                        this.props.getUsers()
+                      }}
                     >
                       Delete
                     </Button>
@@ -56,6 +59,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getUsers: () => dispatch(fetchUsers()),
   makeAdmin: userId => dispatch(updateAdmin(userId)),
-  deleteUser: userId => dispatch(deleteUser(userId))
+  deleteUser: userId => dispatch(removeUser(userId))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Users)

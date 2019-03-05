@@ -37,6 +37,19 @@ export const updateAdmin = userId => async dispatch => {
   }
 }
 
+export const removeUser = userId => async dispatch => {
+  try {
+    const response = await axios.delete(`/api/users/${userId}`)
+    if (response.status === 204) {
+      dispatch(deleteUser(userId))
+    } else {
+      throw new Error('delete user failed, something went wrong!')
+    }
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 export const allUsers = (state = [], action) => {
   switch (action.type) {
     case SET_USERS:
@@ -49,6 +62,10 @@ export const allUsers = (state = [], action) => {
         } else {
           return user
         }
+      })
+    case DELETE_USER:
+      return state.filter(user => {
+        return user.id !== action.user.id
       })
     default:
       return state
