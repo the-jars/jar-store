@@ -40,15 +40,15 @@ router.get(
  * - TODO:
  * * Test
  */
-router.post(
-  '/',
-  (req, res, next) =>
+router.post('/', (req, res, next) => {
+  console.log(req.body)
+  return (
     Cart.findById(req.body.cartId) // finding the associated cart
       // then inactivate the found cart
       .then(cart => cart.update({status: 'inactive'}, {fields: ['stataus']}))
       // then create the order
       .then(() => {
-        const {email} = req.body.orderInfo
+        const email = req.body.email
         return Order.create({email}).then(newOrder => newOrder) // pass the created order to the next .then() chain
       })
       // then,
@@ -67,12 +67,12 @@ router.post(
       })
       // then set the shipping address association
       .then(order => {
-        const {shippingAddressId} = req.body.orderInfo
+        const shippingAddressId = req.body.shippingAddressId
         return order.setShippingAddress(shippingAddressId).then(() => order)
       })
       // then set the billing address association
       .then(order => {
-        const {billingAddressId} = req.body.orderInfo
+        const billingAddressId = req.body.billingAddressId
         return order.setBillingAddress(billingAddressId).then(() => order)
       })
       // then set user association
@@ -91,7 +91,8 @@ router.post(
       // then finally return order
       .then(order => res.send(order))
       .catch(next) // move onto error handler on error
-)
+  )
+})
 
 /** GET /api/orders/myOrder
  * - gets all order made by logged in user

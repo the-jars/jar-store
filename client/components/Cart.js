@@ -28,18 +28,14 @@ export class Cart extends Component {
     }, 0)
   }
 
-  handleChange(event, {value, currentitem}) {
+  handleChange(event, {value}) {
     this.setState({
-      qty: value,
-      currentItem: currentitem
+      qty: value
     })
   }
 
-  total(cartData) {
-    return cartData.reduce((acc, item) => {
-      acc += item.quantity * item.product.price
-      return acc
-    }, 0)
+  onCheckout(total) {
+    this.props.history.push('/checkout', {total})
   }
 
   render() {
@@ -174,7 +170,9 @@ export class Cart extends Component {
               </Table.Row>
             </Table.Body>
           </Table>
-          <Button>Checkout</Button>
+          <Button onClick={() => this.onCheckout(total.toFixed(2))}>
+            Checkout
+          </Button>
         </Card>
       </div>
     )

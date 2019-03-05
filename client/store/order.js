@@ -14,7 +14,8 @@ export const fetchOrder = orderId => dispatch =>
     .catch(console.error)
 
 export const createOrder = (
-  cart,
+  cartId,
+  cartItems,
   shippingAddress,
   billingAddress,
   email
@@ -22,19 +23,16 @@ export const createOrder = (
   try {
     const shippingRes = await axios.put('/api/address/', shippingAddress)
     const billingRes = await axios.put('/api/address/', billingAddress)
-
-    const newOrder = {
-      cartId: cart.id,
-      cartItems: cart.cartitems,
-      orderInfo: {
-        email,
-        shippingAddressId: shippingRes.data,
-        billingAddressId: billingRes.data
-      }
+    const orderInfo = {
+      cartId,
+      cartItems,
+      email,
+      shippingAddressId: shippingRes.data,
+      billingAddressId: billingRes.data
     }
 
-    const createOrderRes = await axios.post(`/api/orders/`, newOrder)
-    //dispatch(setOrder(createOrderRes.data))
+    const createOrderRes = await axios.post(`/api/orders/`, orderInfo)
+    dispatch(setOrder(createOrderRes.data))
   } catch (e) {
     console.error(e)
   }
