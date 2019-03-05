@@ -7,8 +7,12 @@ import {Menu} from 'semantic-ui-react'
 
 // const Navbar = ({handleClick, isLoggedIn}) => (
 class Navbar extends React.Component {
-  constructor({handleClick, isLoggedIn}) {
-    super({handleClick, isLoggedIn})
+  // constructor({handleClick, isLoggedIn}) {
+  //   super({handleClick, isLoggedIn})
+  //   this.state = {activeItem: 'home'}
+  // }
+  constructor(props) {
+    super(props)
     this.state = {activeItem: 'home'}
   }
   handleItemClick = (e, {name}) => this.setState({activeItem: name})

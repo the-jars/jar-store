@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {CardElement, Elements, injectStripe} from 'react-stripe-elements'
-import StripeForm from './StripeForm'
+import StripeCheckout from './StripeCheckout'
 import {
   Button,
   Form,
@@ -25,7 +25,7 @@ export class CheckoutForm extends Component {
               <Image src="screen_shot_2019-02-27_at_3.40.20_pm.png" /> Check Out
             </Header>
 
-            <StripeForm size="large" />
+            <StripeCheckout size="large" />
           </Grid.Column>
         </Grid>
       </Elements>
