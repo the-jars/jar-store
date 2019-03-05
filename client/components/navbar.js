@@ -13,6 +13,7 @@ class Navbar extends React.Component {
   }
   handleItemClick = (e, {name}) => this.setState({activeItem: name})
   render() {
+    console.log(this.props.isAdmin)
     return (
       <div>
         <h1>THE JARS</h1>
@@ -122,7 +123,8 @@ class Navbar extends React.Component {
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    isAdmin: !!state.user.isAdmin
   }
 }
 

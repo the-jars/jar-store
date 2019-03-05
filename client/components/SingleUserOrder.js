@@ -86,15 +86,21 @@ export class SingleUserOrder extends Component {
               </Card>
             </Grid.Row>
           </Grid>
+          {items ? (
+            <Header as="h2">
+              Your Order Included {items.length} Item{items.length > 1
+                ? 's'
+                : null}:
+            </Header>
+          ) : null}
 
-          <Header as="h2">Your Order Included 1 Item:</Header>
           {console.log(items)}
 
           {!items
             ? 'nah'
             : items.map(item => {
                 return (
-                  <Card color="pink" fluid>
+                  <Card key={item.id} color="pink" fluid>
                     <Card.Content>
                       <Grid columns={5} padded>
                         <Grid.Row>
