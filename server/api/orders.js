@@ -78,9 +78,15 @@ router.post(
       // then set user association
       .then(
         order =>
-          req.user.id
-            ? order.setUser(req.user.id).then(() => order)
-            : order.update()
+          req.user && req.user.id
+            ? order.setUser(req.user.id, {returning: true}).then(returned => {
+                console.log(returned)
+                return order
+              })
+            : order.update(
+                {sessionId: req.session.id},
+                {returning: true, fields: ['sessionId']}
+              )
       )
       // then finally return order
       .then(order => res.send(order))
