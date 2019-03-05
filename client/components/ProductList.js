@@ -3,26 +3,12 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import queryString from 'query-string'
-import {
-  Menu,
-  Sidebar,
-  Grid,
-  Dropdown,
-  Button,
-  Segment,
-  Card,
-  Search,
-  Form,
-  Input,
-  Icon
-} from 'semantic-ui-react'
+import {Grid, Dropdown, Button, Form, Icon} from 'semantic-ui-react'
 
 // internal moduels
 import {fetchProducts, filterCategories, setNewProducts} from '../store/product'
 import {fetchCategories} from '../store/category'
 import Product from './Product'
-import AddItemButton from './AddItemToCart'
-import {cart} from '../store/cart'
 
 export class ProductList extends Component {
   constructor() {
@@ -142,7 +128,7 @@ export class ProductList extends Component {
               <Form onSubmit={this.handleSubmit}>
                 <Form.Input placeholder="Search" type="text" name="search" />
                 <Button>
-                  <Icon name="search" />{' '}
+                  <Icon name="search" />
                 </Button>
               </Form>
             </div>

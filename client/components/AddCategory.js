@@ -1,6 +1,6 @@
 import {addCategoryThunk, fetchCategories} from '../store/category.js'
 import {connect} from 'react-redux'
-import {Button, Form, Header, Card, List} from 'semantic-ui-react'
+import {Button, Form, Header, List} from 'semantic-ui-react'
 import React, {Component} from 'react'
 class AddCategory extends Component {
   constructor(props) {

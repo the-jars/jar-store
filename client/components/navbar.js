@@ -24,13 +24,13 @@ class Navbar extends React.Component {
           <div>
             <Menu secondary>
               {/* The navbar will show these links after you log in */}
-              <Menu.Item
+              {/* <Menu.Item
                 name="home"
                 active={this.props.activeItem === 'home'}
                 onClick={this.handleItemClick}
               >
                 <Link to="/home">Home</Link>
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item
                 name="logout"
                 active={this.props.activeItem === 'logout'}

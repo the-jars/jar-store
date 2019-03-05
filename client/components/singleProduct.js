@@ -2,15 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {showAddReview, getReviews} from '../store/review'
-import {
-  Image,
-  Card,
-  Icon,
-  Segment,
-  Header,
-  Grid,
-  Button
-} from 'semantic-ui-react'
+import {Image, Card, Header, Grid, Button} from 'semantic-ui-react'
 import Review from './Review'
 
 // ACTIONS
@@ -19,9 +11,6 @@ import AddReview from './AddReview.js'
 import AddItemToCart from './AddItemToCart.js'
 
 class SingleProduct extends Component {
-  constructor() {
-    super()
-  }
   componentDidMount() {
     const currentProductId = this.props.match.params.id
     this.props.setProduct(currentProductId)

@@ -1,8 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {addProductToCategory, fetchNewProductCategory} from '../store/product'
+import {addProductToCategory} from '../store/product'
 import {fetchCategories} from '../store/category'
-import {Button, Form, Dropdown} from 'semantic-ui-react'
+import {Button, Form} from 'semantic-ui-react'
 
 class AddProductCategory extends React.Component {
   constructor(props) {
@@ -57,7 +57,7 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatch = (dispatch, ownProps) => ({
+const mapDispatch = dispatch => ({
   fetchCategories: () => dispatch(fetchCategories()),
   addProductToCategory: (categoryId, productId) =>
     dispatch(addProductToCategory(categoryId, productId))

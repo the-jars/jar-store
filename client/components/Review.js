@@ -1,5 +1,5 @@
 import React from 'react'
-import {Comment, Header, Icon, Segment, Feed} from 'semantic-ui-react'
+import {Icon, Feed} from 'semantic-ui-react'
 
 export const Review = props => {
   const {user, review} = props
