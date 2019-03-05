@@ -11,6 +11,7 @@ import {
   Label,
   Divider,
   Segment,
+  Link,
   Header,
   Button,
   Form,
@@ -21,16 +22,18 @@ import React, {Component} from 'react'
 
 export class SingleUserOrder extends Component {
   componentDidMount() {
-    console.log(this.props.match.params.orderId)
     this.props.fetchSingleOrder(this.props.match.params.orderId)
   }
   render() {
-    // console.log('order', this.state.currentOrder)
+    const order = this.props.currentOrder
+    const items = this.props.currentOrder.orderProducts
+
+    console.log('items', items)
     return (
       <div>
         <Header as="h1" padded>
           <br />
-          Your Order on June 11, 2017
+          Your Order on {order.createdAt}
           <br />
           <br />
         </Header>
@@ -39,13 +42,9 @@ export class SingleUserOrder extends Component {
             <Grid.Row>
               <Grid.Column>
                 <Header as="h3">Order Status:</Header>
-                {/* <Header as="h4"> */}
-                Processing
-                <br />OR
-                <br />On its way!
-                <br />Last seen in Miluakee
-                <br />Click here for more details
-                {/* </Header> */}
+                {order.shippingStatus != 'Processing'
+                  ? `${order.shippingStatus}`
+                  : `Processing - expected in 5-6 business days.`}
               </Grid.Column>
               <Grid.Column>
                 <Header as="h3">Shipping Address:</Header>
@@ -59,7 +58,7 @@ export class SingleUserOrder extends Component {
                 Visa ending in 1234
                 <br />
                 <Header as="h3">Order Number:</Header>
-                xxxx-yyyy-zzzz
+                {order.id}
               </Grid.Column>
               <Card centered>
                 <Table basic="very" celled collapsing>
@@ -102,48 +101,67 @@ export class SingleUserOrder extends Component {
               </Card>
             </Grid.Row>
           </Grid>
-          {/* <Divider /> */}
+
           <Header as="h2">Your Order Included 1 Item:</Header>
-          <div>
-            <Card color="pink" fluid>
-              <Card.Content>
-                <Grid columns={5} padded>
-                  <Grid.Row>
-                    <Grid.Column>
-                      <Image
-                        src="/images/raspberry.png"
-                        circular
-                        size="small"
-                      />
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Card.Header>Product name</Card.Header>
-                      <Feed>
-                        <Feed.Content>
-                          <Card.Meta>Description</Card.Meta>
-                        </Feed.Content>
-                      </Feed>
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Card.Content>Quantity: 1</Card.Content>
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Card.Content>
-                        product price at time of order * quantity
-                      </Card.Content>
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Button
-                      // onClick={() => this.props.deleteCartItem(item)}
-                      >
-                        Review Now
-                      </Button>
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-              </Card.Content>
-            </Card>
-          </div>
+          {console.log(items)}
+
+          {!items
+            ? 'nah'
+            : items.map(item => {
+                return (
+                  <Card color="pink" fluid>
+                    <Card.Content>
+                      <Grid columns={5} padded>
+                        <Grid.Row>
+                          <Grid.Column>
+                            <Image
+                              src={item.product.imgUrl}
+                              circular
+                              size="small"
+                            />
+                          </Grid.Column>
+                          <Grid.Column>
+                            <Card.Header>
+                              {item.product.name}
+                              {/* <Link
+                                to={`products/${item.product.id}`}
+                                currentProduct={item}
+                              >
+                                {item.product.name}
+                              </Link> */}
+                            </Card.Header>
+                            <Feed>
+                              <Feed.Content>
+                                <Card.Meta>
+                                  {item.product.description}
+                                </Card.Meta>
+                              </Feed.Content>
+                            </Feed>
+                          </Grid.Column>
+                          <Grid.Column>
+                            <Card.Content>
+                              Quantity: {item.quantity}
+                            </Card.Content>
+                          </Grid.Column>
+                          <Grid.Column>
+                            <Card.Content>
+                              Total: product price at time of order *
+                              {item.quantity}
+                            </Card.Content>
+                          </Grid.Column>
+                          <Grid.Column>
+                            <Button
+                            // onClick={() => this.props.deleteCartItem(item)}
+                            >
+                              Review Now
+                            </Button>
+                          </Grid.Column>
+                        </Grid.Row>
+                      </Grid>
+                    </Card.Content>
+                  </Card>
+                )
+              })}
         </div>{' '}
       </div>
     )
@@ -151,7 +169,8 @@ export class SingleUserOrder extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentOrder: state.currentOrder
+  currentOrder: state.currentOrder,
+  items: state.currentOrder.orderProducts
 })
 
 const mapDispatchToProps = dispatch => ({
