@@ -12,16 +12,52 @@ import {
 } from 'semantic-ui-react'
 
 import {createOrder} from '../store/order'
+import {emit} from 'cluster'
 
 class CheckoutPage extends React.Component {
-  constructor(props) {
-    super(props)
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
+  componentDidMount() {}
 
+  render() {
+    return (
+      <div>
+        <Form onSubmit={this.props.handleSubmit}>
+          <Form.Input
+            icon="user"
+            iconPosition="left"
+            placeholder="E-mail address"
+            name="email"
+            defaultValue={this.props.email}
+          />
+
+          <Form.Input name="shipping_line_1" />
+          <Form.Input name="shipping_line_2" />
+          <Form.Input name="shipping_city" />
+          <Form.Input name="shipping_state" />
+          <Form.Input name="shipping_zip" />
+
+          <Form.Input name="billing_line_1" />
+          <Form.Input name="billing_line_2" />
+          <Form.Input name="billing_city" />
+          <Form.Input name="billing_state" />
+          <Form.Input name="billing_zip" />
+
+          <Button type="submit">Place Order</Button>
+        </Form>
+      </div>
+    )
+  }
+}
+
+const mapState = state => ({
+  cart: state.cart
+})
+
+const mapDispatch = (dispatch, ownProps) => ({
   handleSubmit(evt) {
     evt.preventDefault()
 
+    const email = evt.target.email.value
+    // get the shipping address data
     const {
       shipping_line_1,
       shipping_line_2,
@@ -36,7 +72,7 @@ class CheckoutPage extends React.Component {
       state: shipping_state,
       zip: shipping_zip.value
     }
-
+    // get the billing address data
     const {
       billing_line_1,
       billing_line_2,
@@ -51,28 +87,11 @@ class CheckoutPage extends React.Component {
       state: billing_state.value,
       zip: billing_zip.value
     }
-  }
 
-  render() {
-    return (
-      <div>
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Input name="shipping_line_1" />
-          <Form.Input name="shipping_line_2" />
-          <Form.Input name="shipping_city" />
-          <Form.Input name="shipping_state" />
-          <Form.Input name="shipping_zip" />
-          <Button type="submit">Place Order</Button>
-        </Form>
-      </div>
+    return dispatch(
+      createOrder(ownProps.cart, shippingAddress, billingAddress, email)
     )
   }
-}
-
-const mapState = state => ({
-  cart: state.cart
 })
-
-const mapDispatch = (dispatch, ownProps) => ({})
 
 export default connect(mapState, mapDispatch)(CheckoutPage)
