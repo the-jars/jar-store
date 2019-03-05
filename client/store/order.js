@@ -50,23 +50,23 @@ export const fetchAdminOrders = () => async dispatch => {
   }
 }
 
-export const filterUserOrders = (userType, status) => async dispatch => {
+export const filterUserOrders = status => async dispatch => {
   try {
     const filteredOrderList = await axios.get(
       `/api/orders/filterUserOrders?status=${status}`
     )
-    dispatch(setUserOrders(filteredOrderList))
+    dispatch(setUserOrders(filteredOrderList.data))
   } catch (error) {
     console.error(error)
   }
 }
 
-export const filterAdminOrders = (userType, status) => async dispatch => {
+export const filterAdminOrders = status => async dispatch => {
   try {
     const filteredOrderList = await axios.get(
       `/api/orders/filterAdminOrders?status=${status}`
     )
-    dispatch(setAdminOrders(filteredOrderList))
+    dispatch(setAdminOrders(filteredOrderList.data))
   } catch (error) {
     console.error(error)
   }
