@@ -16,36 +16,17 @@ let transporter = nodemailer.createTransport({
   }
 })
 
-// setup email data with unicode symbols
-
-// send mail with defined transport object
-
-// console.log('Message sent:s', info.messageId)
-// Preview only available when sending through an Ethereal account
-// console.log('Preview URL:s', nodemailer.getTestMessageUrl(info))
-
-// Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-// Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
-
-// router.post('/sendconfirmationemail', async (req, res, next) => {
-//   try {
-//     const info = await transporter.sendMail(mailOptions)
-//     // if (error) {
-//     //   console.err('nodemailer error!', error)
-//     //   res.sendStatus(500)
-//     // }
-//     res.json(info)
-//   } catch (err) {
-//     next(err)
-//   }
-// })
+//func that creates email
+//get vars from body in post
+//call email generating func
+//send mail with result of email generating func
 
 router.post('/sendconfirmationemail', function(req, res) {
   const mailOptions = {
     from: '"Fred Foo" <foo@example.com>', // sender address
     to: 'bar@example.com, baz@example.com', // list of receivers
     subject: 'Hello', // Subject line
-    text: 'Hello world?', // plain text body
+    text: 'Congrats on your jars!', // plain text body
     html: '<b>Hello world?</b>' // html body
   }
 
@@ -59,7 +40,4 @@ router.post('/sendconfirmationemail', function(req, res) {
   })
 })
 
-//LATER
-//pull vars we need from body
-//generate email with them
 module.exports = router
