@@ -13,16 +13,31 @@ export const fetchOrder = orderId => dispatch =>
     .then(res => dispatch(setOrder(res.data)))
     .catch(console.error)
 
-export const createOrder = (cart, orderInfo) => dispatch => {
-  const newOrder = {
-    cartId: cart.id,
-    cartItems: cart.cartitems,
-    orderInfo
+export const createOrder = (
+  cart,
+  shippingAddress,
+  billingAddress,
+  email
+) => async dispatch => {
+  try {
+    const shippingRes = await axios.put('/api/address/', shippingAddress)
+    const billingRes = await axios.put('/api/address/', billingAddress)
+
+    const newOrder = {
+      cartId: cart.id,
+      cartItems: cart.cartitems,
+      orderInfo: {
+        email,
+        shippingAddressId: shippingRes.data,
+        billingAddressId: billingRes.data
+      }
+    }
+
+    const createOrderRes = await axios.post(`/api/orders/`, newOrder)
+    //dispatch(setOrder(createOrderRes.data))
+  } catch (e) {
+    console.error(e)
   }
-  return axios
-    .post(`/api/orders/`, newOrder)
-    .then(res => dispatch(setOrder(res.data)))
-    .catch(console.error)
 }
 
 export default function(state = {}, action) {

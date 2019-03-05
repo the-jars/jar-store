@@ -14,6 +14,11 @@ import {
 import {createOrder} from '../store/order'
 
 class CheckoutPage extends React.Component {
+  constructor(props) {
+    super(props)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
   handleSubmit(evt) {
     evt.preventDefault()
 
@@ -68,39 +73,6 @@ const mapState = state => ({
   cart: state.cart
 })
 
-const mapDispatch = (dispatch, ownProps) => ({
-  handleSubmit(evt) {
-    evt.preventDefault()
-    const {
-      shipping_line_1,
-      shipping_line_2,
-      shipping_city,
-      shipping_state,
-      shipping_zip
-    } = evt.target
-    const shippingAddress = {
-      line_1: shipping_line_1.value,
-      line_2: shipping_line_2.value,
-      city: shipping_city.value,
-      state: shipping_state,
-      zip: shipping_zip.value
-    }
-
-    const {
-      billing_line_1,
-      billing_line_2,
-      billing_city,
-      billing_state,
-      billing_zip
-    } = evt.target
-    const billingAddress = {
-      line_1: billing_line_1.value,
-      line_2: billing_line_2.value,
-      city: billing_city.value,
-      state: billing_state.value,
-      zip: billing_zip.value
-    }
-  }
-})
+const mapDispatch = (dispatch, ownProps) => ({})
 
 export default connect(mapState, mapDispatch)(CheckoutPage)
