@@ -30,6 +30,7 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
+
         <Route path="/login" component={Login} />
         <Route path="/signup" render={() => <Signup type="signup" />} />
         <Route path="/cart" render={() => <Cart {...this.props} />} />
