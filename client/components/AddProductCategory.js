@@ -1,60 +1,66 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchSingleProduct, fetchNewProductCategory} from '../store/product'
-import {categories} from '../store/category'
-import {Button, Form} from 'semantic-ui-react'
+import {addProductToCategory, fetchNewProductCategory} from '../store/product'
+import {fetchCategories} from '../store/category'
+import {Button, Form, Dropdown} from 'semantic-ui-react'
 
 class AddProductCategory extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      categoryId: 0,
-      productId: 0
+      category: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleNewPC = this.handleNewPC.bind(this)
   }
   handleNewPC() {
-    this.props.fetchNewProductCategory(
-      this.state.categoryId,
-      this.state.productId
+    this.props.addProductToCategory(
+      this.state.category.id,
+      this.props.product.id
     )
   }
-  handleChange = event => {
+  handleChange = (event, {value}) => {
     return this.setState({
-      [event.target.name]: event.target.value
+      category: value
     })
   }
 
+  componentDidMount() {
+    this.props.fetchCategories()
+  }
+
   render() {
+    const categories = this.props.categories.length
+      ? this.props.categories.map(category => {
+          return {key: category.id, text: category.name, value: category}
+        })
+      : []
+    const category = this.state.category
     return (
       <Form onSubmit={this.handleNewPC}>
-        <Form.Input
-          type="text"
-          name="categoryId"
-          label="categoryId"
-          id="categoryId"
-          value={this.state.categoryId}
+        <Form.Dropdown
+          placeholder="Assign Category"
+          selection
+          options={categories}
+          name="category"
+          value={category}
           onChange={this.handleChange}
         />
-
-        <Form.Input
-          type="text"
-          name="productId"
-          label="productId"
-          id="productId"
-          value={this.state.productId}
-          onChange={this.handleChange}
-        />
-        <Button type="submit">Add New ProductCategory</Button>
+        <Button type="submit">Assign Category</Button>
       </Form>
     )
   }
 }
+const mapStateToProps = state => {
+  return {
+    categories: state.categories
+  }
+}
 
 const mapDispatch = (dispatch, ownProps) => ({
-  fetchNewProductCategory: (categoryId, productId) =>
-    dispatch(fetchNewProductCategory(categoryId, productId))
+  fetchCategories: () => dispatch(fetchCategories()),
+  addProductToCategory: (categoryId, productId) =>
+    dispatch(addProductToCategory(categoryId, productId))
 })
 
-export default connect(null, mapDispatch)(AddProductCategory)
+export default connect(mapStateToProps, mapDispatch)(AddProductCategory)

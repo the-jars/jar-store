@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleProduct, editSingleProduct} from '../store/product'
 import {Form, Grid, Card, Button} from 'semantic-ui-react'
+import AddProductCategory from './AddProductCategory'
 
 class EditProduct extends React.Component {
   constructor() {
@@ -121,6 +122,9 @@ class EditProduct extends React.Component {
                 ref={this.availability}
                 onClick={this.toggleAvailability}
               />
+            </Form.Field>
+            <Form.Field>
+              <AddProductCategory product={productToEdit} />
             </Form.Field>
           </Form>
         </Card>
