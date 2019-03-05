@@ -18,7 +18,8 @@ export const createOrder = (
   cartItems,
   shippingAddress,
   billingAddress,
-  email
+  email,
+  total
 ) => async dispatch => {
   try {
     const shippingRes = await axios.put('/api/address/', shippingAddress)
@@ -28,7 +29,8 @@ export const createOrder = (
       cartItems,
       email,
       shippingAddressId: shippingRes.data,
-      billingAddressId: billingRes.data
+      billingAddressId: billingRes.data,
+      total
     }
 
     const createOrderRes = await axios.post(`/api/orders/`, orderInfo)

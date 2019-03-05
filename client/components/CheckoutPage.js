@@ -171,7 +171,7 @@ const mapState = state => ({
   user: state.user
 })
 
-const mapDispatch = dispatch => ({
+const mapDispatch = (dispatch, ownProps) => ({
   createOrderThunk: (
     cartId,
     cartItems,
@@ -180,7 +180,14 @@ const mapDispatch = dispatch => ({
     email
   ) =>
     dispatch(
-      createOrder(cartId, cartItems, shippingAddress, billingAddress, email)
+      createOrder(
+        cartId,
+        cartItems,
+        shippingAddress,
+        billingAddress,
+        email,
+        ownProps.location.state.total
+      )
     )
 })
 
