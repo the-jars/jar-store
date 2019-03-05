@@ -14,6 +14,7 @@ import SingleUserOrder from './components/SingleUserOrder'
 import AddReview from './components/AddReview'
 import Review from './components/Review'
 import AdminOrderList from './components/AdminOrderList'
+import CheckoutForm from './components/CheckoutForm'
 /**
  * COMPONENT
  */
@@ -37,6 +38,7 @@ class Routes extends Component {
         <Route exact path="/categories/add" component={AddCategory} />
         <Route exact path="/products" component={ProductList} />
         <Route exact path="/myorders" component={UserOrderList} />
+        <Route exact path="/checkoutform" component={CheckoutForm} />
         <Route exact path="/myorders/:orderId" component={SingleUserOrder} />
         <Route exact path="/admin/orders" component={AdminOrderList} />
         <Redirect exact from="/products/" to="/products" />
