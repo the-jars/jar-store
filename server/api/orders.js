@@ -40,9 +40,7 @@ router.get(
  * - TODO:
  * * Test
  */
-router.post('/', (req, res, next) => {
-  console.log(req.body)
-  return (
+router.post('/', (req, res, next) => 
     Cart.findById(req.body.cartId) // finding the associated cart
       // then inactivate the found cart
       .then(cart => cart.update({status: 'inactive'}, {fields: ['stataus']}))
@@ -91,8 +89,6 @@ router.post('/', (req, res, next) => {
       // then finally return order
       .then(order => res.send(order))
       .catch(next) // move onto error handler on error
-  )
-})
 
 /** GET /api/orders/myOrder
  * - gets all order made by logged in user
