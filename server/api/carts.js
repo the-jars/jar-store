@@ -106,7 +106,6 @@ router.put('/:cartId/:productId', async (req, res, next) => {
 router.get('/:userId', async (req, res, next) => {
   try {
     //pull cartId with userid && active in cart table
-    // console.log('id', req.body.userId)
     const carts = await Cart.findAll({
       where: {
         userId: req.params.userId,

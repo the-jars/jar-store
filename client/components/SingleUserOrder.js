@@ -12,7 +12,6 @@ export class SingleUserOrder extends Component {
     const items = this.props.currentOrder.orderProducts
     const origDate = Date.parse(order.createdAt)
     const dateStr = new Date(origDate).toDateString()
-    console.log('items', items)
     return (
       <div>
         <Header as="h1" padded>
@@ -93,8 +92,6 @@ export class SingleUserOrder extends Component {
                 : null}:
             </Header>
           ) : null}
-
-          {console.log(items)}
 
           {!items
             ? 'nah'
