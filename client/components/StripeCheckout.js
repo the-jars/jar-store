@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {CardElement, Elements, injectStripe} from 'react-stripe-elements'
 
-class CheckoutForm extends Component {
+class StripeCheckout extends Component {
   constructor(props) {
     super(props)
     //create state to inform if charge is complete
@@ -18,7 +18,10 @@ class CheckoutForm extends Component {
       body: token.id
     })
     //set state complete to true once payment goes through
-    if (response.ok) this.setState({complete: true})
+    if (response.ok) {
+      this.setState({complete: true})
+      this.props.onSubmit()
+    }
   }
 
   render() {
@@ -30,7 +33,7 @@ class CheckoutForm extends Component {
       <div className="checkout">
         <p>Would you like to complete the purchase?</p>
         <CardElement />
-        <button type="button" onClick={this.submit}>
+        <button type="submit" onClick={this.submit}>
           Send
         </button>
       </div>
@@ -38,4 +41,4 @@ class CheckoutForm extends Component {
   }
 }
 
-export default injectStripe(CheckoutForm)
+export default injectStripe(StripeCheckout)
