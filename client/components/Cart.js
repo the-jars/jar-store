@@ -75,7 +75,11 @@ export class Cart extends Component {
                                 />
                               </Grid.Column>
                               <Grid.Column>
-                                <Card.Header>{item.product.name}</Card.Header>
+                                <Card.Header>
+                                  <h3 className="header">
+                                    {item.product.name}
+                                  </h3>
+                                </Card.Header>
                                 <Feed>
                                   <Feed.Content>
                                     <Card.Meta>
