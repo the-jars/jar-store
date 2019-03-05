@@ -81,10 +81,13 @@ router.post('/', (req, res, next) =>
                 console.log(returned)
                 return order
               })
-            : order.update(
-                {sessionId: req.session.id},
-                {returning: true, fields: ['sessionId']}
-              )
+            : order.update({sessionId: req.session.id}, {fields: ['sessionId']})
+      )
+      .then(order =>
+        order.update(
+          {totalCost: req.body.total},
+          {returning: true, fields: ['totalCost']}
+        )
       )
       // then finally return order
       .then(order => res.send(order))
