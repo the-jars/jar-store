@@ -12,6 +12,12 @@ const Order = db.define('order', {
     validate: {
       isEmail: true
     }
+  },
+  shippingAddressId: {
+    type: Sequelize.INTEGER
+  },
+  billingAddressId: {
+    type: Sequelize.INTEGER
   }
 })
 

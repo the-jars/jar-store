@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Cart, Order, OrderProduct} = require('../db/models')
+const {Cart, Order, OrderProduct, Address} = require('../db/models')
 
 // Routes for /api/orders
 
@@ -43,7 +43,7 @@ router.get(
 router.post('/', (req, res, next) => {
   console.log(req.body)
   Cart.findById(req.body.cartId) // finding the associated cart to set it inactive
-    .then(cart => cart.update({status: 'inactive'}, {fields: ['stataus']}))
+    .then(cart => cart.update({status: 'inactive'}, {fields: ['status']}))
     .then(() => {
       const {email, shippingAddressId, billingAddressId} = req.body.orderInfo
       // creates a new order and returns it to next .then() chain
@@ -74,15 +74,15 @@ router.post('/', (req, res, next) => {
  * - TODO:
  * * Test
  */
-router.get(
-  '/myOrder',
-  (req, res, next) =>
-    req.user.id &&
-    req.user
-      .getOrders()
-      .then(orders => res.send(orders))
+router.get('/myorders', (req, res, next) => {
+  if (req.user.id)
+    return req.user
+      .getOrders({
+        include: [{all: true, nested: true}]
+      })
+      .then(orders => res.json(orders))
       .catch(next)
-)
+})
 
 /** param for any /api/orders/ route with params=<orderId>
  * - grabs the required order and attach them to req as req.order.
@@ -107,6 +107,55 @@ router.param('orderId', (req, res, next, id) =>
  * - TODO:
  * * Test
  */
+router.get('/filterUserOrders', async (req, res, next) => {
+  try {
+    let filteredOrders
+
+    if (req.query.status === 'All') {
+      filteredOrders = await Order.findAll({
+        where: {userId: req.user.id},
+        include: [{all: true, nested: true}]
+      })
+    } else {
+      filteredOrders = await Order.findAll({
+        where: {
+          userId: req.user.id,
+          shippingStatus: req.query.status
+        },
+        include: [{all: true, nested: true}]
+      })
+    }
+    res.json(filteredOrders)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/filterAdminOrders', async (req, res, next) => {
+  try {
+    if (!req.user.isAdmin) {
+      res.json('ERROR')
+    }
+    console.log('isAdmin?', req.user.isAdmin)
+    let filteredOrders
+    if (req.query.status === 'All') {
+      filteredOrders = await Order.findAll({
+        include: [{all: true, nested: true}]
+      })
+    } else {
+      filteredOrders = await Order.findAll({
+        where: {
+          shippingStatus: req.query.status
+        },
+        include: [{all: true, nested: true}]
+      })
+    }
+    res.json(filteredOrders)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.get('/:orderId', (req, res, next) => res.send(req.order))
 
 module.exports = router

@@ -36,7 +36,7 @@ User.hasMany(Order)
 
 // has two types of address
 Order.hasOne(Address, {
-  as: 'sippingAddress',
+  as: 'shippingAddress',
   constraints: false,
   allowNull: true,
   defaultValue: null
