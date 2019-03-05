@@ -62,14 +62,6 @@ class CheckoutPage extends React.Component {
           email
         )
     })
-
-    this.props.createOrderThunk(
-      this.props.cartId,
-      this.props.cartItems,
-      shippingAddress,
-      billingAddress,
-      email
-    )
   }
 
   render() {
