@@ -55,9 +55,7 @@ class Navbar extends React.Component {
                 active={this.props.activeItem === 'orders'}
                 onClick={this.handleItemClick}
               >
-                <Link to="/myorders" onClick={this.props.handleClick}>
-                  Previous Orders
-                </Link>
+                <Link to="/myorders">Previous Orders</Link>
               </Menu.Item>
               {this.props.isAdmin ? (
                 <Menu.Item
