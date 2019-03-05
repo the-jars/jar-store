@@ -3,8 +3,6 @@ import {Grid, Card, Feed, Button, Image} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 
 const OrderRow = props => {
-  console.log(props)
-
   const firstItem =
     props.order.orderProducts && props.order.orderProducts.length
       ? props.order.orderProducts[0].product
@@ -38,7 +36,10 @@ const OrderRow = props => {
                 </Feed>
               </Grid.Column>
               <Grid.Column>
-                <Card.Content>Total: $55</Card.Content>
+                <Card.Content>
+                  {/* totalCost */}
+                  Total: $55
+                </Card.Content>
               </Grid.Column>
               <Grid.Column>
                 <Card.Header>Status: {order.shippingStatus}</Card.Header>

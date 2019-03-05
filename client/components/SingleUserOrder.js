@@ -1,23 +1,6 @@
 import {fetchSingleOrder} from '../store/order'
 import {connect} from 'react-redux'
-
-import {
-  Card,
-  Feed,
-  Grid,
-  Image,
-  Table,
-  Dropdown,
-  Label,
-  Divider,
-  Segment,
-  Link,
-  Header,
-  Button,
-  Form,
-  Input
-} from 'semantic-ui-react'
-
+import {Card, Feed, Grid, Image, Table, Header, Button} from 'semantic-ui-react'
 import React, {Component} from 'react'
 
 export class SingleUserOrder extends Component {
@@ -94,6 +77,7 @@ export class SingleUserOrder extends Component {
                           <Header.Content>Total</Header.Content>
                         </Header>
                       </Table.Cell>
+                      {/* totalCost */}
                       <Table.Cell>Total</Table.Cell>
                     </Table.Row>
                   </Table.Body>
@@ -146,6 +130,7 @@ export class SingleUserOrder extends Component {
                           </Grid.Column>
                           <Grid.Column>
                             <Card.Content>
+                              {/* perItemCost */}
                               Total: product price at time of order *
                               {item.quantity}
                             </Card.Content>
