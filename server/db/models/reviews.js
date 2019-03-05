@@ -12,7 +12,10 @@ const Review = db.define('review', {
   },
   reviewText: {
     type: Sequelize.TEXT,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      len: [3]
+    }
   }
 })
 

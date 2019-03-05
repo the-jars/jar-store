@@ -14,7 +14,8 @@ router.get('/', async (req, res, next) => {
         'lastName',
         'isAdmin',
         'forceReset',
-        'addressId'
+        'addressId',
+        'updatedAt'
       ],
       include: [{all: true, nested: true}]
     })
@@ -42,6 +43,25 @@ router.post('/:id/cart', async (req, res, next) => {
       })
     }
     res.json(userCart[0])
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/:userId', async (req, res, next) => {
+  try {
+    const [rowsUpdated, updatedUser] = await User.update(
+      {
+        isAdmin: true
+      },
+      {
+        returning: true,
+        where: {
+          id: Number(req.params.userId)
+        }
+      }
+    )
+    res.json(updatedUser)
   } catch (error) {
     next(error)
   }
