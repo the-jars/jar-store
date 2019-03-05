@@ -13,6 +13,10 @@ const Order = db.define('order', {
       isEmail: true
     }
   },
+  totalCost: {
+    type: Sequelize.DECIMAL(10, 2),
+    defaultValue: 0.0
+  },
   sessionId: Sequelize.STRING
 })
 

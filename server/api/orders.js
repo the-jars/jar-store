@@ -25,12 +25,12 @@ router.get(
  * - recieves the new order info by:
  * - req.body: {
  * * - cartId,
- * * - cartitem<Array>
- * * - userId(optional): only when order is made by user
+ * * - cartItems<Array>
  * * - orderInfo: {
  *      email,
  *      shippingAddressId,
- *      billingAddressId
+ *      billingAddressId,
+ *      price
  *     }
  * - }
  * --------------------
@@ -43,7 +43,7 @@ router.get(
 router.post(
   '/',
   (req, res, next) =>
-    Cart.findById(req.body.cartId) // finding the associated cart to set it inactive
+    Cart.findById(req.body.cartId) // finding the associated cart
       // then inactivate the found cart
       .then(cart => cart.update({status: 'inactive'}, {fields: ['stataus']}))
       // then create the order
@@ -55,7 +55,7 @@ router.post(
       // - looping through array of cart item that is being ordered
       // - create new orderProduct instance and set the assosiation with the product
       .then(order => {
-        req.body.cartitems.map(item =>
+        req.body.cartItems.map(item =>
           order // create order product on each loop corresponding to the item
             .createOrderProduct({
               quantity: item.quantity

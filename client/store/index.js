@@ -8,6 +8,7 @@ import user from './user'
 import {cart, cartMeta} from './cart'
 import {singleProduct, allProducts} from './product'
 import {reviews} from './review'
+import order from './order'
 
 const reducer = combineReducers({
   cart,
@@ -16,7 +17,8 @@ const reducer = combineReducers({
   singleProduct,
   allProducts,
   categories,
-  reviews
+  reviews,
+  order
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
