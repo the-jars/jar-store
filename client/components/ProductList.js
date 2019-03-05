@@ -31,7 +31,6 @@ export class ProductList extends Component {
       currentPage: 1,
       productsPerPage: 30,
       filter: 'All',
-      searchValue: '',
       products: []
     }
     this.handleClick = this.handleClick.bind(this)
@@ -150,26 +149,16 @@ export class ProductList extends Component {
                 </Link>
               ) : null}
               <Form onSubmit={this.handleSubmit}>
-                <Form.Input
-                  //onChange={this.handleChangeSearch}
-                  placeholder="Search"
-                  type="text"
-                  name="search"
-                />
+                <Form.Input placeholder="Search" type="text" name="search" />
                 <Button>
                   <Icon name="search" />{' '}
                 </Button>
               </Form>
-              {/* <Link to="/category/add">
-                <Button type="button">Add Category</Button>
-              </Link>
-              ) : null} */}
             </div>
           </div>
           <br />
           <div>
             <Grid>
-              {/* <Grid.Column> */}
               {productsToMap.map(
                 product =>
                   product.available ? (
@@ -177,12 +166,12 @@ export class ProductList extends Component {
                       key={product.id}
                       className="grid-item"
                       product={product}
+                      user={this.props.user}
                     />
                   ) : (
                     ''
                   )
               )}
-              {/* </Grid.Column> */}
             </Grid>
           </div>
           <br />
