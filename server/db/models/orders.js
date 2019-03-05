@@ -13,12 +13,11 @@ const Order = db.define('order', {
       isEmail: true
     }
   },
-  shippingAddressId: {
-    type: Sequelize.INTEGER
+  totalCost: {
+    type: Sequelize.DECIMAL(10, 2),
+    defaultValue: 0.0
   },
-  billingAddressId: {
-    type: Sequelize.INTEGER
-  }
+  sessionId: Sequelize.STRING
 })
 
 const OrderProduct = db.define('orderProduct', {
