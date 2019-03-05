@@ -8,6 +8,7 @@ import singleProduct from './components/singleProduct'
 import ProductList from './components/ProductList'
 import AddProduct from './components/AddProduct.js'
 import AddCategory from './components/AddCategory.js'
+import CheckoutForm from './components/CheckoutForm'
 
 import Cart from './components/Cart'
 /**
@@ -27,6 +28,8 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/cart" render={() => <Cart {...this.props} />} />
+        <Route exact path="/checkoutform" component={CheckoutForm} />
+
         <Route exact path="/products/add" component={AddProduct} />
         <Route exact path="/categories/add" component={AddCategory} />
         <Route exact path="/products" component={ProductList} />
