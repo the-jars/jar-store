@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {CardElement, Elements, injectStripe} from 'react-stripe-elements'
-
+import axios from 'axios'
 class CheckoutForm extends Component {
   constructor(props) {
     super(props)
@@ -10,6 +10,8 @@ class CheckoutForm extends Component {
     this.submit = this.submit.bind(this)
   }
 
+  async sendConfirmationEmail() {}
+
   async submit(ev) {
     let {token} = await this.props.stripe.createToken({name: 'Name'})
     let response = await fetch('/charge', {
@@ -18,7 +20,17 @@ class CheckoutForm extends Component {
       body: token.id
     })
     //set state complete to true once payment goes through
-    if (response.ok) this.setState({complete: true})
+    if (response.ok) {
+      this.setState({complete: true})
+      axios
+        .post('/api/email/sendconfirmationemail')
+        .then(function(response) {
+          console.log(response)
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
+    }
   }
 
   render() {
