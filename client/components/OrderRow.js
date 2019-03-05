@@ -1,8 +1,10 @@
 import React from 'react'
 import {Grid, Card, Feed, Button, Image} from 'semantic-ui-react'
+import {Link} from 'react-router-dom'
 
 const OrderRow = props => {
-  console.log(props.order)
+  const firstItem = props.order.orderProducts[0].product
+  const order = props.order
   return (
     <div>
       <Card color="pink" fluid>
@@ -10,35 +12,46 @@ const OrderRow = props => {
           <Grid columns={5}>
             <Grid.Row>
               <Grid.Column>
-                <Image src="/images/raspberry.png" circular size="small" />
+                <Image src={firstItem.imgUrl} circular size="small" />
               </Grid.Column>
               <Grid.Column>
-                <Card.Header>date: june 11 2017 4 pm</Card.Header>
+                <Card.Header>{order.createdAt}</Card.Header>
                 <Feed>
                   <Feed.Content>
                     <Card.Meta>
-                      items: strawberry jelly, peach salsa, and more
+                      items:{' '}
+                      <ul>
+                        {order.orderProducts.map((orderProduct, i) => (
+                          <li key={i}>{orderProduct.product.name}</li>
+                        ))}
+                      </ul>
                     </Card.Meta>
                   </Feed.Content>
                 </Feed>
               </Grid.Column>
               <Grid.Column>
-                <Card.Content>cost: $10</Card.Content>
+                <Card.Content>total: $NEED COST STILL</Card.Content>
               </Grid.Column>
               <Grid.Column>
-                <Card.Header>status: processed</Card.Header>
+                <Card.Header>status: {order.shippingStatus}</Card.Header>
                 <Feed>
                   <Feed.Content>
-                    <Card.Meta>click here for more info</Card.Meta>
+                    <Card.Meta>click here for shipping info</Card.Meta>
                   </Feed.Content>
                 </Feed>
               </Grid.Column>
               <Grid.Column>
-                <Button
+                <Button>
+                  <Link to={`/myorders/${order.id}`}>
+                    click here for more info
+                  </Link>
+                </Button>
+
+                {/* <Button
                 // onClick={() => this.props.deleteCartItem(item)}
                 >
                   Details
-                </Button>
+                </Button> */}
               </Grid.Column>
             </Grid.Row>
           </Grid>

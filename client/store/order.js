@@ -24,8 +24,9 @@ export const setAdminOrders = orderList => ({
 // THUNKS
 export const fetchSingleOrder = orderId => async dispatch => {
   try {
-    const currentOrder = await axios.get(`/api/${orderId}`)
-    dispatch(setCurrentOrder(currentOrder))
+    console.log('hey!!!!!!', orderId)
+    const currentOrder = await axios.get(`/api/orders/${orderId}`)
+    dispatch(setCurrentOrder(currentOrder.data))
   } catch (error) {
     console.error(error)
   }
@@ -33,8 +34,8 @@ export const fetchSingleOrder = orderId => async dispatch => {
 
 export const fetchUserOrders = () => async dispatch => {
   try {
-    const userOrders = await axios.get('/api/myOrders')
-    dispatch(setUserOrders(userOrders))
+    const userOrders = await axios.get('/api/orders/myorders')
+    dispatch(setUserOrders(userOrders.data))
   } catch (error) {
     console.error(error)
   }

@@ -74,15 +74,28 @@ router.post('/', (req, res, next) => {
  * - TODO:
  * * Test
  */
-router.get(
-  '/myOrders',
-  (req, res, next) =>
-    req.user.id &&
-    req.user
-      .getOrders()
-      .then(orders => res.send(orders))
+router.get('/myorders', (req, res, next) => {
+  if (req.user.id)
+    return req.user
+      .getOrders({
+        include: [{all: true, nested: true}]
+      })
+      .then(orders => res.json(orders))
       .catch(next)
-)
+})
+
+// router.get('/myorders', async (req, res, next) => {
+//   try {
+//     const userId = req.body.userId
+//     const ordersList = await Order.findAll({
+//       where: {userId: userId}
+//     })
+
+//     res.json(ordersList)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
 /** param for any /api/orders/ route with params=<orderId>
  * - grabs the required order and attach them to req as req.order.

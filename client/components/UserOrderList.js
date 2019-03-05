@@ -1,34 +1,24 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {
-  Card,
-  Feed,
-  Grid,
-  Image,
-  Table,
-  Dropdown,
-  Header,
-  Button,
-  Form,
-  Input
-} from 'semantic-ui-react'
+import {Grid} from 'semantic-ui-react'
 import OrderRow from './OrderRow'
+import {fetchUserOrders} from '../store/order'
 
 //we want a list of every order by the user
 //we want it to have
 
 export class UserOrderList extends Component {
-  constructor(props) {
-    super(props)
-  }
+  // constructor(props) {
+  //   super(props)
+  // }
 
   componentDidMount() {
     //call fetch orders
+    this.props.getUserOrders()
   }
 
   render() {
     const orders = this.props.userOrders
-    console.log('orders', orders)
     return !orders || !orders.length ? (
       <h1>No Orders</h1>
     ) : (
@@ -45,7 +35,11 @@ export class UserOrderList extends Component {
 }
 
 const mapStateToProps = state => ({
-  userOrders: state.UserOrderList
+  userOrders: state.userOrderList
 })
 
-export default connect(mapStateToProps)(UserOrderList)
+const mapDispatchToProps = dispatch => ({
+  getUserOrders: () => dispatch(fetchUserOrders())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserOrderList)

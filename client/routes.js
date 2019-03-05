@@ -35,12 +35,8 @@ class Routes extends Component {
         <Route exact path="/products/add" component={AddProduct} />
         <Route exact path="/categories/add" component={AddCategory} />
         <Route exact path="/products" component={ProductList} />
-        <Route exact path="/users/:id/orders" component={UserOrderList} />
-        <Route
-          exact
-          path="/users/:userId/orders/:orderId"
-          component={SingleUserOrder}
-        />
+        <Route exact path="/myorders" component={UserOrderList} />
+        <Route exact path="/myorders/:orderId" component={SingleUserOrder} />
         <Redirect exact from="/products/" to="/products" />
 
         <Route path="/products/:id/edit" component={EditProduct} />
