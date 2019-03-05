@@ -28,6 +28,7 @@ export const createOrder = (cart, orderInfo) => dispatch => {
 export default function(state = {}, action) {
   if (action.type === SET_ORDER) return action.order
   return state
+}
 // ACTION TYPES
 const SET_USER_ORDERS = 'SET_USER_ORDERS'
 const SET_CURRENT_ORDER = 'SET_CURRENT_ORDER'

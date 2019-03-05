@@ -8,8 +8,7 @@ import user from './user'
 import {cart, cartMeta} from './cart'
 import {singleProduct, allProducts} from './product'
 import {reviews} from './review'
-import order from './order'
-import {userOrderList, currentOrder, adminOrderList} from './order'
+import order, {userOrderList, currentOrder, adminOrderList} from './order'
 import {allUsers} from './userList'
 
 const reducer = combineReducers({
@@ -20,6 +19,7 @@ const reducer = combineReducers({
   allProducts,
   categories,
   reviews,
+  order,
   userOrderList,
   currentOrder,
   adminOrderList,
