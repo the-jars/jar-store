@@ -18,7 +18,7 @@ import {
 } from 'semantic-ui-react'
 
 // internal moduels
-import {fetchProducts, filterCategories} from '../store/product'
+import {fetchProducts, filterCategories, setNewProducts} from '../store/product'
 import {fetchCategories} from '../store/category'
 import Product from './Product'
 import AddItemButton from './AddItemToCart'
@@ -70,9 +70,10 @@ export class ProductList extends Component {
           .includes(event.target.search.value.toLowerCase())
       )
     })
-    this.setState({
-      products: filteredProducts
-    })
+    // this.setState({
+    //   products: filteredProducts
+    // })
+    this.props.setNewProducts(filteredProducts)
   }
 
   render() {
@@ -159,10 +160,10 @@ export class ProductList extends Component {
                   <Icon name="search" />{' '}
                 </Button>
               </Form>
-              <Link to="/category/add">
+              {/* <Link to="/category/add">
                 <Button type="button">Add Category</Button>
               </Link>
-              ) : null}
+              ) : null} */}
             </div>
           </div>
           <br />
@@ -212,7 +213,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchProducts: () => dispatch(fetchProducts()),
   fetchCategories: () => dispatch(fetchCategories()),
-  applyFilter: filter => dispatch(filterCategories(filter))
+  applyFilter: filter => dispatch(filterCategories(filter)),
+  setNewProducts: newProducts => dispatch(setNewProducts(newProducts))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductList)
