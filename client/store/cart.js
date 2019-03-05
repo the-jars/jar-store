@@ -93,7 +93,7 @@ export const addItemToCart = (productId, cartId) => async dispatch => {
 
 // Helper function for updating state with a new quantity of an item
 const filterHelper = (state, updatedItem) => {
-  if (state.length > 1) {
+  if (state.length >= 1) {
     const filteredState = state.filter(item => item.id !== updatedItem.id)
     return [...filteredState, updatedItem]
   }

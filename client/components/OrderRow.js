@@ -28,7 +28,11 @@ const OrderRow = props => {
                       Items:
                       <ul>
                         {order.orderProducts.map((orderProduct, i) => (
-                          <li key={i}>{orderProduct.product.name}</li>
+                          <li key={i}>
+                            <Link to={`/products/${orderProduct.product.id}`}>
+                              {orderProduct.product.name}
+                            </Link>
+                          </li>
                         ))}
                       </ul>
                     </Card.Meta>

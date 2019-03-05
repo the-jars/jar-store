@@ -41,7 +41,6 @@ export class UserOrderList extends Component {
     })
 
     const orders = this.props.adminOrderList
-    console.log(this.props)
     return !orders || !orders.length ? (
       <h1>No Orders</h1>
     ) : (

@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Cart, Order, OrderProduct, Address} = require('../db/models')
+const {Cart, Order} = require('../db/models')
 
 // Routes for /api/orders
 
@@ -78,7 +78,6 @@ router.post('/', (req, res, next) =>
         order =>
           req.user && req.user.id
             ? order.setUser(req.user.id, {returning: true}).then(returned => {
-                console.log(returned)
                 return order
               })
             : order.update({sessionId: req.session.id}, {fields: ['sessionId']})
@@ -162,7 +161,6 @@ router.get('/filterAdminOrders', async (req, res, next) => {
     if (!req.user.isAdmin) {
       res.json('ERROR')
     }
-    console.log('isAdmin?', req.user.isAdmin)
     let filteredOrders
     if (req.query.status === 'All') {
       filteredOrders = await Order.findAll({

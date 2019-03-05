@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import {Menu} from 'semantic-ui-react'
+import {Menu, Icon} from 'semantic-ui-react'
 
 // const Navbar = ({handleClick, isLoggedIn}) => (
 class Navbar extends React.Component {
@@ -24,13 +24,13 @@ class Navbar extends React.Component {
           <div>
             <Menu secondary>
               {/* The navbar will show these links after you log in */}
-              <Menu.Item
+              {/* <Menu.Item
                 name="home"
                 active={this.props.activeItem === 'home'}
                 onClick={this.handleItemClick}
               >
                 <Link to="/home">Home</Link>
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item
                 name="logout"
                 active={this.props.activeItem === 'logout'}
@@ -52,14 +52,16 @@ class Navbar extends React.Component {
                 active={this.props.activeItem === 'cart'}
                 onClick={this.handleItemClick}
               >
-                <Link to="/cart">Cart</Link>
+                <Link to="/cart">
+                  <Icon name="cart" />
+                </Link>
               </Menu.Item>
               <Menu.Item
                 name="orders"
                 active={this.props.activeItem === 'orders'}
                 onClick={this.handleItemClick}
               >
-                <Link to="/myorders">Previous Orders</Link>
+                <Link to="/myorders">Your Orders</Link>
               </Menu.Item>
               {this.props.isAdmin ? (
                 <Menu.Item
@@ -111,7 +113,9 @@ class Navbar extends React.Component {
                 active={this.props.activeItem === 'cart'}
                 onClick={this.handleItemClick}
               >
-                <Link to="/cart">Cart</Link>
+                <Link to="/cart">
+                  <Icon name="cart" />
+                </Link>
               </Menu.Item>
             </Menu>
           </div>
@@ -126,7 +130,8 @@ class Navbar extends React.Component {
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    isAdmin: !!state.user.isAdmin
   }
 }
 

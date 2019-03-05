@@ -68,7 +68,6 @@ export const setAdminOrders = orderList => ({
 // THUNKS
 export const fetchSingleOrder = orderId => async dispatch => {
   try {
-    console.log('hey!!!!!!', orderId)
     const currentOrder = await axios.get(`/api/orders/${orderId}`)
     dispatch(setCurrentOrder(currentOrder.data))
   } catch (error) {
