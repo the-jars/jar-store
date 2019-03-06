@@ -13,11 +13,15 @@ export const addCategory = category => ({
   category
 })
 
-export const fetchCategories = () => dispatch =>
+export const fetchCategories = () => async dispatch => {
   axios
-    .get('api/categories')
-    .then(response => dispatch(setCategories(response.data)))
+    .get('/api/categories')
+    .then(res => {
+      console.log(res.data)
+      dispatch(setCategories(res.data))
+    })
     .catch(console.log)
+}
 
 export const addCategoryThunk = newCategoryInfo => dispatch => {
   axios

@@ -1,13 +1,19 @@
 const router = require('express').Router()
-const {Category} = require('../db/models/index.js')
+const {Category} = require('../db/models/product')
 const {Product} = require('../db/models/product')
 
 // GET /api/categories/
-router.get('/', (req, res, next) =>
-  Category.findAll()
-    .then(categories => res.send(categories))
-    .catch(next)
-)
+router.get('/', async (req, res, next) => {
+  // Category.findAll()
+  //   .then(categories => res.send(categories))
+  //   .catch(next)
+  try {
+    const categories = await Category.findAll()
+    res.json(categories)
+  } catch (error) {
+    next(error)
+  }
+})
 
 router.post('/', async (req, res, next) => {
   try {

@@ -17,6 +17,7 @@ import AddReview from './components/AddReview'
 import Review from './components/Review'
 import AdminOrderList from './components/AdminOrderList'
 import UserList from './components/UserList'
+import Checkout from './components/CheckoutPage'
 
 /**
  * COMPONENT
@@ -32,6 +33,7 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
+
         <Route path="/login" component={Login} />
         <Route path="/signup" render={() => <Signup type="signup" />} />
         <Route path="/cart" render={() => <Cart {...this.props} />} />
@@ -47,6 +49,7 @@ class Routes extends Component {
         <Route exact path="/admin/orders" component={AdminOrderList} />
         <Redirect exact from="/products/" to="/products" />
         <Route exact path="/users" component={UserList} />
+        <Route path="/checkout" component={Checkout} />
 
         <Route path="/products/:id/edit" component={EditProduct} />
 

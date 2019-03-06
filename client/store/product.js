@@ -54,7 +54,7 @@ export const filterCategories = filter => async dispatch => {
 
 export const fetchProducts = () => async dispatch => {
   try {
-    const {data} = await axios.get(`api/products`)
+    const {data} = await axios.get(`/api/products`)
     dispatch(getProducts(data))
   } catch (err) {
     console.error(err)
@@ -76,7 +76,7 @@ export const addProductThunk = newProductInfo => dispatch => {
     .catch(console.log)
 }
 
-export const fetchNewProductCategory = (
+export const addProductToCategory = (
   categoryId,
   productId
 ) => async dispatch => {

@@ -3,26 +3,12 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import queryString from 'query-string'
-import {
-  Menu,
-  Sidebar,
-  Grid,
-  Dropdown,
-  Button,
-  Segment,
-  Card,
-  Search,
-  Form,
-  Input,
-  Icon
-} from 'semantic-ui-react'
+import {Grid, Dropdown, Button, Form, Icon} from 'semantic-ui-react'
 
 // internal moduels
 import {fetchProducts, filterCategories, setNewProducts} from '../store/product'
 import {fetchCategories} from '../store/category'
 import Product from './Product'
-import AddItemButton from './AddItemToCart'
-import {cart} from '../store/cart'
 
 export class ProductList extends Component {
   constructor() {
@@ -31,7 +17,6 @@ export class ProductList extends Component {
       currentPage: 1,
       productsPerPage: 30,
       filter: 'All',
-      searchValue: '',
       products: []
     }
     this.handleClick = this.handleClick.bind(this)
@@ -119,16 +104,7 @@ export class ProductList extends Component {
                 value={this.state.filter}
                 onChange={this.handleChange}
                 options={categoryOptions}
-              >
-                {/* <option value="All">All</option>
-                {!categories
-                  ? ''
-                  : categories.map(category => (
-                      <option key={category.id} value={category.name}>
-                        {category.name}
-                      </option>
-                    ))} */}
-              </Dropdown>
+              />
               <Button
                 onClick={() => {
                   this.props.applyFilter(this.state.filter)
@@ -150,26 +126,16 @@ export class ProductList extends Component {
                 </Link>
               ) : null}
               <Form onSubmit={this.handleSubmit}>
-                <Form.Input
-                  //onChange={this.handleChangeSearch}
-                  placeholder="Search"
-                  type="text"
-                  name="search"
-                />
+                <Form.Input placeholder="Search" type="text" name="search" />
                 <Button>
-                  <Icon name="search" />{' '}
+                  <Icon name="search" />
                 </Button>
               </Form>
-              {/* <Link to="/category/add">
-                <Button type="button">Add Category</Button>
-              </Link>
-              ) : null} */}
             </div>
           </div>
           <br />
           <div>
             <Grid>
-              {/* <Grid.Column> */}
               {productsToMap.map(
                 product =>
                   product.available ? (
@@ -177,12 +143,12 @@ export class ProductList extends Component {
                       key={product.id}
                       className="grid-item"
                       product={product}
+                      user={this.props.user}
                     />
                   ) : (
                     ''
                   )
               )}
-              {/* </Grid.Column> */}
             </Grid>
           </div>
           <br />

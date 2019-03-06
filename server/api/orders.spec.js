@@ -73,7 +73,6 @@ describe('/api/orders/ route', () => {
       state: 'Westeros',
       zip: '100'
     })
-    console.log(cart.id)
   })
 
   describe('/api/orders routes', () => {

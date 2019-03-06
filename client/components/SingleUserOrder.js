@@ -2,6 +2,9 @@ import {fetchSingleOrder} from '../store/order'
 import {connect} from 'react-redux'
 import {Card, Feed, Grid, Image, Table, Header, Button} from 'semantic-ui-react'
 import React, {Component} from 'react'
+import {showAddReview} from '../store/review'
+import AddReview from './AddReview.js'
+import {Link} from 'react-router-dom'
 
 export class SingleUserOrder extends Component {
   componentDidMount() {
@@ -12,10 +15,9 @@ export class SingleUserOrder extends Component {
     const items = this.props.currentOrder.orderProducts
     const origDate = Date.parse(order.createdAt)
     const dateStr = new Date(origDate).toDateString()
-    console.log('items', items)
     return (
       <div>
-        <Header as="h1" padded>
+        <Header as="h1">
           <br />
           Your Order on {dateStr}
           <br />
@@ -86,15 +88,19 @@ export class SingleUserOrder extends Component {
               </Card>
             </Grid.Row>
           </Grid>
-
-          <Header as="h2">Your Order Included 1 Item:</Header>
-          {console.log(items)}
+          {items ? (
+            <Header as="h2">
+              Your Order Included {items.length} Item{items.length > 1
+                ? 's'
+                : null}:
+            </Header>
+          ) : null}
 
           {!items
-            ? 'nah'
+            ? ''
             : items.map(item => {
                 return (
-                  <Card color="pink" fluid>
+                  <Card key={item.id} color="pink" fluid>
                     <Card.Content>
                       <Grid columns={5} padded>
                         <Grid.Row>
@@ -107,13 +113,12 @@ export class SingleUserOrder extends Component {
                           </Grid.Column>
                           <Grid.Column>
                             <Card.Header>
-                              {item.product.name}
-                              {/* <Link
-                                to={`products/${item.product.id}`}
+                              <Link
+                                to={`/products/${item.product.id}`}
                                 currentProduct={item}
                               >
                                 {item.product.name}
-                              </Link> */}
+                              </Link>
                             </Card.Header>
                             <Feed>
                               <Feed.Content>
@@ -136,11 +141,10 @@ export class SingleUserOrder extends Component {
                             </Card.Content>
                           </Grid.Column>
                           <Grid.Column>
-                            <Button
-                            // onClick={() => this.props.deleteCartItem(item)}
-                            >
-                              Review Now
-                            </Button>
+                            {/* <Button onClick={this.props.showAddReviewFunc}>
+                              Add a Review
+                            </Button> */}
+                            <AddReview product={item.product} />
                           </Grid.Column>
                         </Grid.Row>
                       </Grid>
@@ -161,7 +165,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   // const orderId = ownProps.match.params.orderId
-  fetchSingleOrder: orderId => dispatch(fetchSingleOrder(orderId))
+  fetchSingleOrder: orderId => dispatch(fetchSingleOrder(orderId)),
+  showAddReviewFunc: () => dispatch(showAddReview())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleUserOrder)

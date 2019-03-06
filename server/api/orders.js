@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Cart, Order, OrderProduct, Address} = require('../db/models')
+const {Cart, Order, OrderProduct, Product} = require('../db/models')
 
 // Routes for /api/orders
 
@@ -13,7 +13,13 @@ router.get(
   '/',
   (req, res, next) =>
     req.user.isAdmin &&
-    Order.findAll({include: [{all: true, nested: true}]})
+    Order.findAll({
+      include: [
+        'shippingAddress',
+        'billingAddress',
+        {model: OrderProduct, include: [Product]}
+      ]
+    })
       .then(orders => res.send(orders))
       .catch(next)
 )
@@ -48,7 +54,7 @@ router.post(
       .then(cart => cart.update({status: 'inactive'}, {fields: ['stataus']}))
       // then create the order
       .then(() => {
-        const {email} = req.body.orderInfo
+        const email = req.body.email
         return Order.create({email}).then(newOrder => newOrder) // pass the created order to the next .then() chain
       })
       // then,
@@ -67,32 +73,33 @@ router.post(
       })
       // then set the shipping address association
       .then(order => {
-        const {shippingAddressId} = req.body.orderInfo
+        const shippingAddressId = req.body.shippingAddressId
         return order.setShippingAddress(shippingAddressId).then(() => order)
       })
       // then set the billing address association
       .then(order => {
-        const {billingAddressId} = req.body.orderInfo
+        const billingAddressId = req.body.billingAddressId
         return order.setBillingAddress(billingAddressId).then(() => order)
       })
       // then set user association
       .then(
         order =>
           req.user && req.user.id
-            ? order.setUser(req.user.id, {returning: true}).then(returned => {
-                console.log(returned)
+            ? order.setUser(req.user.id, {returning: true}).then(() => {
                 return order
               })
-            : order.update(
-                {sessionId: req.session.id},
-                {returning: true, fields: ['sessionId']}
-              )
+            : order.update({sessionId: req.session.id}, {fields: ['sessionId']})
+      )
+      .then(order =>
+        order.update(
+          {totalCost: req.body.total},
+          {returning: true, fields: ['totalCost']}
+        )
       )
       // then finally return order
       .then(order => res.send(order))
       .catch(next) // move onto error handler on error
 )
-
 /** GET /api/orders/myOrder
  * - gets all order made by logged in user
  * - only available if user is logged in: checks for userId
@@ -104,10 +111,15 @@ router.get('/myorders', (req, res, next) => {
   if (req.user.id)
     return req.user
       .getOrders({
-        include: [{all: true, nested: true}]
+        include: [
+          'shippingAddress',
+          'billingAddress',
+          {model: OrderProduct, include: [Product]}
+        ]
       })
       .then(orders => res.json(orders))
       .catch(next)
+  else res.sendStatus(403)
 })
 
 /** param for any /api/orders/ route with params=<orderId>
@@ -118,7 +130,13 @@ router.get('/myorders', (req, res, next) => {
  * * Test
  */
 router.param('orderId', (req, res, next, id) =>
-  Order.findById(id, {include: [{all: true, nested: true}]})
+  Order.findById(id, {
+    include: [
+      'shippingAddress',
+      'billingAddress',
+      {model: OrderProduct, include: [Product]}
+    ]
+  })
     .then(order => {
       req.order = order
       next()
@@ -162,7 +180,6 @@ router.get('/filterAdminOrders', async (req, res, next) => {
     if (!req.user.isAdmin) {
       res.json('ERROR')
     }
-    console.log('isAdmin?', req.user.isAdmin)
     let filteredOrders
     if (req.query.status === 'All') {
       filteredOrders = await Order.findAll({

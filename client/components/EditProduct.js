@@ -2,6 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleProduct, editSingleProduct} from '../store/product'
 import {Form, Grid, Card, Button} from 'semantic-ui-react'
+import AddProductCategory from './AddProductCategory'
+import {Link} from 'react-router-dom'
 
 class EditProduct extends React.Component {
   constructor() {
@@ -71,7 +73,12 @@ class EditProduct extends React.Component {
     const productToEdit = this.props.productToEdit
     return (
       <div>
-        <h3>{`Edit ${productToEdit.name}`}</h3>
+        <h3>
+          Edit
+          <Link to={`products/${productToEdit.id}`}>{` ${
+            productToEdit.name
+          }`}</Link>
+        </h3>
         <Card>
           <Form onSubmit={this.handleSubmit}>
             <Form.Field>
@@ -121,6 +128,9 @@ class EditProduct extends React.Component {
                 ref={this.availability}
                 onClick={this.toggleAvailability}
               />
+            </Form.Field>
+            <Form.Field>
+              <AddProductCategory product={productToEdit} />
             </Form.Field>
           </Form>
         </Card>

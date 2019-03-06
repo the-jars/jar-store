@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
-import {CardElement, Elements, injectStripe} from 'react-stripe-elements'
+
+import {CardElement, injectStripe} from 'react-stripe-elements'
 import axios from 'axios'
-class CheckoutForm extends Component {
+
+class StripeCheckout extends Component {
   constructor(props) {
     super(props)
     //create state to inform if charge is complete
@@ -10,9 +12,7 @@ class CheckoutForm extends Component {
     this.submit = this.submit.bind(this)
   }
 
-  async sendConfirmationEmail() {}
-
-  async submit(ev) {
+  async submit() {
     let {token} = await this.props.stripe.createToken({name: 'Name'})
     let response = await fetch('/charge', {
       method: 'POST',
@@ -22,7 +22,7 @@ class CheckoutForm extends Component {
     //set state complete to true once payment goes through
     if (response.ok) {
       this.setState({complete: true})
-      axios
+      await axios
         .post('/api/email/sendconfirmationemail')
         .then(function(response) {
           console.log(response)
@@ -30,6 +30,7 @@ class CheckoutForm extends Component {
         .catch(function(error) {
           console.log(error)
         })
+      this.props.finalizeOrder()
     }
   }
 
@@ -42,10 +43,12 @@ class CheckoutForm extends Component {
       <div className="checkout">
         <p>Would you like to complete the purchase?</p>
         <CardElement />
-        <button onClick={this.submit}>Send</button>
+        <button type="submit" onClick={this.submit}>
+          Send
+        </button>
       </div>
     )
   }
 }
 
-export default injectStripe(CheckoutForm)
+export default injectStripe(StripeCheckout)
