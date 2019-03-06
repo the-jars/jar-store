@@ -52,15 +52,16 @@ class CheckoutPage extends React.Component {
       zip: billing_zip.value
     }
 
+    const cartId = this.props.cartId
+    const cartItems = this.props.cartItems
+    const thunk = this.props.createOrderThunk
+
     this.props.history.push('/checkoutform', {
-      onSubmit: () =>
-        this.props.createOrderThunk(
-          this.props.cartId,
-          this.props.cartItems,
-          shippingAddress,
-          billingAddress,
-          email
-        )
+      cartId,
+      cartItems,
+      shippingAddress,
+      billingAddress,
+      email
     })
   }
 
