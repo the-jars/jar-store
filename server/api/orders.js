@@ -12,10 +12,11 @@ const {Cart, Order} = require('../db/models')
 router.get(
   '/',
   (req, res, next) =>
-    req.user.isAdmin &&
-    Order.findAll({include: [{all: true, nested: true}]})
-      .then(orders => res.send(orders))
-      .catch(next)
+    (req.user.isAdmin &&
+      Order.findAll({include: [{all: true, nested: true}]})
+        .then(orders => res.send(orders))
+        .catch(next)) ||
+    res.sendStatus(403)
 )
 
 /** POST /api/orders/
@@ -40,7 +41,9 @@ router.get(
  * - TODO:
  * * Test
  */
-router.post('/', (req, res, next) => 
+router.post(
+  '/',
+  (req, res, next) =>
     Cart.findById(req.body.cartId) // finding the associated cart
       // then inactivate the found cart
       .then(cart => cart.update({status: 'inactive'}, {fields: ['stataus']}))
@@ -100,6 +103,7 @@ router.post('/', (req, res, next) =>
  * * Test
  */
 router.get('/myorders', (req, res, next) => {
+  console.log('We at the route: ', req.user)
   if (req.user.id)
     return req.user
       .getOrders({
@@ -107,6 +111,7 @@ router.get('/myorders', (req, res, next) => {
       })
       .then(orders => res.json(orders))
       .catch(next)
+  else res.sendStatus(403)
 })
 
 /** param for any /api/orders/ route with params=<orderId>

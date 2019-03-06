@@ -78,7 +78,7 @@ export const fetchSingleOrder = orderId => async dispatch => {
 export const fetchUserOrders = () => async dispatch => {
   try {
     const userOrders = await axios.get('/api/orders/myorders')
-    dispatch(setUserOrders(userOrders.data))
+    if (userOrders.data.status !== 403) dispatch(setUserOrders(userOrders.data))
   } catch (error) {
     console.error(error)
   }
@@ -87,7 +87,7 @@ export const fetchUserOrders = () => async dispatch => {
 export const fetchAdminOrders = () => async dispatch => {
   try {
     const orderList = await axios.get('/api/orders/')
-    dispatch(setAdminOrders(orderList.data))
+    if (orderList.data.status !== 403) dispatch(setAdminOrders(orderList.data))
   } catch (error) {
     console.error(error)
   }
