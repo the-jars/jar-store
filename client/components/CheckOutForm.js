@@ -36,7 +36,7 @@ class CheckoutForm extends Component {
   }
 }
 
-const mapDispatch = dispatch => ({
+const mapDispatch = (dispatch, ownProps) => ({
   createOrderThunk: orderInfo => {
     const {
       cartId,
@@ -53,7 +53,8 @@ const mapDispatch = dispatch => ({
         shippingAddress,
         billingAddress,
         email,
-        totalCost
+        totalCost,
+        ownProps.history
       )
     )
   }

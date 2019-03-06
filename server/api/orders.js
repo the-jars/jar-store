@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Cart, Order} = require('../db/models')
+const {Cart, Order, OrderProduct, Product} = require('../db/models')
 
 // Routes for /api/orders
 
@@ -13,7 +13,13 @@ router.get(
   '/',
   (req, res, next) =>
     req.user.isAdmin &&
-    Order.findAll({include: ['shippingAddress', 'billingAddress']})
+    Order.findAll({
+      include: [
+        'shippingAddress',
+        'billingAddress',
+        {model: OrderProduct, include: [Product]}
+      ]
+    })
       .then(orders => res.send(orders))
       .catch(next)
 )
@@ -105,7 +111,11 @@ router.get('/myorders', (req, res, next) => {
   if (req.user.id)
     return req.user
       .getOrders({
-        include: ['shippingAddress', 'billingAddress']
+        include: [
+          'shippingAddress',
+          'billingAddress',
+          {model: OrderProduct, include: [Product]}
+        ]
       })
       .then(orders => res.json(orders))
       .catch(next)
@@ -120,7 +130,13 @@ router.get('/myorders', (req, res, next) => {
  * * Test
  */
 router.param('orderId', (req, res, next, id) =>
-  Order.findById(id, {include: ['shippingAddress', 'billingAddress']})
+  Order.findById(id, {
+    include: [
+      'shippingAddress',
+      'billingAddress',
+      {model: OrderProduct, include: [Product]}
+    ]
+  })
     .then(order => {
       req.order = order
       next()

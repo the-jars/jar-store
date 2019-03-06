@@ -97,7 +97,7 @@ export class SingleUserOrder extends Component {
           ) : null}
 
           {!items
-            ? 'nah'
+            ? ''
             : items.map(item => {
                 return (
                   <Card key={item.id} color="pink" fluid>
