@@ -10,10 +10,8 @@ class CheckoutPage extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.user !== this.props.user) {
-      this.email = this.props.user.email
-    }
+  componentDidMount() {
+    this.email.current.value = this.props.user.email
   }
 
   handleSubmit(evt) {
