@@ -103,7 +103,6 @@ router.post(
  * * Test
  */
 router.get('/myorders', (req, res, next) => {
-  console.log('We at the route: ', req.user)
   if (req.user.id)
     return req.user
       .getOrders({
