@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
+
 import {CardElement, injectStripe} from 'react-stripe-elements'
+import axios from 'axios'
 
 class StripeCheckout extends Component {
   constructor(props) {
@@ -20,6 +22,14 @@ class StripeCheckout extends Component {
     //set state complete to true once payment goes through
     if (response.ok) {
       this.setState({complete: true})
+      await axios
+        .post('/api/email/sendconfirmationemail')
+        .then(function(response) {
+          console.log(response)
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
       this.props.finalizeOrder()
     }
   }
