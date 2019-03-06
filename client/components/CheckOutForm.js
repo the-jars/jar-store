@@ -1,17 +1,20 @@
 import React, {Component} from 'react'
-import {CardElement, Elements, injectStripe} from 'react-stripe-elements'
+import {connect} from 'react-redux'
+import {Elements} from 'react-stripe-elements'
 import StripeCheckout from './StripeCheckout'
-import {
-  Button,
-  Form,
-  Grid,
-  Header,
-  Image,
-  Message,
-  Segment
-} from 'semantic-ui-react'
+import {Grid, Header, Image} from 'semantic-ui-react'
+import order, {createOrder} from '../store/order'
 
 class CheckoutForm extends Component {
+  constructor() {
+    super()
+    this.finalizeOrder = this.finalizeOrder.bind(this)
+  }
+
+  finalizeOrder() {
+    this.props.createOrderThunk(this.props.location.state)
+  }
+
   render() {
     return (
       <Elements>
@@ -25,10 +28,7 @@ class CheckoutForm extends Component {
               <Image src="screen_shot_2019-02-27_at_3.40.20_pm.png" /> Check Out
             </Header>
 
-            <StripeCheckout
-              size="large"
-              onSubmit={this.props.location.state.onSubmit}
-            />
+            <StripeCheckout size="large" finalizeOrder={this.finalizeOrder} />
           </Grid.Column>
         </Grid>
       </Elements>
@@ -36,4 +36,27 @@ class CheckoutForm extends Component {
   }
 }
 
-export default CheckoutForm
+const mapDispatch = dispatch => ({
+  createOrderThunk: orderInfo => {
+    const {
+      cartId,
+      cartItems,
+      shippingAddress,
+      billingAddress,
+      email,
+      totalCost
+    } = orderInfo
+    return dispatch(
+      createOrder(
+        cartId,
+        cartItems,
+        shippingAddress,
+        billingAddress,
+        email,
+        totalCost
+      )
+    )
+  }
+})
+
+export default connect(null, mapDispatch)(CheckoutForm)

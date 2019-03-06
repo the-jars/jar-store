@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {Button, Form, Grid, Header, Image, Table, Card} from 'semantic-ui-react'
 import {createOrder} from '../store/order'
 
@@ -54,14 +53,15 @@ class CheckoutPage extends React.Component {
 
     const cartId = this.props.cartId
     const cartItems = this.props.cartItems
-    const thunk = this.props.createOrderThunk
+    const totalCost = this.props.location.state.total
 
     this.props.history.push('/checkoutform', {
       cartId,
       cartItems,
       shippingAddress,
       billingAddress,
-      email
+      email,
+      totalCost
     })
   }
 
@@ -175,24 +175,4 @@ const mapState = state => ({
   user: state.user
 })
 
-const mapDispatch = (dispatch, ownProps) => ({
-  createOrderThunk: (
-    cartId,
-    cartItems,
-    shippingAddress,
-    billingAddress,
-    email
-  ) =>
-    dispatch(
-      createOrder(
-        cartId,
-        cartItems,
-        shippingAddress,
-        billingAddress,
-        email,
-        ownProps.location.state.total
-      )
-    )
-})
-
-export default connect(mapState, mapDispatch)(CheckoutPage)
+export default connect(mapState)(CheckoutPage)
