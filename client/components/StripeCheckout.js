@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {CardElement, Elements, injectStripe} from 'react-stripe-elements'
+import {CardElement, injectStripe} from 'react-stripe-elements'
 
 class StripeCheckout extends Component {
   constructor(props) {
@@ -10,7 +10,7 @@ class StripeCheckout extends Component {
     this.submit = this.submit.bind(this)
   }
 
-  async submit(ev) {
+  async submit() {
     let {token} = await this.props.stripe.createToken({name: 'Name'})
     let response = await fetch('/charge', {
       method: 'POST',
@@ -20,7 +20,7 @@ class StripeCheckout extends Component {
     //set state complete to true once payment goes through
     if (response.ok) {
       this.setState({complete: true})
-      this.props.onSubmit()
+      this.props.finalizeOrder()
     }
   }
 

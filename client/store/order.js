@@ -1,49 +1,5 @@
 import axios from 'axios'
 
-const SET_ORDER = 'SET_ORDER'
-
-export const setOrder = order => ({
-  type: SET_ORDER,
-  order
-})
-
-export const fetchOrder = orderId => dispatch =>
-  axios
-    .get(`/api/orders/${orderId}`)
-    .then(res => dispatch(setOrder(res.data)))
-    .catch(console.error)
-
-export const createOrder = (
-  cartId,
-  cartItems,
-  shippingAddress,
-  billingAddress,
-  email,
-  total
-) => async dispatch => {
-  try {
-    const shippingRes = await axios.put('/api/address/', shippingAddress)
-    const billingRes = await axios.put('/api/address/', billingAddress)
-    const orderInfo = {
-      cartId,
-      cartItems,
-      email,
-      shippingAddressId: shippingRes.data,
-      billingAddressId: billingRes.data,
-      total
-    }
-
-    const createOrderRes = await axios.post(`/api/orders/`, orderInfo)
-    dispatch(setOrder(createOrderRes.data))
-  } catch (e) {
-    console.error(e)
-  }
-}
-
-export default function(state = {}, action) {
-  if (action.type === SET_ORDER) return action.order
-  return state
-}
 // ACTION TYPES
 const SET_USER_ORDERS = 'SET_USER_ORDERS'
 const SET_CURRENT_ORDER = 'SET_CURRENT_ORDER'
@@ -78,7 +34,7 @@ export const fetchSingleOrder = orderId => async dispatch => {
 export const fetchUserOrders = () => async dispatch => {
   try {
     const userOrders = await axios.get('/api/orders/myorders')
-    dispatch(setUserOrders(userOrders.data))
+    if (userOrders.data.status !== 403) dispatch(setUserOrders(userOrders.data))
   } catch (error) {
     console.error(error)
   }
@@ -87,7 +43,7 @@ export const fetchUserOrders = () => async dispatch => {
 export const fetchAdminOrders = () => async dispatch => {
   try {
     const orderList = await axios.get('/api/orders/')
-    dispatch(setAdminOrders(orderList.data))
+    if (orderList.data.status !== 403) dispatch(setAdminOrders(orderList.data))
   } catch (error) {
     console.error(error)
   }
@@ -112,6 +68,35 @@ export const filterAdminOrders = status => async dispatch => {
     dispatch(setAdminOrders(filteredOrderList.data))
   } catch (error) {
     console.error(error)
+  }
+}
+
+export const createOrder = (
+  cartId,
+  cartItems,
+  shippingAddress,
+  billingAddress,
+  email,
+  total,
+  history
+) => async dispatch => {
+  try {
+    const shippingRes = await axios.put('/api/address/', shippingAddress)
+    const billingRes = await axios.put('/api/address/', billingAddress)
+    const orderInfo = {
+      cartId,
+      cartItems,
+      email,
+      shippingAddressId: shippingRes.data,
+      billingAddressId: billingRes.data,
+      total
+    }
+
+    const createOrderRes = await axios.post(`/api/orders/`, orderInfo)
+    await dispatch(setCurrentOrder(createOrderRes.data))
+    history.push(`/myorders/${createOrderRes.data.id}`)
+  } catch (e) {
+    console.error(e)
   }
 }
 

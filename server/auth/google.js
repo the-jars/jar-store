@@ -2,7 +2,7 @@ const passport = require('passport')
 const router = require('express').Router()
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 const {User} = require('../db/models')
-require('./secrets')
+if (process.env.NODE_ENV !== 'production') require('./secrets')
 module.exports = router
 
 /**

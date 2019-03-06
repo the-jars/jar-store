@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Cart, Order} = require('../db/models')
+const {Cart, Order, OrderProduct, Product} = require('../db/models')
 
 // Routes for /api/orders
 
@@ -13,7 +13,13 @@ router.get(
   '/',
   (req, res, next) =>
     req.user.isAdmin &&
-    Order.findAll({include: [{all: true, nested: true}]})
+    Order.findAll({
+      include: [
+        'shippingAddress',
+        'billingAddress',
+        {model: OrderProduct, include: [Product]}
+      ]
+    })
       .then(orders => res.send(orders))
       .catch(next)
 )
@@ -40,7 +46,9 @@ router.get(
  * - TODO:
  * * Test
  */
-router.post('/', (req, res, next) => 
+router.post(
+  '/',
+  (req, res, next) =>
     Cart.findById(req.body.cartId) // finding the associated cart
       // then inactivate the found cart
       .then(cart => cart.update({status: 'inactive'}, {fields: ['stataus']}))
@@ -77,7 +85,7 @@ router.post('/', (req, res, next) =>
       .then(
         order =>
           req.user && req.user.id
-            ? order.setUser(req.user.id, {returning: true}).then(returned => {
+            ? order.setUser(req.user.id, {returning: true}).then(() => {
                 return order
               })
             : order.update({sessionId: req.session.id}, {fields: ['sessionId']})
@@ -103,10 +111,15 @@ router.get('/myorders', (req, res, next) => {
   if (req.user.id)
     return req.user
       .getOrders({
-        include: [{all: true, nested: true}]
+        include: [
+          'shippingAddress',
+          'billingAddress',
+          {model: OrderProduct, include: [Product]}
+        ]
       })
       .then(orders => res.json(orders))
       .catch(next)
+  else res.sendStatus(403)
 })
 
 /** param for any /api/orders/ route with params=<orderId>
@@ -117,7 +130,13 @@ router.get('/myorders', (req, res, next) => {
  * * Test
  */
 router.param('orderId', (req, res, next, id) =>
-  Order.findById(id, {include: [{all: true, nested: true}]})
+  Order.findById(id, {
+    include: [
+      'shippingAddress',
+      'billingAddress',
+      {model: OrderProduct, include: [Product]}
+    ]
+  })
     .then(order => {
       req.order = order
       next()

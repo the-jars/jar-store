@@ -17,7 +17,7 @@ export class SingleUserOrder extends Component {
     const dateStr = new Date(origDate).toDateString()
     return (
       <div>
-        <Header as="h1" padded>
+        <Header as="h1">
           <br />
           Your Order on {dateStr}
           <br />
@@ -97,7 +97,7 @@ export class SingleUserOrder extends Component {
           ) : null}
 
           {!items
-            ? 'nah'
+            ? ''
             : items.map(item => {
                 return (
                   <Card key={item.id} color="pink" fluid>
