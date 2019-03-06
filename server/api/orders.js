@@ -12,11 +12,10 @@ const {Cart, Order} = require('../db/models')
 router.get(
   '/',
   (req, res, next) =>
-    (req.user.isAdmin &&
-      Order.findAll({include: [{all: true, nested: true}]})
-        .then(orders => res.send(orders))
-        .catch(next)) ||
-    res.sendStatus(403)
+    req.user.isAdmin &&
+    Order.findAll({include: ['shippingAddress', 'billingAddress']})
+      .then(orders => res.send(orders))
+      .catch(next)
 )
 
 /** POST /api/orders/
@@ -80,7 +79,7 @@ router.post(
       .then(
         order =>
           req.user && req.user.id
-            ? order.setUser(req.user.id, {returning: true}).then(returned => {
+            ? order.setUser(req.user.id, {returning: true}).then(() => {
                 return order
               })
             : order.update({sessionId: req.session.id}, {fields: ['sessionId']})
@@ -106,7 +105,7 @@ router.get('/myorders', (req, res, next) => {
   if (req.user.id)
     return req.user
       .getOrders({
-        include: [{all: true, nested: true}]
+        include: ['shippingAddress', 'billingAddress']
       })
       .then(orders => res.json(orders))
       .catch(next)
@@ -121,7 +120,7 @@ router.get('/myorders', (req, res, next) => {
  * * Test
  */
 router.param('orderId', (req, res, next, id) =>
-  Order.findById(id, {include: [{all: true, nested: true}]})
+  Order.findById(id, {include: ['shippingAddress', 'billingAddress']})
     .then(order => {
       req.order = order
       next()

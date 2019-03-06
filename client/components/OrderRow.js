@@ -27,13 +27,14 @@ const OrderRow = props => {
                     <Card.Meta>
                       Items:
                       <ul>
-                        {order.orderProducts.map((orderProduct, i) => (
-                          <li key={i}>
-                            <Link to={`/products/${orderProduct.product.id}`}>
-                              {orderProduct.product.name}
-                            </Link>
-                          </li>
-                        ))}
+                        {order.orderProducts &&
+                          order.orderProducts.map((orderProduct, i) => (
+                            <li key={i}>
+                              <Link to={`/products/${orderProduct.product.id}`}>
+                                {orderProduct.product.name}
+                              </Link>
+                            </li>
+                          ))}
                       </ul>
                     </Card.Meta>
                   </Feed.Content>
